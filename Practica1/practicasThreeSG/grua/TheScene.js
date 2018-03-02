@@ -149,7 +149,6 @@ class TheScene extends THREE.Scene {
     if(controls.height >= 20 ){
       if(controls.takeBox){
       this.dropBox();
-      controls.takeBox = false;
       }
     }
 
