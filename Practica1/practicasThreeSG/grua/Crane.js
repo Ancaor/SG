@@ -69,7 +69,7 @@ class Crane extends THREE.Object3D {
   /// It creates the base and adds the mast to the base
   createBase () {
     var base = new THREE.Mesh (
-      new THREE.CylinderGeometry (this.craneWidth/10, this.craneWidth/10, this.baseHookHeight, 16, 1),
+      new THREE.BoxGeometry (6, 6, 6),      // Cubo
                                this.material);
     base.geometry.applyMatrix (new THREE.Matrix4().makeTranslation (0, this.baseHookHeight/2, 0));
     base.castShadow = true;
@@ -116,7 +116,7 @@ class Crane extends THREE.Object3D {
     this.trolley.position.x = this.distanceMin;
 
     this.string = new THREE.Mesh (
-      new THREE.CylinderGeometry (this.craneWidth/100, this.craneWidth/100, 1), this.material);
+      new THREE.CylinderGeometry (this.craneWidth/120, this.craneWidth/120, 1), this.material);   // Donde tocar para tamanio de cuerda
     this.string.geometry.applyMatrix (new THREE.Matrix4().makeTranslation (0, -0.5, 0));
     this.string.castShadow = true;
     this.stringLength = this.computeStringLength();

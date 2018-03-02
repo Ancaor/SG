@@ -47,6 +47,14 @@ function createGUI (withStats) {
       applicationMode = TheScene.MOVING_BOXES;
     };
 
+    // Funcion que elimina cajas
+
+    this.deleteBox = function () {
+      setMessage ("Elimina cajas al hacer click sobre ellas");
+      applicationMode = TheScene.DELETING_BOXES;
+    }
+
+
     // Funcion que resetea posicion de la grua
 
     this.resetCrane = function (){
@@ -71,7 +79,8 @@ function createGUI (withStats) {
     var showingMessage = actions.add (GUIcontrols,'showMessage').name(': Show message :');
     var resettingCrane = actions.add (GUIcontrols,'resetCrane').name(': Reset crane position :');
     var takingBoxes = actions.add (GUIcontrols, 'takeBox').name ('Take the box below').listen();
-    
+    var deletingBoxes = actions.add (GUIcontrols, 'deleteBox').name('Delete the box below');
+
     takingBoxes.onChange (function (value) {
         if (value) {
         newHeight = scene.takeBox();
@@ -144,6 +153,9 @@ function onMouseDown (event) {
         case TheScene.MOVING_BOXES :
           scene.moveBox (event, TheScene.SELECT_BOX);
           break;
+        case TheScene.DELETING_BOXES:
+          scene.deleteBox (event);
+          break;
         default :
           applicationMode = TheScene.NO_ACTION;
           break;
@@ -166,6 +178,7 @@ function onMouseMove (event) {
       case TheScene.MOVING_BOXES :
         scene.moveBox (event, TheScene.MOVE_BOX);
         break;
+      case TheScene.DELETING_BOXES : break;    // necesario para que al soltar raton no se salga de la accion
       default :
         applicationMode = TheScene.NO_ACTION;
         break;
@@ -186,6 +199,7 @@ function onMouseUp (event) {
       case TheScene.MOVING_BOXES :
         scene.moveBox (event, TheScene.END_ACTION);
         break;
+      case TheScene.DELETING_BOXES : break;    // necesario para que al soltar raton no se salga de la accion
       default :
         applicationMode = TheScene.NO_ACTION;
         break;

@@ -109,6 +109,15 @@ class TheScene extends THREE.Scene {
     this.ground.moveBox (event, action);
   }
 
+
+// Borra una caja
+
+  deleteBox (event) {
+    this.ground.deleteBox (event);
+  }
+
+
+
   /// The crane can take a box
   /**
    * @return The new height of the hook, on the top of the taken box. Zero if no box is taken
@@ -189,6 +198,7 @@ class TheScene extends THREE.Scene {
   TheScene.NO_ACTION = 0;
   TheScene.ADDING_BOXES = 1;
   TheScene.MOVING_BOXES = 2;
+  TheScene.DELETING_BOXES = 3;  // Modo de borrado de cajas
 
   // Actions
   TheScene.NEW_BOX = 0;

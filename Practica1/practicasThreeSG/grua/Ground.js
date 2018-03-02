@@ -2,7 +2,7 @@
 /// The Ground class
 /**
  * @author FVelasco
- * 
+ *
  * @param aWidth - The width of the ground
  * @param aDeep - The deep of the ground
  * @param aMaterial - The material of the ground
@@ -13,18 +13,18 @@ class Ground extends THREE.Object3D {
 
   constructor (aWidth, aDeep, aMaterial, aBoxSize) {
     super();
-    
+
     this.width = aWidth;
     this.deep = aDeep;
     this.material = aMaterial;
     this.boxSize = aBoxSize;
-    
+
     this.ground = null;
     this.boxes  = null;
-    
+
     this.box    = null;
     this.raycaster = new THREE.Raycaster ();  // To select boxes
-  
+
     this.ground = new THREE.Mesh (
       new THREE.BoxGeometry (this.width, 0.2, this.deep, 1, 1, 1),
       this.material);
@@ -32,11 +32,11 @@ class Ground extends THREE.Object3D {
     this.ground.receiveShadow = true;
     this.ground.autoUpdateMatrix = false;
     this.add (this.ground);
-    
+
     this.boxes = new THREE.Object3D();
     this.add (this.boxes);
   }
-  
+
   /// Whether the boxes b1 and b2 intersect or not
   /**
    * @param b1 - A box to test
@@ -49,7 +49,7 @@ class Ground extends THREE.Object3D {
                                    new THREE.Vector2 (b2.position.x, b2.position.z));
     return (vectorBetweenBoxes.length() < this.boxSize);
   }
-  
+
   /// It returns the position of the mouse in normalized coordinates ([-1,1],[-1,1])
   /**
    * @param event - Mouse information
@@ -61,7 +61,7 @@ class Ground extends THREE.Object3D {
     mouse.y = 1 - 2 * (event.clientY / window.innerHeight);
     return mouse;
   }
-  
+
   /// It returns the point on the ground where the mouse has clicked
   /**
    * @param event - The mouse information
@@ -77,7 +77,7 @@ class Ground extends THREE.Object3D {
     } else
       return null;
   }
-  
+
   /// It computes the height of the boxes so that some can be stacked on the others
   /**
    * @param k - From which box must be calculated
@@ -87,13 +87,13 @@ class Ground extends THREE.Object3D {
       this.boxes.children[i].position.y = 0;
       for (var j = 0; j < i; j++) {
         if (this.intersectBoxes (this.boxes.children[j], this.boxes.children[i])) {
-          this.boxes.children[i].position.y = this.boxes.children[j].position.y + 
+          this.boxes.children[i].position.y = this.boxes.children[j].position.y +
             this.boxes.children[j].geometry.parameters.height;
         }
       }
     }
   }
-  
+
   /// It adds a new box on the ground
   /**
    * @param event - Mouse information
@@ -104,12 +104,12 @@ class Ground extends THREE.Object3D {
       this.box = null;
       return;
     }
-    
+
     var pointOnGround = this.getPointOnGround (event);
     if (pointOnGround !== null) {
       if (action === TheScene.NEW_BOX) {
         this.box = new THREE.Mesh (
-          new THREE.BoxGeometry (this.boxSize, this.boxSize, this.boxSize), 
+          new THREE.BoxGeometry (this.boxSize, this.boxSize, this.boxSize),
           new THREE.MeshPhongMaterial ({color: Math.floor (Math.random()*16777215)}));
         this.box.geometry.applyMatrix (new THREE.Matrix4().makeTranslation (0, this.boxSize/2, 0));
         this.box.position.x = pointOnGround.x;
@@ -122,7 +122,7 @@ class Ground extends THREE.Object3D {
       }
     }
   }
-    
+
   /// It moves or rotates a box on the ground
   /**
    * @param event - Mouse information
@@ -136,7 +136,7 @@ class Ground extends THREE.Object3D {
           this.box = null;
         }
         break;
-        
+
       case TheScene.MOVE_BOX :
         var pointOnGround = this.getPointOnGround (event);
         if (pointOnGround !== null) {
@@ -147,7 +147,7 @@ class Ground extends THREE.Object3D {
           }
         }
         break;
-        
+
       case TheScene.SELECT_BOX :
         var mouse = this.getMouse (event);
         this.raycaster.setFromCamera (mouse, scene.getCamera());
@@ -162,7 +162,7 @@ class Ground extends THREE.Object3D {
           this.updateHeightBoxes(indexOfBox);
         }
         break;
-        
+
       case TheScene.ROTATE_BOX :
         if (this.box !== null) {
           // Chrome and other use wheelDelta, Firefox uses detail
@@ -171,7 +171,25 @@ class Ground extends THREE.Object3D {
         break;
     }
   }
-  
+
+
+// Selecciona la caja y la borra
+
+
+  deleteBox (event) {
+    var mouse = this.getMouse (event);
+    this.raycaster.setFromCamera (mouse, scene.getCamera());
+    var pickedObjects = this.raycaster.intersectObjects (this.boxes.children);
+    if (pickedObjects.length > 0) {
+      this.box = pickedObjects[0].object;
+      var indexOfBox = this.boxes.children.indexOf (this.box);
+      this.boxes.remove (this.box);
+      
+      this.updateHeightBoxes(indexOfBox);
+    }
+  }
+
+
   /// The crane can take a box
   /**
    * @param position The position where the crane's hook is
@@ -198,7 +216,7 @@ class Ground extends THREE.Object3D {
     }
     return null;
   }
-  
+
   /// The crane has dropped a box
   /**
    * @param aBox - The dropped box
