@@ -22,6 +22,11 @@ class Ground extends THREE.Object3D {
     this.ground = null;
     this.boxes  = null;
 
+    ////////////7
+
+    ///////////
+
+
     this.box    = null;
     this.raycaster = new THREE.Raycaster ();  // To select boxes
 
@@ -106,11 +111,15 @@ class Ground extends THREE.Object3D {
     }
 
     var pointOnGround = this.getPointOnGround (event);
+    var loader = new THREE.TextureLoader();
+    var textura3 = loader.load("imgs/im.jpg");
+
+
     if (pointOnGround !== null) {
       if (action === TheScene.NEW_BOX) {
         this.box = new THREE.Mesh (
           new THREE.BoxGeometry (this.boxSize, this.boxSize, this.boxSize),
-          new THREE.MeshPhongMaterial ({color: Math.floor (Math.random()*16777215)}));
+          new THREE.MeshPhongMaterial ({map: textura3}));
         this.box.geometry.applyMatrix (new THREE.Matrix4().makeTranslation (0, this.boxSize/2, 0));
         this.box.position.x = pointOnGround.x;
         this.box.position.y = 0;
@@ -184,7 +193,7 @@ class Ground extends THREE.Object3D {
       this.box = pickedObjects[0].object;
       var indexOfBox = this.boxes.children.indexOf (this.box);
       this.boxes.remove (this.box);
-      
+
       this.updateHeightBoxes(indexOfBox);
     }
   }
