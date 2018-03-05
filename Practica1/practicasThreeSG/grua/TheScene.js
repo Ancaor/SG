@@ -80,7 +80,7 @@ class TheScene extends THREE.Scene {
   createModel () {
     var model = new THREE.Object3D()
     var loader = new THREE.TextureLoader();
-    var textura2 = loader.load("imgs/im.jpg");
+    var textura2 = loader.load("imgs/metal.jpg");
     this.crane = new Crane({material:new THREE.MeshPhongMaterial ({map: textura2})});
     model.add (this.crane);
     var textura = loader.load ("imgs/wood.jpg");
