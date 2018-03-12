@@ -12,14 +12,10 @@ class TheScene extends THREE.Scene {
 
     this.ambientLight = null;
     this.spotLight = null;
-    this.secondLight = null;  // luz aniadida
     this.camera = null;
     this.trackballControls = null;
     this.crane = null;
     this.ground = null;
-
-    this.robot = null;
-
 
     this.createLights ();
     this.createCamera (renderer);
@@ -35,7 +31,7 @@ class TheScene extends THREE.Scene {
    */
   createCamera (renderer) {
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.set (0, 10, 60);
+    this.camera.position.set (60, 30, 60);
     var look = new THREE.Vector3 (0,20,0);
     this.camera.lookAt(look);
 
@@ -62,18 +58,6 @@ class TheScene extends THREE.Scene {
     this.spotLight.shadow.mapSize.width=2048
     this.spotLight.shadow.mapSize.height=2048;
     this.add (this.spotLight);
-
-    // add secondLife
-
-    this.secondLight = new THREE.SpotLight( 0xff0000 );
-    this.secondLight.position.set( -10, 60, 20 );
-    this.secondLight.castShadow = true;
-    // the shadow resolution
-    this.secondLight.shadow.mapSize.width=2048
-    this.secondLight.shadow.mapSize.height=2048;
-    this.add (this.secondLight);
-
-
   }
 
   /// It creates the geometric model: crane and ground
@@ -82,13 +66,10 @@ class TheScene extends THREE.Scene {
    */
   createModel () {
     var model = new THREE.Object3D()
+    this.crane = new Crane({});
+    model.add (this.crane);
     var loader = new THREE.TextureLoader();
-    var textura2 = loader.load("imgs/rajoy.jpg");
-    this.crane = new Crane({material:new THREE.MeshPhongMaterial ({map: textura2})});
-    this.robot = new Robot({material:new THREE.MeshPhongMaterial ({map: textura2})});
-    model.add (this.robot);
-    
-    var textura = loader.load ("imgs/es.jpg");
+    var textura = loader.load ("imgs/wood.jpg");
     this.ground = new Ground (300, 300, new THREE.MeshPhongMaterial ({map: textura}), 4);
     model.add (this.ground);
     return model;
@@ -113,15 +94,6 @@ class TheScene extends THREE.Scene {
   moveBox (event, action) {
     this.ground.moveBox (event, action);
   }
-
-
-// Borra una caja
-
-  deleteBox (event) {
-    this.ground.deleteBox (event);
-  }
-
-
 
   /// The crane can take a box
   /**
@@ -152,22 +124,12 @@ class TheScene extends THREE.Scene {
    */
   animate (controls) {
     this.axis.visible = controls.axis;
-    this.spotLight.intensity = controls.lightIntensity;
 
-    if(controls.secondLightIsOn)
-      this.secondLight.intensity = controls.secondLightIntensity;  // Controla la intensidad de la segunda luz
-    else this.secondLight.intensity = 0;
+    if(controls.lightIsOn){                                     //EXAMEN
+      this.spotLight.intensity = controls.lightIntensity;       //EXAMEN
+    }else this.spotLight.intensity = 0;                         //EXAMEN
 
     this.crane.setHookPosition (controls.rotation, controls.distance, controls.height);
-
-    if(controls.height >= 20 ){
-      if(controls.takeBox){
-      this.dropBox();
-      }
-    }
-
-
-
   }
 
   /// It returns the camera
@@ -203,7 +165,6 @@ class TheScene extends THREE.Scene {
   TheScene.NO_ACTION = 0;
   TheScene.ADDING_BOXES = 1;
   TheScene.MOVING_BOXES = 2;
-  TheScene.DELETING_BOXES = 3;  // Modo de borrado de cajas
 
   // Actions
   TheScene.NEW_BOX = 0;
