@@ -69,11 +69,29 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
 
   createCuerpo(){
     var cuerpo = new THREE.Mesh (
-      new THREE.CylinderGeometry (1.5, 1.5, 6, 16, 8), this.material);
-
-      cuerpo.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,this.))
+      new THREE.CylinderGeometry (1.5, 1.5, 6, 300, 8), this.material);
+      cuerpo.applyMatrix(new THREE.Matrix4().makeTranslation(0,this.altura, 0));
+      cuerpo.add(this.createCabeza());
 
       return cuerpo;
+  }
+
+  createCabeza(){
+    var cabeza = new THREE.Mesh (
+      new THREE.SphereGeometry( 1.5, 32, 32 ), this.material);
+      cabeza.applyMatrix(new THREE.Matrix4().makeTranslation(0,3, 0));
+      cabeza.add(this.createOjo());
+
+      return cabeza;
+  }
+
+  createOjo(){
+    var ojo = new THREE.Mesh (
+      new THREE.CylinderGeometry (0.25, 0.25, 1, 300, 8), this.material);
+      ojo.applyMatrix(new THREE.Matrix4().makeRotationX(1.5708));
+      ojo.applyMatrix(new THREE.Matrix4().makeTranslation(0,0.7,1));
+
+      return ojo;
   }
 
 
