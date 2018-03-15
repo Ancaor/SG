@@ -108,7 +108,7 @@ class TheScene extends THREE.Scene {
     // The retuned height set the new limit to down the hook
   }
 
-  /// The crane drops its taken box
+  /// T-he crane drops its taken box
   dropBox () {
     var box = this.crane.dropBox ();
     if (box !== null) {

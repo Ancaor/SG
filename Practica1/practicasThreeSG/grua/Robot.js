@@ -7,7 +7,7 @@ class Robot extends THREE.Object3D {
 
 this.material    = (parameters.material === undefined ? new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}) : parameters.material);
     this.balanceo = 0;
-    this.cabececo = 0;
+    this.cabeceo = 0;
     this.altura = 5;
 
 
@@ -19,7 +19,9 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
 
     this.brazo_1 = this.createBrazo_1();
     this.brazo_2 = this.createBrazo_2();
+    this.cabeza= null;
     this.cuerpo = this.createCuerpo();
+    
     //this.base = this.createBase();
     this.add(this.brazo_1);
     this.add(this.brazo_2);
@@ -73,16 +75,18 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
       cuerpo.applyMatrix(new THREE.Matrix4().makeTranslation(0,this.altura, 0));
       cuerpo.add(this.createCabeza());
 
+
       return cuerpo;
   }
 
   createCabeza(){
-    var cabeza = new THREE.Mesh (
+    this.cabeza = new THREE.Mesh (
       new THREE.SphereGeometry( 1.5, 32, 32 ), this.material);
-      cabeza.applyMatrix(new THREE.Matrix4().makeTranslation(0,3, 0));
-      cabeza.add(this.createOjo());
+      this.cabeza.applyMatrix(new THREE.Matrix4().makeTranslation(0,3, 0));
+      this.cabeza.updateMatrix();
+      this.cabeza.add(this.createOjo());
 
-      return cabeza;
+      return this.cabeza;
   }
 
   createOjo(){
@@ -93,6 +97,18 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
 
       return ojo;
   }
+
+  setHead(cabeceo){
+    this.cabeceo = cabeceo;
+    this.cabeza.rotation.y=this.cabeceo;
+  }
+
+  setCuerpo(balanceo){
+    this.balanceo = balanceo;
+    this.cuerpo.rotation.x = this.balanceo;
+  }
+
+
 
 
 }
