@@ -72,8 +72,9 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
   createCuerpo(){
     var cuerpo = new THREE.Mesh (
       new THREE.CylinderGeometry (1.5, 1.5, 6, 300, 8), this.material);
-      cuerpo.applyMatrix(new THREE.Matrix4().makeTranslation(0,this.altura, 0));
+      cuerpo.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,-2, 0));
       cuerpo.add(this.createCabeza());
+      cuerpo.position.y = 7;
 
 
       return cuerpo;
@@ -82,7 +83,7 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
   createCabeza(){
     this.cabeza = new THREE.Mesh (
       new THREE.SphereGeometry( 1.5, 32, 32 ), this.material);
-      this.cabeza.applyMatrix(new THREE.Matrix4().makeTranslation(0,3, 0));
+      this.cabeza.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,1, 0));
       this.cabeza.updateMatrix();
       this.cabeza.add(this.createOjo());
 
@@ -92,8 +93,8 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
   createOjo(){
     var ojo = new THREE.Mesh (
       new THREE.CylinderGeometry (0.25, 0.25, 1, 300, 8), this.material);
-      ojo.applyMatrix(new THREE.Matrix4().makeRotationX(1.5708));
-      ojo.applyMatrix(new THREE.Matrix4().makeTranslation(0,0.7,1));
+      ojo.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(1.5708));
+      ojo.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,1.7,1));
 
       return ojo;
   }
@@ -107,8 +108,5 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.balanceo = balanceo;
     this.cuerpo.rotation.x = this.balanceo;
   }
-
-
-
 
 }
