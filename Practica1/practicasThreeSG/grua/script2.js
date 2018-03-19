@@ -30,12 +30,17 @@ function createGUI (withStats) {
     this.altura = 5;
     this.distance = 10;
     this.height   = 7;
+    life=100;
 
     // Funcion que muestra un Mensaje
 
     this.showMessage = function(){
       setMessage ("Mensaje nuevo");
       applicationMode = TheScene.NO_ACTION;
+    }
+
+    this.quitaVida = function(){
+      move();
     }
 
   }
@@ -49,6 +54,8 @@ function createGUI (withStats) {
 
   var actions = gui.addFolder ('Actions');
     var showingMessage = actions.add (GUIcontrols,'showMessage').name(': Show message :');
+    var showingMesssage = actions.add (GUIcontrols,'quitaVida').name(': Show message :');
+    
 
 
   var robotControls = gui.addFolder ('Crane Controls');
@@ -89,6 +96,21 @@ function initStats() {
  */
 function setMessage (str) {
   document.getElementById ("Messages").innerHTML = "<h2>"+str+"</h2>";
+}
+
+
+// Quita vida
+
+function move() {
+  var elem = document.getElementById("myBar");   
+    if (life <= 0) {
+      clearInterval(id);
+    } else {
+      life-=10; 
+      elem.style.width = life + '%'; 
+      elem.innerHTML = life * 1  + '%';
+    }
+  
 }
 
 /// It processes the clic-down of the mouse
