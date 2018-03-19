@@ -106,6 +106,7 @@ class TheScene extends THREE.Scene {
     
     this.robot.setHead(controls.rotation_head);
     this.robot.setCuerpo(controls.balanceo_cuerpo);
+    this.robot.setAltura(controls.height);
 
     if(controls.secondLightIsOn)
       this.secondLight.intensity = controls.secondLightIntensity;  // Controla la intensidad de la segunda luz

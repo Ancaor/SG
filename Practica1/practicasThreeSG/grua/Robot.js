@@ -109,4 +109,8 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.cuerpo.rotation.x = this.balanceo;
   }
 
+  setAltura(height){
+    this.altura = height;
+    this.cuerpo.position.y = this.altura;
+  }
 }

@@ -29,7 +29,7 @@ function createGUI (withStats) {
     this.balanceo_cuerpo=0;
     this.altura = 5;
     this.distance = 10;
-    this.height   = 10;
+    this.height   = 7;
 
     // Funcion que muestra un Mensaje
 
@@ -54,7 +54,7 @@ function createGUI (withStats) {
   var robotControls = gui.addFolder ('Crane Controls');
     robotControls.add (GUIcontrols, 'rotation_head', -1.39626, 1.39626, 0.001).name('Rotation_head :').listen();
     robotControls.add (GUIcontrols, 'balanceo_cuerpo', -0.785398,  0.523599,  0.01).name('Balanceo :').listen();
-    //craneControls.add (GUIcontrols, 'height', 0, 50, 0.1).name('Height :').listen();
+    robotControls.add (GUIcontrols, 'height', 7, 8, 0.1).name('Height :').listen();
     
     // The method  listen()  allows the height attribute to be written, not only read
 
