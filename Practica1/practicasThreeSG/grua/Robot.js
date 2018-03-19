@@ -21,16 +21,19 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
 
   //  this.brazo_1 = this.createBrazo_1();
     this.brazo_der_completo = null;
+    this.brazo_izq_completo = null;
     this.createBrazoDerComp();
+    this.createBrazoIzqComp();
     //this.brazo_2 = this.createBrazo_2();
     this.cabeza= null;
-    //this.cuerpo = this.createCuerpo();
+    this.cuerpo = this.createCuerpo();
     
     //this.base = this.createBase();
    // this.add(this.brazo_1);
     //this.add(this.brazo_2);
-   // this.add(this.cuerpo);
-    this.add(this.brazo_der_completo)
+    this.add(this.cuerpo);
+    this.add(this.brazo_der_completo);
+    this.add(this.brazo_izq_completo);
   }
 
   createBrazo_1(){
@@ -51,11 +54,22 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.brazo_der_completo.applyMatrix (new THREE.Matrix4().makeTranslation(2,0,0));
     var base = this.createBaseDerecha();
     this.brazo_derecho = this.createBrazo_derecho();
-   // this.hombroDer = this.createHombroDerecho();
+    this.hombroDer = this.createHombroDerecho();
     this.brazo_der_completo.add(base);
     this.brazo_der_completo.add(this.brazo_derecho);
-    //this.brazo_der_completo.add(this.hombroDer);
+    this.brazo_der_completo.add(this.hombroDer);
 
+  }
+
+  createBrazoIzqComp(){
+    this.brazo_izq_completo = new THREE.Object3D();
+    this.brazo_izq_completo.applyMatrix (new THREE.Matrix4().makeTranslation(-2,0,0));
+    var base = this.createBaseDerecha();
+    this.brazo_izquierdo = this.createBrazo_derecho();
+    this.hombroIzq = this.createHombroDerecho();
+    this.brazo_izq_completo.add(base);
+    this.brazo_izq_completo.add(this.brazo_izquierdo);
+    this.brazo_izq_completo.add(this.hombroIzq);
   }
 
 
@@ -81,12 +95,12 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
   createBrazo_derecho(){
     var cilindro = new THREE.CylinderGeometry (0.3, 0.3, 1, 16, 8);
     cilindro.applyMatrix (new THREE.Matrix4().makeTranslation (0, 0.5, 0));
-    this.brazo_derecho = new THREE.Mesh (cilindro, this.material);
-      this.brazo_derecho.scale.set(1,this.altura,1);
-      this.brazo_derecho.position.y = 1;
-      this.brazo_derecho.castShadow = true;
+    var brazo_derecho = new THREE.Mesh (cilindro, this.material);
+      brazo_derecho.scale.set(1,this.altura,1);
+      brazo_derecho.position.y = 1;
+      brazo_derecho.castShadow = true;
      // this.brazo_derecho.add(this.createHombroDerecho());
-    return this.brazo_derecho;
+    return brazo_derecho;
   }
 
   createBrazo_izquierdo(){
@@ -99,10 +113,10 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
   }
 
   createHombroDerecho(){
-    this.hombroDer = new THREE.Mesh (
+    var hombroDer = new THREE.Mesh (
       new THREE.BoxGeometry (1,1,1),this.material);
-      this.hombroDer.applyMatrix (new THREE.Matrix4().makeTranslation (0, this.altura+1.5, 0));
-      return this.hombroDer;
+      hombroDer.applyMatrix (new THREE.Matrix4().makeTranslation (0, this.altura+1.5, 0));
+      return hombroDer;
   }
 
   createHombroIzquierdo(){
@@ -143,21 +157,23 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
   }
 
   setHead(cabeceo){
-    //this.cabeceo = cabeceo;
-    //this.cabeza.rotation.y=this.cabeceo;
+    this.cabeceo = cabeceo;
+    this.cabeza.rotation.y=this.cabeceo;
   }
 
   setCuerpo(balanceo){
-    //this.balanceo = balanceo;
-    //this.cuerpo.rotation.x = this.balanceo;
+    this.balanceo = balanceo;
+    this.cuerpo.rotation.x = this.balanceo;
   }
 
   setAltura(height){
     this.altura=height;
-    //this.cuerpo.position.y = this.altura;
-   // this.hombroDer.position.y = this.altura-0.5;
-   // this.hombroIzq.position.y = this.altura-0.5;
-    this.brazo_derecho.scale.y = height;
+    this.cuerpo.position.y = this.altura;
+    this.hombroDer.position.y = this.altura-0.5;
+    this.hombroIzq.position.y = this.altura-0.5;
+    this.brazo_derecho.scale.y = height-2;
+    this.brazo_izquierdo.scale.y=height-2;
+    //this.applyMatrix(new THREE.Matrix4().makeTranslation(0,1, 0));
     
   }
 }
