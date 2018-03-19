@@ -31,6 +31,7 @@ function createGUI (withStats) {
     this.distance = 10;
     this.height   = 7;
     life=100;
+    puntos=0;
 
     // Funcion que muestra un Mensaje
 
@@ -40,7 +41,15 @@ function createGUI (withStats) {
     }
 
     this.quitaVida = function(){
-      move();
+      quitarVida();
+    }
+
+    this.darVida = function(){
+      darVida();
+    }
+
+    this.aumentarPuntuacion = function(){
+      darPuntos();
     }
 
   }
@@ -54,7 +63,9 @@ function createGUI (withStats) {
 
   var actions = gui.addFolder ('Actions');
     var showingMessage = actions.add (GUIcontrols,'showMessage').name(': Show message :');
-    var showingMesssage = actions.add (GUIcontrols,'quitaVida').name(': Show message :');
+    var quitLife = actions.add (GUIcontrols,'quitaVida').name(': Quita vida :');
+    var giveLife = actions.add (GUIcontrols,'darVida').name(': Da vida :');
+    var givePoints = actions.add (GUIcontrols,'aumentarPuntuacion').name(': Da puntos :');
     
 
 
@@ -98,19 +109,60 @@ function setMessage (str) {
   document.getElementById ("Messages").innerHTML = "<h2>"+str+"</h2>";
 }
 
+// Da puntos
+
+function darPuntos() {
+  var elem = document.getElementById("puntuacion"); 
+  var id = setInterval(frame, 10);
+  var timeout = puntos+10;  
+  function frame(){
+  if(puntos < timeout){
+      puntos++; 
+      elem.innerHTML = puntos * 1 ;
+  }
+  else clearInterval(id);
+}
+
+}
 
 // Quita vida
 
-function move() {
-  var elem = document.getElementById("myBar");   
+function quitarVida() {
+  var elem = document.getElementById("myBar"); 
+  var id = setInterval(frame, 10);
+  var timeout = life-10;  
+  function frame(){
+  if(life > timeout){
     if (life <= 0) {
       clearInterval(id);
     } else {
-      life-=10; 
+      life--; 
       elem.style.width = life + '%'; 
       elem.innerHTML = life * 1  + '%';
     }
+  }
+  else clearInterval(id);
+}
   
+}
+
+// Da vida
+function darVida(){
+  var elem = document.getElementById("myBar"); 
+  var id = setInterval(frame, 10);
+  var timeout = life+10;  
+  function frame(){
+  if(life < timeout){
+    if (life >= 100) {
+      clearInterval(id);
+    } else {
+      life++; 
+      elem.style.width = life + '%'; 
+      elem.innerHTML = life * 1  + '%';
+    }
+  }
+  else clearInterval(id);
+}
 }
 
 /// It processes the clic-down of the mouse
