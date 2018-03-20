@@ -24,7 +24,7 @@ function createGUI (withStats) {
     this.axis = true;
     this.lightIntensity = 0.5;
     this.secondLightIntensity = 0.5;
-    this.secondLightIsOn = true; // Controla si la segunda luz esta encendida o no
+    this.secondLightIsOn = false; // Controla si la segunda luz esta encendida o no
     this.rotation_head = 0;
     this.balanceo_cuerpo=0;
     this.altura = 5;

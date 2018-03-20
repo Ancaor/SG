@@ -130,6 +130,7 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     var cuerpo = new THREE.Mesh (
       new THREE.CylinderGeometry (1.5, 1.5, 6, 300, 8), this.material);
       cuerpo.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,-2, 0));
+      cuerpo.geometry.applyMatrix(new THREE.Matrix4().makeRotationY(3,14159));
       cuerpo.add(this.createCabeza());
       cuerpo.position.y = 7;
 
