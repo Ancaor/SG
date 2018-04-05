@@ -27,6 +27,23 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     //this.brazo_2 = this.createBrazo_2();
     this.cabeza= null;
     this.cuerpo = this.createCuerpo();
+
+
+    // esferas para colisiones
+    this.colisionGruesa = null;
+    this.generarColisionGuesa();
+    //this.add(this.colisionGruesa);
+    this.colisionFina1 = null;
+    this.colisionFina2 = null;
+    this.colisionFina3 = null;
+    this.generarColisionesFinas();
+    this.add(this.colisionFina1);
+    this.add(this.colisionFina2);
+    this.add(this.colisionFina3);
+
+    ////////////////////////////
+
+
     
     //this.base = this.createBase();
    // this.add(this.brazo_1);
@@ -156,6 +173,32 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
 
       return ojo;
   }
+
+  generarColisionGuesa(){
+    var material = new THREE.MeshPhongMaterial ({color: 0x00604f,transparent: true, opacity: 0.5});
+      material.transparent = false;
+        var geometria = new THREE.SphereGeometry (5,32,32);    // geometria esfera
+        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,4.5,0));
+    this.colisionGruesa = new THREE.Mesh(geometria,material);
+    this.colisionGruesa.material.transparent = true;
+  }
+
+  generarColisionesFinas(){
+    var material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: true, opacity: 0.7});
+
+        var geometria = new THREE.SphereGeometry (2.6,32,32);    // geometria esfera
+        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,6.9,0));
+    this.colisionFina1 = new THREE.Mesh(geometria,material);
+
+    var geometria = new THREE.SphereGeometry (2.6,32,32);    // geometria esfera
+        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,4.3,0));
+    this.colisionFina2 = new THREE.Mesh(geometria,material);
+
+    var geometria = new THREE.SphereGeometry (2.6,32,32);    // geometria esfera
+        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,1.5,0));
+    this.colisionFina3 = new THREE.Mesh(geometria,material);
+  }
+
 
   setHead(cabeceo){
     this.cabeceo = cabeceo;

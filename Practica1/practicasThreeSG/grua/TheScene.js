@@ -17,6 +17,7 @@ class TheScene extends THREE.Scene {
     this.trackballControls = null;
     this.ground = null;
 
+    this.lanzador = null;
     this.robot = null;
 
 
@@ -34,8 +35,8 @@ class TheScene extends THREE.Scene {
    */
   createCamera (renderer) {
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.set (0, 10, 60);
-    var look = new THREE.Vector3 (0,20,0);
+    this.camera.position.set (0, 120, -10);
+    var look = new THREE.Vector3 (0,0,40);
     this.camera.lookAt(look);
 
     this.trackballControls = new THREE.TrackballControls (this.camera, renderer);
@@ -89,6 +90,16 @@ class TheScene extends THREE.Scene {
     var textura = loader.load ("imgs/ground.jpg");
     this.ground = new Ground (300, 300, new THREE.MeshPhongMaterial ({map: textura}), 4);
     model.add (this.ground);
+
+    //lanzador oculto para meteoritos
+    //this.lanzador = new Lanzador();
+    //model.add(this.lanzador);
+
+// pruebasz
+    this.meteorito = new Meteorito();
+    model.add(this.meteorito);
+//pruebas
+
     return model;
   }
 
@@ -111,6 +122,8 @@ class TheScene extends THREE.Scene {
     if(controls.secondLightIsOn)
       this.secondLight.intensity = controls.secondLightIntensity;  // Controla la intensidad de la segunda luz
     else this.secondLight.intensity = 0;
+
+    this.meteorito.update();
 
     
 
