@@ -111,11 +111,25 @@ class TheScene extends THREE.Scene {
     if(controls.secondLightIsOn)
       this.secondLight.intensity = controls.secondLightIntensity;  // Controla la intensidad de la segunda luz
     else this.secondLight.intensity = 0;
-
-    
-
-
   }
+
+  moveRobot(key){
+    switch(key){
+      case "ArrowLeft":
+            this.robot.turnLeft();
+            break;
+        case "ArrowRight":
+            this.robot.turnRight();
+            break;
+        case "ArrowUp":
+            this.robot.moveForward();
+            break;
+        case "ArrowDown":
+            this.robot.moveBackward();
+            break;
+    }
+  }
+
 
   /// It returns the camera
   /**

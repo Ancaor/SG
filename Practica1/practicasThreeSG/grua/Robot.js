@@ -9,6 +9,12 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.balanceo = 0;
     this.cabeceo = 0;
     this.altura = 5;
+    this.rotacionY = 0;
+    this.traslacionX = 0;
+    this.TraslacionZ = 0;
+
+    this.anguloRotacion = 10;
+    this.velocidadRobot = 0.3;
 
 
     this.brazo_1 = null;
@@ -176,5 +182,34 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.brazo_izquierdo.scale.y=height-2;
     //this.applyMatrix(new THREE.Matrix4().makeTranslation(0,1, 0));
     
+  }
+
+  moveForward(){
+    var radianes = (this.rotacionY * 2 * Math.PI) / 360;
+    this.traslacionZ = Math.cos(radianes) * this.velocidadRobot; ; 
+    this.traslacionX = Math.sin(radianes) * this.velocidadRobot; ; 
+    this.position.z += this.traslacionZ;
+    this.position.x += this.traslacionX;
+
+  }
+
+  moveBackward(){
+    var radianes = (this.rotacionY * 2 * Math.PI) / 360;
+    this.traslacionZ = Math.cos(radianes + Math.PI) * this.velocidadRobot; 
+    this.traslacionX = Math.sin(radianes + Math.PI) * this.velocidadRobot; 
+    this.position.z += this.traslacionZ;
+    this.position.x += this.traslacionX;
+  }
+
+  turnRight(){
+    this.rotacionY += this.anguloRotacion;
+    var radianes = (this.rotacionY * 2 * Math.PI) / 360;
+    this.rotation.y = radianes;
+  }
+
+  turnLeft(){
+    this.rotacionY -= this.anguloRotacion;
+    var radianes = (this.rotacionY * 2 * Math.PI) / 360;
+    this.rotation.y = radianes;
   }
 }
