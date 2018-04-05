@@ -93,12 +93,12 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
   }
 
   createBrazo_derecho(){
-    var cilindro = new THREE.CylinderGeometry (0.3, 0.3, 1, 16, 8);
-    cilindro.applyMatrix (new THREE.Matrix4().makeTranslation (0, 0.5, 0));
-    var brazo_derecho = new THREE.Mesh (cilindro, this.material);
-      brazo_derecho.scale.set(1,this.altura,1);
-      brazo_derecho.position.y = 1;
-      brazo_derecho.castShadow = true;
+    var cilindro = new THREE.CylinderGeometry (0.3, 0.3, 1, 16, 8);    // geometria cilindro
+    cilindro.applyMatrix (new THREE.Matrix4().makeTranslation (0, 0.5, 0));   // pongo la geometria ciindro sobre el eje (se hace 1 vez en toda la ejecucion)
+    var brazo_derecho = new THREE.Mesh (cilindro, this.material);             // asigno la geometria cilindro a un Mesh
+      brazo_derecho.scale.set(1,this.altura,1);               //escala el Mesh
+      brazo_derecho.position.y = 1;                           //mueve el mesh
+      brazo_derecho.castShadow = true;                      
      // this.brazo_derecho.add(this.createHombroDerecho());
     return brazo_derecho;
   }
@@ -133,7 +133,7 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
       cuerpo.geometry.applyMatrix(new THREE.Matrix4().makeRotationY(3,14159));
       cuerpo.add(this.createCabeza());
       cuerpo.position.y = 7;
-
+      cuerpo.castShadow = true;
 
       return cuerpo;
   }
