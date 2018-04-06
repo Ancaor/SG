@@ -265,4 +265,14 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     var radianes = (this.rotacionY * 2 * Math.PI) / 360;
     this.rotation.y = radianes;    
   }
+
+  restartPosicion(){
+    this.rotacionY = 0;
+    this.traslacionX = 0;
+    this.TraslacionZ = 0; 
+
+    this.rotation.y = 0;
+    this.position.x = 0;
+    this.position.z = 0;
+  }
 }

@@ -158,21 +158,32 @@ class TheScene extends THREE.Scene {
   }
 
   moveRobot(key){
-    if(this.estadoPartida)
-    switch(key){
-      case "ArrowLeft":
-            this.robot.turnLeft();
-            break;
-        case "ArrowRight":
-            this.robot.turnRight();
-            break;
-        case "ArrowUp":
-            this.robot.moveForward();
-            break;
-        case "ArrowDown":
-            this.robot.moveBackward();
-            break;
+    if(this.estadoPartida){
+      switch(key){
+        case "ArrowLeft":
+              this.robot.turnLeft();
+              break;
+          case "ArrowRight":
+              this.robot.turnRight();
+              break;
+          case "ArrowUp":
+              this.robot.moveForward();
+              break;
+          case "ArrowDown":
+              this.robot.moveBackward();
+              break;
+      }
+      if(this.robot.position.x > 150 || this.robot.position.z > 150 || this.robot.position.x < -150 || this.robot.position.z < -150 ){
+        console.log("Fuera de límites ( X : " + this.robot.position.x + " , Z : " + this.robot.position.z + " )" );
+        this.robot.restartPosicion();
+        this.lanzador.restart();
+        this.changeStateGame();
+        alert("Has perdido. Te has salido de los límites del mapa");
+      }
+        
+
     }
+    
   }
   //  this.meteorito.update();
   

@@ -58,10 +58,6 @@ class Lanzador extends THREE.Object3D{
     reanudar(){
         this.tiempoActual = Date.now();
         this.tiempoAnterior = (this.tiempoActual - (this.tiempoTranscurrido*1000));
-        console.log("actual");
-        console.log(this.tiempoActual/1000);
-        console.log("anterior");
-        console.log(this.tiempoAnterior/1000);
     }
 
     getEstado(){
@@ -114,14 +110,11 @@ class Lanzador extends THREE.Object3D{
       // console.log()
        // console.log(tiempoActual);
        this.tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
-       console.log("timpo transcurrido")
-       console.log(this.tiempoTranscurrido);
 
         if( this.tiempoTranscurrido >0.5){   // tiempo entre bolas
             this.meteo = new Meteorito({z:50,y:5,x:this.x});
             this.meteoritos.add(this.meteo);
             //this.add(this.meteoritos);
-            console.log("entra");
         //    console.log(tiempoActual);
         this.tiempoAnterior = this.tiempoActual;
         this.x = Math.floor(Math.random() * 61) - 30;
@@ -133,7 +126,6 @@ class Lanzador extends THREE.Object3D{
             var a = this.meteoritos.children[i].update(posRobot,posGruesa,posFina);
 
             if(a){
-                console.log("true");
                 this.meteoritos.remove(this.meteoritos.children[i]);
                 longitud = this.meteoritos.children.length;
               // i+=2;
@@ -143,6 +135,12 @@ class Lanzador extends THREE.Object3D{
         
         
         //this.meteorito.update();
+    }
+
+    restart(){
+        this.estado = 0;
+        while(this.meteoritos.length)
+            this.meteoritos.pop();
     }
 
 }
