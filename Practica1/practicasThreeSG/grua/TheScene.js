@@ -21,6 +21,9 @@ class TheScene extends THREE.Scene {
     this.robot = null;
 
 
+    this.estadoPartida = false;
+
+
     this.createLights ();
     this.createCamera (renderer);
     this.axis = new THREE.AxisHelper (25);
@@ -123,27 +126,61 @@ class TheScene extends THREE.Scene {
       this.secondLight.intensity = controls.secondLightIntensity;  // Controla la intensidad de la segunda luz
     else this.secondLight.intensity = 0;
 
-  //  this.meteorito.update();
-  if(controls.startGame){
-    if(this.lanzador.getEstado() == 0 || this.lanzador.getEstado() == 1){
-      this.lanzador.setEstado(1);
-      this.lanzador.update();
-    }else if(this.lanzador.getEstado() == 2){
-      this.lanzador.setEstado(3);
-      this.lanzador.update();
+    var aux = this.robot.getPos();
+    var x = aux.x;
+    var y = aux.y;
+    var z = aux.z;
+
+    var pepe = new THREE.Vector3(x,y,z);
+   // console.log(pepe);
+
+    if(this.estadoPartida){
+      if(this.lanzador.getEstado() == 0 || this.lanzador.getEstado() == 1){
+        this.lanzador.setEstado(1);
+        this.lanzador.update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
+      }else if(this.lanzador.getEstado() == 2){
+        this.lanzador.setEstado(3);
+        this.lanzador.update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
+      }
+    }else {
+      if(this.lanzador.getEstado() == 1 || this.lanzador.getEstado() == 2 ){
+        this.lanzador.setEstado(2);
+      }
     }
-  }else {
-    if(this.lanzador.getEstado() == 1 || this.lanzador.getEstado() == 2 ){
-      this.lanzador.setEstado(2);
+    
+    
+  }
+
+  changeStateGame(){
+    if(this.estadoPartida)
+      this.estadoPartida = false;
+    else this.estadoPartida = true;
+  }
+
+  moveRobot(key){
+    if(this.estadoPartida)
+    switch(key){
+      case "ArrowLeft":
+            this.robot.turnLeft();
+            break;
+        case "ArrowRight":
+            this.robot.turnRight();
+            break;
+        case "ArrowUp":
+            this.robot.moveForward();
+            break;
+        case "ArrowDown":
+            this.robot.moveBackward();
+            break;
     }
   }
+  //  this.meteorito.update();
+  
   //}
    
     
     
 
-
-  }
 
   /// It returns the camera
   /**

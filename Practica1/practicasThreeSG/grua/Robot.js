@@ -9,6 +9,12 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.balanceo = 0;
     this.cabeceo = 0;
     this.altura = 5;
+    this.rotacionY = 0;
+    this.traslacionX = 0;
+    this.TraslacionZ = 0;
+
+    this.anguloRotacion = 10;
+    this.velocidadRobot = 0.8;
 
 
     this.brazo_1 = null;
@@ -30,9 +36,10 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
 
 
     // esferas para colisiones
+
     this.colisionGruesa = null;
     this.generarColisionGuesa();
-    //this.add(this.colisionGruesa);
+    this.add(this.colisionGruesa);
     this.colisionFina1 = null;
     this.colisionFina2 = null;
     this.colisionFina3 = null;
@@ -40,6 +47,12 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.add(this.colisionFina1);
     this.add(this.colisionFina2);
     this.add(this.colisionFina3);
+
+    this.colisionGruesaY = 4.5;
+    this.colisionFina1Y = 6.9;
+    this.colisionFina2Y = 4.3;
+    this.colisionFina3Y = 1.5;
+    
 
     ////////////////////////////
 
@@ -178,7 +191,7 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     var material = new THREE.MeshPhongMaterial ({color: 0x00604f,transparent: true, opacity: 0.5});
       material.transparent = false;
         var geometria = new THREE.SphereGeometry (5,32,32);    // geometria esfera
-        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,4.5,0));
+        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,this.colisionGruesaY ,0));
     this.colisionGruesa = new THREE.Mesh(geometria,material);
     this.colisionGruesa.material.transparent = true;
   }
@@ -187,18 +200,21 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     var material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: true, opacity: 0.7});
 
         var geometria = new THREE.SphereGeometry (2.6,32,32);    // geometria esfera
-        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,6.9,0));
+        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,this.colisionFina1Y,0));
     this.colisionFina1 = new THREE.Mesh(geometria,material);
 
     var geometria = new THREE.SphereGeometry (2.6,32,32);    // geometria esfera
-        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,4.3,0));
+        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,this.colisionFina2Y,0));
     this.colisionFina2 = new THREE.Mesh(geometria,material);
 
     var geometria = new THREE.SphereGeometry (2.6,32,32);    // geometria esfera
-        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,1.5,0));
+        geometria.applyMatrix(new THREE.Matrix4().makeTranslation(0,this.colisionFina3Y,0));
     this.colisionFina3 = new THREE.Mesh(geometria,material);
   }
 
+  getPos(){
+    return this.position;
+  }
 
   setHead(cabeceo){
     this.cabeceo = cabeceo;
@@ -219,5 +235,34 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.brazo_izquierdo.scale.y=height-2;
     //this.applyMatrix(new THREE.Matrix4().makeTranslation(0,1, 0));
     
+  }
+
+  moveForward(){
+    var radianes = (this.rotacionY * 2 * Math.PI) / 360;
+    this.traslacionZ = Math.cos(radianes) * this.velocidadRobot; ; 
+    this.traslacionX = Math.sin(radianes) * this.velocidadRobot; ; 
+    this.position.z += this.traslacionZ;
+    this.position.x += this.traslacionX;
+
+  }
+
+  moveBackward(){
+    var radianes = (this.rotacionY * 2 * Math.PI) / 360;
+    this.traslacionZ = Math.cos(radianes + Math.PI) * this.velocidadRobot; 
+    this.traslacionX = Math.sin(radianes + Math.PI) * this.velocidadRobot; 
+    this.position.z += this.traslacionZ;
+    this.position.x += this.traslacionX;
+  }
+
+  turnRight(){
+    this.rotacionY -= this.anguloRotacion;
+    var radianes = (this.rotacionY * 2 * Math.PI) / 360;
+    this.rotation.y = radianes;
+  }
+
+  turnLeft(){
+    this.rotacionY += this.anguloRotacion;
+    var radianes = (this.rotacionY * 2 * Math.PI) / 360;
+    this.rotation.y = radianes;    
   }
 }

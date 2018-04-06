@@ -29,6 +29,17 @@ class Lanzador extends THREE.Object3D{
         //this.add(this.meteorito);
 
         this.meteo = null;
+        
+        ///////////////////////////////////////
+        
+        this.radioColisionGruesa = 5;
+        this.posColisionGruesa = new THREE.Vector3(0,4.5,0);
+
+        this.radioColisionFina = 2.6;
+        this.posColisionFina = new Array(new THREE.Vector3(0,6.9,0),new THREE.Vector3(0,4.3,0),new THREE.Vector3(0,1.5,0));
+        
+
+        //////////////////////////////////////
 
         this.estado = 0; // 0 no empezado, 1 funcionando,2 pausado , 3 reanudada
 
@@ -36,6 +47,9 @@ class Lanzador extends THREE.Object3D{
         this.x = 0.5; 
 
         this.add(this.visor);
+
+
+
 
 /////////////////////////////////////////////////////////////////////
 
@@ -57,8 +71,25 @@ class Lanzador extends THREE.Object3D{
     setEstado(estado){
         this.estado = estado;
     }
+/*
+    actualizarInfoRobot(posGruesa,posFina1,posFina2,posFina3){
+        this.posColisionGruesa = posGruesa;
 
-    update(){
+        this.posColisionFina[0] = posFina1;
+        this.posColisionFina[1] = posFina2;
+        this.posColisionFina[2] = posFina3;
+
+        for(var i = 0; i < this.meteoritos.children.length; i++){
+            this.meteoritos.children[i].setInfoRobot(posGruesa,);
+        }
+    }
+*/
+    update(posRobot,posGruesa,posFina1,posFina2,posFina3){
+
+
+        var posFina = new Array(posFina1,posFina2,posFina3); // solo tiene la y de cada centro de colisiones
+
+
         //this.reanudar();
         //console.log(this.tiempoActual);
         //console.log(this.tiempoAnterior);
@@ -99,7 +130,7 @@ class Lanzador extends THREE.Object3D{
         var longitud  = this.meteoritos.children.length;
 
         for(var i = 0; i < longitud ; i++){
-            var a = this.meteoritos.children[i].update();
+            var a = this.meteoritos.children[i].update(posRobot,posGruesa,posFina);
 
             if(a){
                 console.log("true");

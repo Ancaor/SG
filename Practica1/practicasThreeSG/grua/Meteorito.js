@@ -71,14 +71,13 @@ class Meteorito extends THREE.Object3D{
         this.estado = estado;
     }
 
-    update(){
+    update(posRobot,posGruesa,posFina){ 
 
         switch(this.estado){
             case 0:    ;break;
             case 1: this.tiempoActual = Date.now();break;
             case 2: ;break;
-            case 3: this.reanudar(); ; 
-                break;
+            case 3: this.reanudar(); break;
         }
 
         this.tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
@@ -91,8 +90,9 @@ class Meteorito extends THREE.Object3D{
 
         var diferencia_radios = this.radio + this.radioColisionGruesa;
         //console.log(this.meteorito.position);
-
-        var distanciaReal = this.meteorito.position.distanceTo(this.posColisionGruesa);
+        var posGruesaReal = posRobot;
+        posGruesaReal.y = posGruesa;
+        var distanciaReal = this.meteorito.position.distanceTo(posGruesaReal);
        
 
         //if(this.meteorito.position.z < 20){
@@ -102,8 +102,10 @@ class Meteorito extends THREE.Object3D{
         //console.log(this.meteorito.position);
         if(distanciaReal <= diferencia_radios){  // colision gruesa
            // console.log("grande");
-            for(var i=0; i < this.posColisionFina.length; i++){   // colisiones finas
-                var distanciaReal = this.meteorito.position.distanceTo(this.posColisionFina[i]);
+            for(var i=0; i < posFina.length; i++){   // colisiones finas
+                var posFinaReal = posRobot;
+                posFinaReal.y = posFina[i]; 
+                var distanciaReal = this.meteorito.position.distanceTo(posFinaReal);
                 diferencia_radios = this.radio + this.radioColisionFina;
                 if(distanciaReal <= diferencia_radios){
                   //  console.log(i);

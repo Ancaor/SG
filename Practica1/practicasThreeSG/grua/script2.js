@@ -292,6 +292,13 @@ function render() {
   renderer.render(scene, scene.getCamera());
 }
 
+function keyboardInput(event){
+  scene.moveRobot(event.key);
+  //console.log(event.keyCode)
+  if(event.keyCode === 32)
+    scene.changeStateGame();
+}
+
 /// The main function
 $(function () {
   // create a render and set the size
@@ -306,6 +313,9 @@ $(function () {
   window.addEventListener ("mousewheel", onMouseWheel, true);   // For Chrome an others
   window.addEventListener ("DOMMouseScroll", onMouseWheel, true); // For Firefox
 
+  window.addEventListener('keydown', function(event) {
+    keyboardInput(event);
+  });
   // create a scene, that will hold all our elements such as objects, cameras and lights.
   scene = new TheScene (renderer.domElement);
 
