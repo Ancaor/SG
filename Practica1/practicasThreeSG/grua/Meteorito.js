@@ -107,8 +107,8 @@ class Meteorito extends THREE.Object3D{
                 diferencia_radios = this.radio + this.radioColisionFina;
                 if(distanciaReal <= diferencia_radios){
                   //  console.log(i);
-                    this.reset();
-                   //return true;
+                                        //this.reset();      // lo que debe hacer es esto
+                   return true;
                 }
             }
            // console.log(this.posColisionFina.length)
