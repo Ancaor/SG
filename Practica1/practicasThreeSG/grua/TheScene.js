@@ -92,12 +92,12 @@ class TheScene extends THREE.Scene {
     model.add (this.ground);
 
     //lanzador oculto para meteoritos
-    //this.lanzador = new Lanzador();
-    //model.add(this.lanzador);
+    this.lanzador = new Lanzador();
+    model.add(this.lanzador);
 
 // pruebasz
-    this.meteorito = new Meteorito();
-    model.add(this.meteorito);
+    //this.meteorito = new Meteorito();
+    //model.add(this.meteorito);
 //pruebas
 
     return model;
@@ -123,8 +123,8 @@ class TheScene extends THREE.Scene {
       this.secondLight.intensity = controls.secondLightIntensity;  // Controla la intensidad de la segunda luz
     else this.secondLight.intensity = 0;
 
-    this.meteorito.update();
-
+  //  this.meteorito.update();
+    this.lanzador.update();
     
 
 

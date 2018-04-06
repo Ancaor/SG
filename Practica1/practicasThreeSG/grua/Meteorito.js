@@ -1,5 +1,5 @@
 class Meteorito extends THREE.Object3D{
-    constructor () {
+    constructor (parameters) {
         super();
         this.velocidad = 10; //unidades / s
         this.tiempoAnterior = Date.now();
@@ -9,6 +9,12 @@ class Meteorito extends THREE.Object3D{
 
         this.radioColisionFina = 2.6;
         this.posColisionFina = new Array(new THREE.Vector3(0,6.9,0),new THREE.Vector3(0,4.3,0),new THREE.Vector3(0,1.5,0));
+
+        this.tipo = null;
+
+        this.posicionz = parameters.z;
+        this.posiciony = parameters.y;
+        this.posicionx = parameters.x;
 
 
         this.radio=3;
@@ -27,8 +33,9 @@ class Meteorito extends THREE.Object3D{
             geometria, this.material);
         //this.visor.geometry.applyMatrix (new THREE.Matrix4().makeTranslation(0,1,10));
         this.meteorito.scale.set(3,3,3);
-        this.meteorito.position.z = 50; 
-        this.meteorito.position.y = 7;
+        this.meteorito.position.z = this.posicionz; 
+        this.meteorito.position.y = this.posiciony;
+        this.meteorito.position.x = this.posicionx;
 
         this.add(this.meteorito);
 
@@ -64,7 +71,7 @@ class Meteorito extends THREE.Object3D{
                 var distanciaReal = this.meteorito.position.distanceTo(this.posColisionFina[i]);
                 diferencia_radios = this.radio + this.radioColisionFina;
                 if(distanciaReal <= diferencia_radios){
-                    console.log(i);
+                  //  console.log(i);
                     this.reset();
                 }
             }
@@ -77,3 +84,6 @@ class Meteorito extends THREE.Object3D{
     }
 
 }
+
+Meteorito.BUENO = 0;
+Meteorito.MALO = 1;
