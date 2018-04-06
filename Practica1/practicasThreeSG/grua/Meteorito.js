@@ -1,7 +1,7 @@
 class Meteorito extends THREE.Object3D{
     constructor (parameters) {
         super();
-        this.velocidad = 10; //unidades / s
+        this.velocidad = 15; //unidades / s
         this.tiempoAnterior = Date.now();
 
         this.radioColisionGruesa = 5;
@@ -65,17 +65,25 @@ class Meteorito extends THREE.Object3D{
        // }
 
         //console.log(this.meteorito.position);
-        if(distanciaReal <= diferencia_radios){
+        if(distanciaReal <= diferencia_radios){  // colision gruesa
            // console.log("grande");
-            for(var i=0; i < this.posColisionFina.length; i++){
+            for(var i=0; i < this.posColisionFina.length; i++){   // colisiones finas
                 var distanciaReal = this.meteorito.position.distanceTo(this.posColisionFina[i]);
                 diferencia_radios = this.radio + this.radioColisionFina;
                 if(distanciaReal <= diferencia_radios){
                   //  console.log(i);
                     this.reset();
+                   //return true;
                 }
             }
            // console.log(this.posColisionFina.length)
+        }else{
+            
+            if(this.meteorito.position.z < -10){
+                console.log(this.meteorito.position.z)
+                return true;
+            }
+            
         }
             
            // 

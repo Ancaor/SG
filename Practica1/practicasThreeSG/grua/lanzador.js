@@ -44,20 +44,27 @@ class Lanzador extends THREE.Object3D{
        // console.log(tiempoActual);
        ;
 
-        if((tiempoActual - this.tiempoAnterior)/1000 >4){
+        if((tiempoActual - this.tiempoAnterior)/1000 >1){
             this.meteo = new Meteorito({z:50,y:5,x:this.x});
             this.meteoritos.add(this.meteo);
             //this.add(this.meteoritos);
             console.log("entra");
         //    console.log(tiempoActual);
         this.tiempoAnterior = tiempoActual;
-        if((this.x % 2) == 0)
-        this.x +=1;
-        else this.x -=2;
+        this.x = Math.floor(Math.random() * 61) - 30;
         }
 
-        for(var i = 0; i < this.meteoritos.children.length ; i++){
-            this.meteoritos.children[i].update();
+        var longitud  = this.meteoritos.children.length;
+
+        for(var i = 0; i < longitud ; i++){
+            var a = this.meteoritos.children[i].update();
+
+            if(a){
+                console.log("true");
+                this.meteoritos.remove(this.meteoritos.children[i]);
+              // i+=2;
+            }
+
         }
         
         
