@@ -3,6 +3,9 @@ class Meteorito extends THREE.Object3D{
         super();
         this.velocidad = 15; //unidades / s
         this.tiempoAnterior = Date.now();
+        this.tiempoActual = null;
+
+        this.tiempoTranscurrido = 0;
 
         this.radioColisionGruesa = 5;
         this.posColisionGruesa = new THREE.Vector3(0,4.5,0);
@@ -18,6 +21,9 @@ class Meteorito extends THREE.Object3D{
 
 
         this.radio=3;
+
+
+        this.estado = 0; // 0 no empezado, 1 funcionando,2 pausado , 3 reanudada
 
 
 
@@ -47,11 +53,40 @@ class Meteorito extends THREE.Object3D{
         this.meteorito.position.z = 50;
     }
 
+
+    reanudar(){
+        this.tiempoActual = Date.now();
+        this.tiempoAnterior = (this.tiempoActual - (this.tiempoTranscurrido*1000));
+        console.log("actual");
+        console.log(this.tiempoActual/1000);
+        console.log("anterior");
+        console.log(this.tiempoAnterior/1000);
+    }
+
+    getEstado(){
+        return this.estado;
+    }
+
+    setEstado(estado){
+        this.estado = estado;
+    }
+
     update(){
-        var tiempoActual = Date.now();
-        this.meteorito.position.z -= this.velocidad * (tiempoActual-this.tiempoAnterior)/1000; // /1000 para ponerlo en ms.
+
+        switch(this.estado){
+            case 0:    ;break;
+            case 1: this.tiempoActual = Date.now();break;
+            case 2: ;break;
+            case 3: this.reanudar(); ; 
+                break;
+        }
+
+        this.tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
         
-        this.tiempoAnterior = tiempoActual;
+        this.meteorito.position.z -= this.velocidad * this.tiempoTranscurrido; // /1000 para ponerlo en ms.
+        
+        this.tiempoAnterior =this.tiempoActual;
+
         // detectar colisiones y hacer algo
 
         var diferencia_radios = this.radio + this.radioColisionGruesa;
@@ -80,7 +115,7 @@ class Meteorito extends THREE.Object3D{
         }else{
             
             if(this.meteorito.position.z < -10){
-                console.log(this.meteorito.position.z)
+             //   console.log(this.meteorito.position.z)
                 return true;
             }
             

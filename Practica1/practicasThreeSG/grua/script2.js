@@ -32,6 +32,7 @@ function createGUI (withStats) {
     this.height   = 7;
     life=100;
     puntos=0;
+    this.startGame=false;
 
     // Funcion que muestra un Mensaje
 
@@ -60,6 +61,7 @@ function createGUI (withStats) {
     axisLights.add(GUIcontrols, 'lightIntensity', 0, 1.0).name('Light intensity :');
     axisLights.add(GUIcontrols, 'secondLightIsOn').name('Second light on/off :');
     axisLights.add(GUIcontrols, 'secondLightIntensity', 0, 1.0).name('Second Light intensity :');
+    axisLights.add(GUIcontrols, 'startGame').name('Start game:');
 
   var actions = gui.addFolder ('Actions');
     var showingMessage = actions.add (GUIcontrols,'showMessage').name(': Show message :');

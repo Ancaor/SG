@@ -124,7 +124,22 @@ class TheScene extends THREE.Scene {
     else this.secondLight.intensity = 0;
 
   //  this.meteorito.update();
-    this.lanzador.update();
+  if(controls.startGame){
+    if(this.lanzador.getEstado() == 0 || this.lanzador.getEstado() == 1){
+      this.lanzador.setEstado(1);
+      this.lanzador.update();
+    }else if(this.lanzador.getEstado() == 2){
+      this.lanzador.setEstado(3);
+      this.lanzador.update();
+    }
+  }else {
+    if(this.lanzador.getEstado() == 1 || this.lanzador.getEstado() == 2 ){
+      this.lanzador.setEstado(2);
+    }
+  }
+  //}
+   
+    
     
 
 
