@@ -127,14 +127,39 @@ function darPuntos() {
 
 }
 
+//Reinicia la barra de vida
+
+function restartVida() {
+ // console.log("restarteando");
+  var elem = document.getElementById("myBar"); 
+//  var id = setInterval(frame, 1);
+//  function frame(){
+  //  if(life < 100){
+      elem.style.width = 100 + '%'; 
+      elem.innerHTML = 100 * 1  + '%';
+      life = 100;
+   // }else clearInterval(id);
+//}
+  
+}
+
+function restartPuntos(){
+  var elem = document.getElementById("puntuacion");
+  puntos = 0;
+  elem.innerHTML =puntos * 1;
+}
+
+
 // Quita vida
 
 function quitarVida() {
+  
   var elem = document.getElementById("myBar"); 
   var id = setInterval(frame, 10);
   var timeout = life-10;  
   function frame(){
   if(life > timeout){
+    //console.log("quiteando");
     if (life <= 0) {
       clearInterval(id);
     } else {

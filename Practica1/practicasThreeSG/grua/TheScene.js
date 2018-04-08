@@ -158,9 +158,20 @@ class TheScene extends THREE.Scene {
       var longitud  = colisiones.length;
       for(var i = 0; i < longitud; i++){
         switch(colisiones[i]){
-          case 0: console.log("quitamos vida"); break;
-          case 1: console.log("damos vida"); break;
-          case 2: console.log("damos puntos"); break;
+          case 0: //console.log(this.robot.life)
+                  if(this.robot.life <= 10){
+                    //console.log("restar vida")
+                    this.reiniciarPartida();
+                    alert("Has perdido. Te has quedado sin vida"); 
+                    
+                  //  this.lanzador.restartColisiones();                 
+                  }else{
+                  //  console.log("quitamos vida");
+                  quitarVida() ;
+                  this.robot.life -= 10;
+                  } break;
+          case 1: console.log("damos vida"); darVida();this.robot.life += 10; break;
+          case 2: console.log("damos puntos"); darPuntos();break;
         }
       }
     }
@@ -192,9 +203,7 @@ class TheScene extends THREE.Scene {
       }
       if(this.robot.position.x > 150 || this.robot.position.z > 150 || this.robot.position.x < -150 || this.robot.position.z < -150 ){
         console.log("Fuera de límites ( X : " + this.robot.position.x + " , Z : " + this.robot.position.z + " )" );
-        this.robot.restartPosicion();
-        this.lanzador.restart();
-        this.changeStateGame();
+        this.reiniciarPartida();
         alert("Has perdido. Te has salido de los límites del mapa");
       }
         
@@ -206,6 +215,14 @@ class TheScene extends THREE.Scene {
   
   //}
    
+  reiniciarPartida(){
+    this.robot.restartPosicion();
+    this.lanzador.restart();
+    this.changeStateGame();
+    this.robot.life = 100;
+    restartVida();
+    restartPuntos();
+  }
     
     
 

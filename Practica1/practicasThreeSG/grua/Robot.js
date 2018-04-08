@@ -16,6 +16,8 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.anguloRotacion = 10;
     this.velocidadRobot = 0.8;
 
+    this.life = 100;
+
 
     this.brazo_1 = null;
     this.base = null;
