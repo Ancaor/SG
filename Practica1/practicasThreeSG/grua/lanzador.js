@@ -37,6 +37,8 @@ class Lanzador extends THREE.Object3D{
 
         this.radioColisionFina = 2.6;
         this.posColisionFina = new Array(new THREE.Vector3(0,6.9,0),new THREE.Vector3(0,4.3,0),new THREE.Vector3(0,1.5,0));
+
+        this.colisiones = new Array();
         
 
         //////////////////////////////////////
@@ -125,16 +127,28 @@ class Lanzador extends THREE.Object3D{
         for(var i = 0; i < longitud ; i++){
             var a = this.meteoritos.children[i].update(posRobot,posGruesa,posFina);
 
-            if(a){
+            if(a == 1){
+                this.colisiones.push(this.meteoritos.children[i].getTipo());
                 this.meteoritos.remove(this.meteoritos.children[i]);
                 longitud = this.meteoritos.children.length;
-              // i+=2;
+            }
+            else if(a == 2){
+                this.meteoritos.remove(this.meteoritos.children[i]);
+                longitud = this.meteoritos.children.length;
             }
 
         }
-        
-        
+        return this.colisiones;
         //this.meteorito.update();
+    }
+
+    getColisiones(){
+        return this.colisiones;
+    }
+
+    restartColisiones(){
+        while(this.colisiones.length)
+        this.colisiones.pop();
     }
 
     restart(){

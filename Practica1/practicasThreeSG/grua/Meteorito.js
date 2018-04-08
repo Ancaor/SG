@@ -13,7 +13,20 @@ class Meteorito extends THREE.Object3D{
         this.radioColisionFina = 2.6;
         this.posColisionFina = new Array(new THREE.Vector3(0,6.9,0),new THREE.Vector3(0,4.3,0),new THREE.Vector3(0,1.5,0));
 
-        this.tipo = null;
+        this.tipo = null;               // 0 quita vida, 1 da vida, 2 da puntos.
+
+
+        var num_aleatorio = Math.floor(Math.random() * (11 - 1)) + 1;
+        
+        if(num_aleatorio < 7){
+            this.tipo = 0;
+        }
+        else if(num_aleatorio == 7 || num_aleatorio == 8 || num_aleatorio == 9){
+            this.tipo = 2;
+        }
+        else{
+            this.tipo = 1;
+        }
 
         this.posicionz = parameters.z;
         this.posiciony = parameters.y;
@@ -30,7 +43,12 @@ class Meteorito extends THREE.Object3D{
         
 ////////////////////////////////////////////////////////////// Lanzador visible
 
-        this.material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
+        if(this.tipo == 0)
+            this.material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
+        else if(this.tipo == 1)
+            this.material = new THREE.MeshPhongMaterial ({color: 0x00ff00,transparent: false, opacity: 0.7});
+        else
+            this.material = new THREE.MeshPhongMaterial ({color: 0x0080ff,transparent: false, opacity: 0.7});
 
         var geometria = new THREE.SphereGeometry (1,32,32);    // geometria esfera
         //geometria.applyMatrix (new THREE.Matrix4().makeTranslation(0,1,0));
@@ -65,6 +83,10 @@ class Meteorito extends THREE.Object3D{
 
     getEstado(){
         return this.estado;
+    }
+
+    getTipo(){
+        return this.tipo;
     }
 
     setEstado(estado){
@@ -110,7 +132,7 @@ class Meteorito extends THREE.Object3D{
                 if(distanciaReal <= diferencia_radios){
                   //  console.log(i);
                                         //this.reset();      // lo que debe hacer es esto
-                   return true;
+                   return 1;
                 }
             }
            // console.log(this.posColisionFina.length)
@@ -118,7 +140,7 @@ class Meteorito extends THREE.Object3D{
             
             if(this.meteorito.position.z < -10){
              //   console.log(this.meteorito.position.z)
-                return true;
+                return 2;
             }
             
         }

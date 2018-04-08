@@ -138,17 +138,34 @@ class TheScene extends THREE.Scene {
       if(this.lanzador.getEstado() == 0 || this.lanzador.getEstado() == 1){
         this.lanzador.setEstado(1);
         this.lanzador.update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
+        this.procesaColisiones();
       }else if(this.lanzador.getEstado() == 2){
         this.lanzador.setEstado(3);
         this.lanzador.update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
+        this.procesaColisiones();
       }
     }else {
       if(this.lanzador.getEstado() == 1 || this.lanzador.getEstado() == 2 ){
         this.lanzador.setEstado(2);
       }
+    }    
+  }
+
+  procesaColisiones(){
+    var colisiones = this.lanzador.getColisiones();
+
+    if(colisiones.length > 0){
+      var longitud  = colisiones.length;
+      for(var i = 0; i < longitud; i++){
+        switch(colisiones[i]){
+          case 0: console.log("quitamos vida"); break;
+          case 1: console.log("damos vida"); break;
+          case 2: console.log("damos puntos"); break;
+        }
+      }
     }
-    
-    
+
+    this.lanzador.restartColisiones();
   }
 
   changeStateGame(){
