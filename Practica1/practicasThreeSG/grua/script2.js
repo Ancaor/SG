@@ -1,5 +1,7 @@
 /// Several functions, including the main
 
+codeset = { 37: false, 38: false, 39: false, 40: false, 32: false };
+
 /// The scene graph
 scene = null;
 
@@ -315,13 +317,34 @@ function render() {
   scene.animate(GUIcontrols);
 
   renderer.render(scene, scene.getCamera());
+  keyboardInput();
 }
 
-function keyboardInput(event){
+function keyboardInput(){
+    if(codeset[37] == true){
+      //console.log("Izquierda");
+      scene.moveRobot(37);
+    }
+    if(codeset[38] == true){
+      //console.log("Arriba");
+      scene.moveRobot(38);
+    }
+    if(codeset[39] == true){
+      //console.log("Derecha");
+      scene.moveRobot(39);
+    }
+    if(codeset[40] == true){
+      //console.log("Abajo");
+      scene.moveRobot(40);
+    }
+    if(codeset[32] == true){
+     scene.changeStateGame();
+     codeset[32] = false;
+    }
+  /*
   scene.moveRobot(event.key);
-  //console.log(event.keyCode)
-  if(event.keyCode === 32)
-    scene.changeStateGame();
+  
+    */
 }
 
 /// The main function
@@ -339,8 +362,16 @@ $(function () {
   window.addEventListener ("DOMMouseScroll", onMouseWheel, true); // For Firefox
 
   window.addEventListener('keydown', function(event) {
-    keyboardInput(event);
+    if (event.keyCode in codeset) {
+      codeset[event.keyCode] = true;
+    }
   });
+  window.addEventListener('keyup', function(event){
+    if(event.keyCode in codeset){
+      codeset[event.keyCode] = false;
+    }
+  });
+
   // create a scene, that will hold all our elements such as objects, cameras and lights.
   scene = new TheScene (renderer.domElement);
 
