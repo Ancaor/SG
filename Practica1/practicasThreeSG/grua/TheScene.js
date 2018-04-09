@@ -170,8 +170,8 @@ class TheScene extends THREE.Scene {
                   quitarVida() ;
                   this.robot.life -= 10;
                   } break;
-          case 1: console.log("damos vida"); darVida();this.robot.life += 10; break;
-          case 2: console.log("damos puntos"); darPuntos();break;
+          case 1:  darVida();this.robot.life += 10; break;
+          case 2:  darPuntos();break;
         }
       }
     }
@@ -188,26 +188,23 @@ class TheScene extends THREE.Scene {
   moveRobot(key){
     if(this.estadoPartida){
       switch(key){
-        case "ArrowLeft":
-              this.robot.turnLeft();
-              break;
-          case "ArrowRight":
-              this.robot.turnRight();
-              break;
-          case "ArrowUp":
-              this.robot.moveForward();
-              break;
-          case "ArrowDown":
-              this.robot.moveBackward();
-              break;
+        case 37:
+            this.robot.turnLeft();
+            break;
+        case 39:
+            this.robot.turnRight();
+            break;
+        case 38:
+            this.robot.moveForward();
+            break;
+        case 40:
+            this.robot.moveBackward();
+            break;
       }
       if(this.robot.position.x > 150 || this.robot.position.z > 150 || this.robot.position.x < -150 || this.robot.position.z < -150 ){
-        console.log("Fuera de límites ( X : " + this.robot.position.x + " , Z : " + this.robot.position.z + " )" );
         this.reiniciarPartida();
         alert("Has perdido. Te has salido de los límites del mapa");
       }
-        
-
     }
     
   }

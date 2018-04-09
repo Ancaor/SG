@@ -75,10 +75,6 @@ class Meteorito extends THREE.Object3D{
     reanudar(){
         this.tiempoActual = Date.now();
         this.tiempoAnterior = (this.tiempoActual - (this.tiempoTranscurrido*1000));
-        console.log("actual");
-        console.log(this.tiempoActual/1000);
-        console.log("anterior");
-        console.log(this.tiempoAnterior/1000);
     }
 
     getEstado(){
