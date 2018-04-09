@@ -196,8 +196,12 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
 
       this.secondLight = new THREE.SpotLight( 0xffffff );
       this.secondLight.decay = 2;
-      this.secondLight.penumbra = 0.8;
-      this.secondLight.position.set( 0, 1.7, 1.5 );
+      this.secondLight.power = 1;
+      this.secondLight.intensity = 0.7;
+      //this.secondLight.shadow.camera.fov = 10;
+      this.secondLight.penumbra = 0.5;
+      this.secondLight.angle = 0.5;
+      this.secondLight.position.set( 0, 0, 1.5 );
       this.secondLight.castShadow = true;
       this.secondLight.shadow.mapSize.width=2048
       this.secondLight.shadow.mapSize.height=2048;
@@ -205,7 +209,7 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
       ojo.add (this.secondLight);
 
       this.objetivo = new THREE.Object3D();
-      this.objetivo.position.set (0,-0,866025404,0.5);
+      this.objetivo.position.set (0,-0.866025404,3);
       this.secondLight.target = this.objetivo; //.copy(this.objetivo);
       this.secondLight.castShadow = true;
     // the shadow resolution

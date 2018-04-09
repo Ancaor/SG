@@ -16,6 +16,7 @@ class TheScene extends THREE.Scene {
     this.camera = null;
     this.trackballControls = null;
     this.ground = null;
+    this.pared = null;
 
     this.lanzador = null;
     this.robot = null;
@@ -97,6 +98,22 @@ class TheScene extends THREE.Scene {
     //lanzador oculto para meteoritos
     this.lanzador = new Lanzador();
     model.add(this.lanzador);
+
+
+    this.material = new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70});
+    this.pared = new THREE.Mesh (
+      new THREE.BoxGeometry (0.2, 300, 300, 1, 1, 1),
+      this.material);
+    this.pared.applyMatrix (new THREE.Matrix4().makeTranslation (150,0,0));
+    
+    this.par = new THREE.Mesh (
+      new THREE.BoxGeometry (0.2, 300, 300, 1, 1, 1),
+      this.material);
+    this.par.applyMatrix (new THREE.Matrix4().makeTranslation (-150,0,0));
+      this.pared.castShadow=true;
+      this.par.castShadow=true
+    model.add(this.pared);
+    model.add(this.par);
 
 // pruebasz
     //this.meteorito = new Meteorito();
