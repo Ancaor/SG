@@ -54,7 +54,7 @@ class TheScene extends THREE.Scene {
   /// It creates lights and adds them to the graph
   createLights () {
     // add subtle ambient lighting
-    this.ambientLight = new THREE.AmbientLight(0xccddee, 0.35);
+    this.ambientLight = new THREE.AmbientLight(0xccddee, 0.1);
     this.add (this.ambientLight);
 
     // add spotlight for the shadows
@@ -125,6 +125,7 @@ class TheScene extends THREE.Scene {
     if(controls.secondLightIsOn)
       this.secondLight.intensity = controls.secondLightIntensity;  // Controla la intensidad de la segunda luz
     else this.secondLight.intensity = 0;
+    
 
     var aux = this.robot.getPos();
     var x = aux.x;

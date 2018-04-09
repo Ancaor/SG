@@ -33,7 +33,7 @@ class Meteorito extends THREE.Object3D{
         this.posicionx = parameters.x;
 
 
-        this.radio=3;
+        this.radio=1;
 
 
         this.estado = 0; // 0 no empezado, 1 funcionando,2 pausado , 3 reanudada
@@ -56,7 +56,7 @@ class Meteorito extends THREE.Object3D{
         this.meteorito = new THREE.Mesh (
             geometria, this.material);
         //this.visor.geometry.applyMatrix (new THREE.Matrix4().makeTranslation(0,1,10));
-        this.meteorito.scale.set(3,3,3);
+        this.meteorito.scale.set(this.radio,this.radio,this.radio);
         this.meteorito.position.z = this.posicionz; 
         this.meteorito.position.y = this.posiciony;
         this.meteorito.position.x = this.posicionx;

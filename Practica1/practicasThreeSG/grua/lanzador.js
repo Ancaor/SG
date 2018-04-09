@@ -15,7 +15,7 @@ class Lanzador extends THREE.Object3D{
         this.visor = new THREE.Mesh (
             geometria, this.material);
         //this.visor.geometry.applyMatrix (new THREE.Matrix4().makeTranslation(0,1,10));
-        this.visor.scale.set(60,30,0.1);
+        this.visor.scale.set(120,30,0.1);
         this.visor.position.z = 50;
         
         this.meteoritos = new THREE.Object3D();
@@ -119,7 +119,7 @@ class Lanzador extends THREE.Object3D{
             //this.add(this.meteoritos);
         //    console.log(tiempoActual);
         this.tiempoAnterior = this.tiempoActual;
-        this.x = Math.floor(Math.random() * 61) - 30;
+        this.x = Math.floor(Math.random() * 121) - 60;
         }
 
         var longitud  = this.meteoritos.children.length;
