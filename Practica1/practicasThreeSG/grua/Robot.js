@@ -204,7 +204,7 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
       ojo.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(1.5708));
       ojo.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,1.7,1));
 
-      this.secondLight = new THREE.SpotLight( 0xff0000 );
+      this.secondLight = new THREE.SpotLight( 0xffffff );
       this.secondLight.position.set( 0, 1.7, 1.5 );
       this.secondLight.castShadow = true;
       this.secondLight.shadow.mapSize.width=2048
@@ -213,10 +213,16 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
       ojo.add (this.secondLight);
 
       this.objetivo = new THREE.Object3D();
-      this.objetivo.position.set (0,-0.5,1);
+      this.objetivo.position.set (0,-0,866025404,0.5);
       this.secondLight.target = this.objetivo; //.copy(this.objetivo);
-      console.log(this.secondLight.target);
+      this.secondLight.castShadow = true;
+    // the shadow resolution
       this.secondLight.add(this.objetivo);
+
+      this.camara = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+      this.camara.position.set(0,0,2);
+      this.camara.rotation.y = Math.PI;
+      ojo.add(this.camara);
 
       return ojo;
   }

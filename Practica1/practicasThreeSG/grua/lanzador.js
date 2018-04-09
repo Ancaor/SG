@@ -44,6 +44,7 @@ class Lanzador extends THREE.Object3D{
         //////////////////////////////////////
 
         this.estado = 0; // 0 no empezado, 1 funcionando,2 pausado , 3 reanudada
+        this.visor.receiveShadow = true;
 
 
         this.x = 0.5; 
