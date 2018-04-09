@@ -60,6 +60,7 @@ class Meteorito extends THREE.Object3D{
         this.meteorito.position.z = this.posicionz; 
         this.meteorito.position.y = this.posiciony;
         this.meteorito.position.x = this.posicionx;
+        this.meteorito.castShadow = true;
 
         this.add(this.meteorito);
 

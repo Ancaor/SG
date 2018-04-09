@@ -19,7 +19,7 @@ class TheScene extends THREE.Scene {
 
     this.lanzador = null;
     this.robot = null;
-
+    this.primeraPersona = false;
 
     this.estadoPartida = false;
 
@@ -152,6 +152,13 @@ class TheScene extends THREE.Scene {
     }    
   }
 
+  changeCamera(){
+    if(this.primeraPersona == true)
+      this.primeraPersona = false;
+    else
+      this.primeraPersona = true; 
+  }
+
   procesaColisiones(){
     var colisiones = this.lanzador.getColisiones();
 
@@ -230,7 +237,10 @@ class TheScene extends THREE.Scene {
    * @return The camera
    */
   getCamera () {
-    return this.camera;
+    if(this.primeraPersona)
+      return this.robot.camara;
+    else
+      return this.camera;
   }
 
   /// It returns the camera controls

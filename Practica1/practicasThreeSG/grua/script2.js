@@ -1,6 +1,6 @@
 /// Several functions, including the main
 
-codeset = { 37: false, 38: false, 39: false, 40: false, 32: false };
+codeset = { 37: false, 38: false, 39: false, 40: false, 32: false, 86: false };
 
 /// The scene graph
 scene = null;
@@ -321,6 +321,9 @@ function render() {
 }
 
 function keyboardInput(){
+
+  
+
     if(codeset[37] == true){
       //console.log("Izquierda");
       scene.moveRobot(37);
@@ -341,10 +344,11 @@ function keyboardInput(){
      scene.changeStateGame();
      codeset[32] = false;
     }
-  /*
-  scene.moveRobot(event.key);
-  
-    */
+    if(codeset[86] == true){
+      console.log("cambio de cámara");
+      scene.changeCamera();
+      codeset[86] = false;
+     }
 }
 
 /// The main function
@@ -362,6 +366,7 @@ $(function () {
   window.addEventListener ("DOMMouseScroll", onMouseWheel, true); // For Firefox
 
   window.addEventListener('keydown', function(event) {
+    //console.log(event.keyCode);
     if (event.keyCode in codeset) {
       codeset[event.keyCode] = true;
     }

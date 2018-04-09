@@ -205,10 +205,16 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
       ojo.add (this.secondLight);
 
       this.objetivo = new THREE.Object3D();
-      this.objetivo.position.set (0,-0.5,1);
+      this.objetivo.position.set (0,-0,866025404,0.5);
       this.secondLight.target = this.objetivo; //.copy(this.objetivo);
-      console.log(this.secondLight.target);
+      this.secondLight.castShadow = true;
+    // the shadow resolution
       this.secondLight.add(this.objetivo);
+
+      this.camara = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+      this.camara.position.set(0,0,2);
+      this.camara.rotation.y = Math.PI;
+      ojo.add(this.camara);
 
       return ojo;
   }
