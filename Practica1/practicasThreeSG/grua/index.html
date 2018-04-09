@@ -11,6 +11,24 @@
           top:50px;
           border: 1px solid aqua;
         }
+
+        #Menu{
+            width: 20%;
+            min-width: 300px;
+            height: 20%;
+            margin-left: 40%;
+            margin-right: 40%;
+            top: 10%;
+
+            border: 2px solid aqua;
+            padding: 10px;
+          
+            
+            position: absolute;
+            background-image: url("./imgs/fondo-menu.jpeg");
+            
+            
+        }
         
         #myBar {
           width: 100%;
@@ -33,7 +51,7 @@
             left:0px; 
             top:0px;
             
-            background-image: url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/jVhILry/futuristic-hud-motion-background_nkx1ozi7x__F0000.png);
+            background-image: url(./imgs/hud-img.png);
             background-size: 450px 150px;
             background-repeat: no-repeat;
         }
@@ -44,6 +62,21 @@
             position: absolute;
             left:294px; 
             top:26px;
+           
+        }
+        #BotonInicio{
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            font-size: 16px;
+            margin: 0 auto;
+            cursor: pointer;
+
+           
         }
 
         </style>
@@ -91,9 +124,14 @@
     <h1 id="puntuacion">0</h1>
 </div>
 
+<div id="Menu">
+        <button id="BotonInicio" onclick="IniciarPartida()" on>Jugar</button>
+</div>
+
 
 <!-- Div which will hold the Output -->
 <div id="WebGL-output">
+        
 </div>
 </body>
 </html>

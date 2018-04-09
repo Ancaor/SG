@@ -1,6 +1,12 @@
 /// Several functions, including the main
 
+
+// map de teclas para el control fluido
 codeset = { 37: false, 38: false, 39: false, 40: false, 32: false, 86: false };
+
+
+//variable que indica que el juego se ha iniciado
+juegoiniciado = false;
 
 /// The scene graph
 scene = null;
@@ -137,9 +143,10 @@ function restartVida() {
 //  var id = setInterval(frame, 1);
 //  function frame(){
   //  if(life < 100){
-      elem.style.width = 100 + '%'; 
-      elem.innerHTML = 100 * 1  + '%';
-      life = 100;
+      this.scene.vida = 100;
+      elem.style.width = this.scene.vida + '%'; 
+      elem.innerHTML = this.scene.vida * 1  + '%';
+      
    // }else clearInterval(id);
 //}
   
@@ -158,16 +165,16 @@ function quitarVida() {
   
   var elem = document.getElementById("myBar"); 
   var id = setInterval(frame, 10);
-  var timeout = life-10;  
+  var timeout = this.scene.vida-10;  
   function frame(){
-  if(life > timeout){
+  if(this.scene.vida > timeout){
     //console.log("quiteando");
-    if (life <= 0) {
+    if (this.scene.vida <= 0) {
       clearInterval(id);
     } else {
-      life--; 
-      elem.style.width = life + '%'; 
-      elem.innerHTML = life * 1  + '%';
+      this.scene.vida-=5; 
+      elem.style.width = this.scene.vida + '%'; 
+      elem.innerHTML = this.scene.vida * 1  + '%';
     }
   }
   else clearInterval(id);
@@ -175,19 +182,43 @@ function quitarVida() {
   
 }
 
+function IniciarPartida(){
+  scene.changeStateGame();
+  var elem = document.getElementById("Menu");
+  elem.style.display = "none";
+  juegoiniciado=true;
+}
+
+function restartCodeset(){
+  codeset[37] = false
+  codeset[38] = false
+  codeset[39] = false
+  codeset[40] = false
+  codeset[32] = false
+  codeset[86] = false
+}
+
+function MostrarMenu(){
+  restartCodeset();
+  var elem = document.getElementById("Menu");
+  elem.style.display = "block";
+  juegoiniciado=false;
+}
+
+
 // Da vida
 function darVida(){
   var elem = document.getElementById("myBar"); 
   var id = setInterval(frame, 10);
-  var timeout = life+10;  
+  var timeout = this.scene.vida+10;  
   function frame(){
-  if(life < timeout){
-    if (life >= 100) {
+  if(this.scene.vida < timeout){
+    if (this.scene.vida >= 100) {
       clearInterval(id);
     } else {
-      life++; 
-      elem.style.width = life + '%'; 
-      elem.innerHTML = life * 1  + '%';
+      this.scene.vida+=5; 
+      elem.style.width = this.scene.vida + '%'; 
+      elem.innerHTML = this.scene.vida * 1  + '%';
     }
   }
   else clearInterval(id);
@@ -340,6 +371,7 @@ function keyboardInput(){
       //console.log("Abajo");
       scene.moveRobot(40);
     }
+    if(juegoiniciado)
     if(codeset[32] == true){
      scene.changeStateGame();
      codeset[32] = false;

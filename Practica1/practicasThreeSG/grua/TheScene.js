@@ -22,6 +22,9 @@ class TheScene extends THREE.Scene {
     this.robot = null;
     this.primeraPersona = false;
 
+    this.vida = 100;
+    this.puntos = 0;
+
     this.estadoPartida = false;
 
 
@@ -184,7 +187,7 @@ class TheScene extends THREE.Scene {
       for(var i = 0; i < longitud; i++){
         switch(colisiones[i]){
           case 0: //console.log(this.robot.life)
-                  if(this.robot.life <= 10){
+                  if(this.vida <= 10){
                     //console.log("restar vida")
                     this.reiniciarPartida();
                     alert("Has perdido. Te has quedado sin vida"); 
@@ -193,9 +196,9 @@ class TheScene extends THREE.Scene {
                   }else{
                   //  console.log("quitamos vida");
                   quitarVida() ;
-                  this.robot.life -= 10;
+                  //this.robot.life -= 10;
                   } break;
-          case 1:  darVida();this.robot.life += 10; break;
+          case 1:  darVida();break;//this.robot.life += 10; break;
           case 2:  darPuntos();break;
         }
       }
@@ -241,9 +244,9 @@ class TheScene extends THREE.Scene {
     this.robot.restartPosicion();
     this.lanzador.restart();
     this.changeStateGame();
-    this.robot.life = 100;
     restartVida();
     restartPuntos();
+    MostrarMenu();
   }
     
     
