@@ -54,6 +54,8 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.colisionFina1Y = 6.9;
     this.colisionFina2Y = 4.3;
     this.colisionFina3Y = 1.5;
+
+    //this.createFoco();
     
 
     ////////////////////////////
@@ -66,6 +68,22 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.add(this.cuerpo);
     this.add(this.brazo_der_completo);
     this.add(this.brazo_izq_completo);
+  }
+
+  createFoco(){
+    this.secondLight = new THREE.SpotLight( 0xff0000 );
+    this.secondLight.position.set( 0, 5, 6 );
+  //  this.secondLight.
+   // this.target = new THREE.Object3D();
+
+   //this.target.position.set = (0,5,-20);
+   //this.father.add(this.target);
+   //this.secondLight.target = this.target;
+    this.secondLight.castShadow = true;
+    // the shadow resolution
+    this.secondLight.shadow.mapSize.width=2048
+    this.secondLight.shadow.mapSize.height=2048;
+    this.add (this.secondLight);
   }
 
   createBrazo_1(){
@@ -185,6 +203,20 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
       new THREE.CylinderGeometry (0.25, 0.25, 1, 300, 8), this.material);
       ojo.geometry.applyMatrix(new THREE.Matrix4().makeRotationX(1.5708));
       ojo.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,1.7,1));
+
+      this.secondLight = new THREE.SpotLight( 0xff0000 );
+      this.secondLight.position.set( 0, 1.7, 1.5 );
+      this.secondLight.castShadow = true;
+      this.secondLight.shadow.mapSize.width=2048
+      this.secondLight.shadow.mapSize.height=2048;
+
+      ojo.add (this.secondLight);
+
+      this.objetivo = new THREE.Object3D();
+      this.objetivo.position.set (0,-0.5,1);
+      this.secondLight.target = this.objetivo; //.copy(this.objetivo);
+      console.log(this.secondLight.target);
+      this.secondLight.add(this.objetivo);
 
       return ojo;
   }
