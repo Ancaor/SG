@@ -7,7 +7,7 @@ class Lanzador extends THREE.Object3D{
         
 ////////////////////////////////////////////////////////////// Lanzador visible
 
-        this.material = new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70});
+        this.material = new THREE.MeshPhongMaterial ({color: 0x00604f,opacity: 0});
 
         var geometria = new THREE.BoxGeometry (1,1,1, 16, 8);    // geometria cilindro
         geometria.applyMatrix (new THREE.Matrix4().makeTranslation(0,0.5,0));
@@ -16,7 +16,7 @@ class Lanzador extends THREE.Object3D{
             geometria, this.material);
         //this.visor.geometry.applyMatrix (new THREE.Matrix4().makeTranslation(0,1,10));
         this.visor.scale.set(120,30,0.1);
-        this.visor.position.z = 50;
+        this.visor.position.z = 90;
 
         this.visor.castShadow = true;
         
@@ -48,6 +48,8 @@ class Lanzador extends THREE.Object3D{
         this.estado = 0; // 0 no empezado, 1 funcionando,2 pausado , 3 reanudada
         this.visor.receiveShadow = true;
 
+
+        this.visor.material.transparent=true;
 
         this.x = 0.5; 
 
@@ -117,7 +119,7 @@ class Lanzador extends THREE.Object3D{
        this.tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
 
         if( this.tiempoTranscurrido >0.1){   // tiempo entre bolas
-            this.meteo = new Meteorito({z:50,y:5,x:this.x});
+            this.meteo = new Meteorito({z:this.visor.position.z,y:5,x:this.x});
             this.meteoritos.add(this.meteo);
             //this.add(this.meteoritos);
         //    console.log(tiempoActual);

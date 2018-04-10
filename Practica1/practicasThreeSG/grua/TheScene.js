@@ -34,6 +34,38 @@ class TheScene extends THREE.Scene {
     this.add (this.axis);
     this.model = this.createModel ();
     this.add (this.model);
+
+    var onProgress = function ( xhr ) {
+      if ( xhr.lengthComputable ) {
+        var percentComplete = xhr.loaded / xhr.total * 100;
+        console.log( Math.round(percentComplete, 2) + '% downloaded' );
+      }
+    };
+
+    var onError = function ( xhr ) { };
+
+    var mtlLoader = new THREE.MTLLoader();
+mtlLoader.setPath('modelos/');
+mtlLoader.load('Millennium_Falcon.mtl', function(materials) {
+  materials.preload();
+  var objLoader = new THREE.OBJLoader();
+  objLoader.setMaterials(materials);
+  objLoader.setPath('modelos/');
+  objLoader.load('Millennium_Falcon.obj', function(object) {
+    object.position.y = 3;
+    object.rotation.y = Math.PI
+
+    object.scale.set(0.3,0.3,0.3);
+    object.position.z = 180;
+    object.castShadow = true;
+    scene.add(object);
+  }, onProgress, onError);
+    
+});
+
+
+
+
   }
 
   /// It creates the camera and adds it to the graph
@@ -117,6 +149,12 @@ class TheScene extends THREE.Scene {
       this.par.castShadow=true
     model.add(this.pared);
     model.add(this.par);
+
+    ////
+
+
+
+    ////
 
 // pruebasz
     //this.meteorito = new Meteorito();
