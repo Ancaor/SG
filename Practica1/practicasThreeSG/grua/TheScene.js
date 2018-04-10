@@ -26,6 +26,7 @@ class TheScene extends THREE.Scene {
     this.puntos = 0;
 
     this.estadoPartida = false;
+    this.nivelDificultad = 0;
 
 
     this.createLights ();
@@ -193,6 +194,22 @@ mtlLoader.load('Millennium_Falcon.mtl', function(materials) {
     var pepe = new THREE.Vector3(x,y,z);
    // console.log(pepe);
 
+
+    switch(this.nivelDificultad){
+      case 1:
+        this.lanzador.setTiempoEntreLanzamientos(0.5); 
+        this.lanzador.setVelocidadMeteoritos(15);
+        break;
+      case 2: 
+        this.lanzador.setTiempoEntreLanzamientos(0.2);
+        this.lanzador.setVelocidadMeteoritos(25);
+        break;
+      case 3:
+        this.lanzador.setTiempoEntreLanzamientos(0.1);
+        this.lanzador.setVelocidadMeteoritos(50); 
+        break;      
+    }
+
     if(this.estadoPartida){
       if(this.lanzador.getEstado() == 0 || this.lanzador.getEstado() == 1){
         this.lanzador.setEstado(1);
@@ -237,7 +254,20 @@ mtlLoader.load('Millennium_Falcon.mtl', function(materials) {
                   //this.robot.life -= 10;
                   } break;
           case 1:  darVida();break;//this.robot.life += 10; break;
-          case 2:  darPuntos();break;
+          case 2:  this.puntos += 10; 
+                   darPuntos();
+                   if(this.puntos < 50){
+                     this.nivelDificultad = 1;
+                     console.log("\nNivel:"+this.nivelDificultad);
+                   }else if(this.puntos < 100){
+                      this.nivelDificultad = 2;
+                      console.log("\nNivel:"+this.nivelDificultad);
+                   }
+                   else if(this.puntos >= 100){
+                    this.nivelDificultad = 3;
+                    console.log("\nNivel:"+this.nivelDificultad);
+                  }
+                   break;
         }
       }
     }
