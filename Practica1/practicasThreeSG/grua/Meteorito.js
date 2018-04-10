@@ -1,7 +1,7 @@
 class Meteorito extends THREE.Object3D{
     constructor (parameters) {
         super();
-        this.velocidad = 15; //unidades / s
+        this.velocidad = parameters.v; //unidades / s
         this.tiempoAnterior = Date.now();
         this.tiempoActual = null;
 

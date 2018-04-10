@@ -45,6 +45,13 @@ class Lanzador extends THREE.Object3D{
 
         //////////////////////////////////////
 
+
+        //////////NIVELES DE DIFICULTAD/////////
+
+        this.tiempoEntreLanzamientos = 0.5;
+        this.velocidadMeteoritos = 15;
+        ////////////////////////////////////////
+
         this.estado = 0; // 0 no empezado, 1 funcionando,2 pausado , 3 reanudada
         this.visor.receiveShadow = true;
 
@@ -116,8 +123,8 @@ class Lanzador extends THREE.Object3D{
        // console.log(tiempoActual);
        this.tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
 
-        if( this.tiempoTranscurrido >0.1){   // tiempo entre bolas
-            this.meteo = new Meteorito({z:50,y:5,x:this.x});
+        if( this.tiempoTranscurrido > this.tiempoEntreLanzamientos){   // tiempo entre bolas
+            this.meteo = new Meteorito({z:50,y:5,x:this.x,v:this.velocidadMeteoritos});
             this.meteoritos.add(this.meteo);
             //this.add(this.meteoritos);
         //    console.log(tiempoActual);
@@ -147,6 +154,14 @@ class Lanzador extends THREE.Object3D{
 
     getColisiones(){
         return this.colisiones;
+    }
+
+    setTiempoEntreLanzamientos(t){
+        this.tiempoEntreLanzamientos = t;
+    }
+
+    setVelocidadMeteoritos(v){
+        this.velocidadMeteoritos = v;
     }
 
     restartColisiones(){
