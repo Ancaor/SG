@@ -19,6 +19,7 @@ class TheScene extends THREE.Scene {
     this.pared = null;
 
     this.lanzador = null;
+    this.lanzadores = new Array();
     this.robot = null;
     this.primeraPersona = false;
 
@@ -27,6 +28,8 @@ class TheScene extends THREE.Scene {
 
     this.estadoPartida = false;
     this.nivelDificultad = 0;
+    this.cambiosNivel2 = false;
+    this.cambiosNivel3 = false;
 
 
     this.createLights ();
@@ -101,23 +104,13 @@ class TheScene extends THREE.Scene {
 
     //lanzador oculto para meteoritos
     this.lanzador = new Lanzador();
-    model.add(this.lanzador);
-
-
-    this.material = new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70});
-    this.pared = new THREE.Mesh (
-      new THREE.BoxGeometry (0.2, 300, 300, 1, 1, 1),
-      this.material);
-    this.pared.applyMatrix (new THREE.Matrix4().makeTranslation (150,0,0));
+    this.lanzador.setPosicion(0, 0, 150, 's');
+    this.lanzadores.push(this.lanzador);
     
-    this.par = new THREE.Mesh (
-      new THREE.BoxGeometry (0.2, 300, 300, 1, 1, 1),
-      this.material);
-    this.par.applyMatrix (new THREE.Matrix4().makeTranslation (-150,0,0));
-      this.pared.castShadow=true;
-      this.par.castShadow=true
-    model.add(this.pared);
-    model.add(this.par);
+    
+    for(var i = 0; i < this.lanzadores.length; i++)
+      model.add(this.lanzadores[i]);
+
 
 // pruebasz
     //this.meteorito = new Meteorito();
@@ -154,37 +147,60 @@ class TheScene extends THREE.Scene {
     var z = aux.z;
 
     var pepe = new THREE.Vector3(x,y,z);
-   // console.log(pepe);
 
 
     switch(this.nivelDificultad){
       case 1:
-        this.lanzador.setTiempoEntreLanzamientos(0.5); 
-        this.lanzador.setVelocidadMeteoritos(15);
+        for(var i = 0; i < this.lanzadores.length; i++){
+          this.lanzadores[i].setTiempoEntreLanzamientos(0.5); 
+          this.lanzadores[i].setVelocidadMeteoritos(15);
+        }
         break;
-      case 2: 
-        this.lanzador.setTiempoEntreLanzamientos(0.2);
-        this.lanzador.setVelocidadMeteoritos(25);
+      case 2:
+        if(!this.cambiosNivel2){
+          this.lanzador = new Lanzador();
+          this.lanzador.setPosicion(-150, 0, 0, 'e');
+          this.lanzadores.push(this.lanzador);
+          this.model.add(this.lanzadores[this.lanzadores.length - 1]);
+          this.cambiosNivel2 = true;
+        }
+        
+        for(var i = 0; i < this.lanzadores.length; i++){
+          this.lanzadores[i].setTiempoEntreLanzamientos(0.2); 
+          this.lanzadores[i].setVelocidadMeteoritos(25);
+        }
         break;
       case 3:
-        this.lanzador.setTiempoEntreLanzamientos(0.1);
-        this.lanzador.setVelocidadMeteoritos(50); 
+
+      if(!this.cambiosNivel3){
+        this.lanzador = new Lanzador();
+        this.lanzador.setPosicion(150, 0, 0, 'o');
+        this.lanzadores.push(this.lanzador);
+        this.model.add(this.lanzadores[this.lanzadores.length - 1]);
+        this.cambiosNivel3 = true;
+      }
+      for(var i = 0; i < this.lanzadores.length; i++){
+        this.lanzadores[i].setTiempoEntreLanzamientos(0.1); 
+        this.lanzadores[i].setVelocidadMeteoritos(50);
+      }
         break;      
     }
 
-    if(this.estadoPartida){
-      if(this.lanzador.getEstado() == 0 || this.lanzador.getEstado() == 1){
-        this.lanzador.setEstado(1);
-        this.lanzador.update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
-        this.procesaColisiones();
-      }else if(this.lanzador.getEstado() == 2){
-        this.lanzador.setEstado(3);
-        this.lanzador.update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
-        this.procesaColisiones();
-      }
-    }else {
-      if(this.lanzador.getEstado() == 1 || this.lanzador.getEstado() == 2 ){
-        this.lanzador.setEstado(2);
+    for(var i = 0; i < this.lanzadores.length; i++){
+      if(this.estadoPartida){
+        if(this.lanzadores[i].getEstado() == 0 || this.lanzadores[i].getEstado() == 1){
+          this.lanzadores[i].setEstado(1);
+          this.lanzadores[i].update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
+          this.procesaColisiones(i);
+        }else if(this.lanzadores[i].getEstado() == 2){
+          this.lanzadores[i].setEstado(3);
+          this.lanzadores[i].update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
+          this.procesaColisiones(i);
+        }
+      }else {
+        if(this.lanzadores[i].getEstado() == 1 || this.lanzadores[i].getEstado() == 2 ){
+          this.lanzadores[i].setEstado(2);
+        }
       }
     }    
   }
@@ -196,45 +212,40 @@ class TheScene extends THREE.Scene {
       this.primeraPersona = true; 
   }
 
-  procesaColisiones(){
-    var colisiones = this.lanzador.getColisiones();
-
-    if(colisiones.length > 0){
-      var longitud  = colisiones.length;
-      for(var i = 0; i < longitud; i++){
-        switch(colisiones[i]){
-          case 0: //console.log(this.robot.life)
-                  if(this.vida <= 10){
-                    //console.log("restar vida")
-                    this.reiniciarPartida();
-                    alert("Has perdido. Te has quedado sin vida"); 
-                    
-                  //  this.lanzador.restartColisiones();                 
-                  }else{
-                  //  console.log("quitamos vida");
-                  quitarVida() ;
-                  //this.robot.life -= 10;
-                  } break;
-          case 1:  darVida();break;//this.robot.life += 10; break;
-          case 2:  this.puntos += 10; 
-                   darPuntos();
-                   if(this.puntos < 50){
-                     this.nivelDificultad = 1;
-                     console.log("\nNivel:"+this.nivelDificultad);
-                   }else if(this.puntos < 100){
-                      this.nivelDificultad = 2;
-                      console.log("\nNivel:"+this.nivelDificultad);
-                   }
-                   else if(this.puntos >= 100){
-                    this.nivelDificultad = 3;
-                    console.log("\nNivel:"+this.nivelDificultad);
-                  }
-                   break;
+  procesaColisiones(indice){
+      var colisiones = this.lanzadores[indice].getColisiones();
+      if(colisiones.length > 0){
+        var longitud  = colisiones.length;
+        for(var i = 0; i < longitud; i++){
+          switch(colisiones[i]){
+            case 0: //console.log(this.robot.life)
+                    if(this.vida <= 10){
+                      //console.log("restar vida")
+                      this.reiniciarPartida();
+                      alert("Has perdido. Te has quedado sin vida"); 
+                      
+                    //  this.lanzador.restartColisiones();                 
+                    }else{
+                    //  console.log("quitamos vida");
+                    quitarVida() ;
+                    //this.robot.life -= 10;
+                    } break;
+            case 1:  darVida();break;//this.robot.life += 10; break;
+            case 2:  this.puntos += 10; 
+                    darPuntos();
+                    if(this.puntos < 50){
+                      this.nivelDificultad = 1;
+                    }else if(this.puntos < 100){
+                        this.nivelDificultad = 2;
+                    }
+                    else if(this.puntos >= 100){
+                      this.nivelDificultad = 3;
+                    }
+                    break;
+          }
         }
+        this.lanzadores[indice].restartColisiones();
       }
-    }
-
-    this.lanzador.restartColisiones();
   }
 
   changeStateGame(){
@@ -272,7 +283,8 @@ class TheScene extends THREE.Scene {
    
   reiniciarPartida(){
     this.robot.restartPosicion();
-    this.lanzador.restart();
+    for(var i = 0; i < this.lanzadores.length; i++)
+      this.lanzadores[i].restart();
     this.changeStateGame();
     restartVida();
     restartPuntos();

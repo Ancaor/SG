@@ -7,16 +7,17 @@ class Lanzador extends THREE.Object3D{
         
 ////////////////////////////////////////////////////////////// Lanzador visible
 
-        this.material = new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70});
+        this.material = new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xff, shininess: 3});
 
         var geometria = new THREE.BoxGeometry (1,1,1, 16, 8);    // geometria cilindro
         geometria.applyMatrix (new THREE.Matrix4().makeTranslation(0,0.5,0));
 
         this.visor = new THREE.Mesh (
             geometria, this.material);
-        //this.visor.geometry.applyMatrix (new THREE.Matrix4().makeTranslation(0,1,10));
+        
+
         this.visor.scale.set(120,30,0.1);
-        this.visor.position.z = 50;
+        this.visor.position.z = 0;
 
         this.visor.castShadow = true;
         
@@ -41,7 +42,7 @@ class Lanzador extends THREE.Object3D{
         this.posColisionFina = new Array(new THREE.Vector3(0,6.9,0),new THREE.Vector3(0,4.3,0),new THREE.Vector3(0,1.5,0));
 
         this.colisiones = new Array();
-        
+        this.orientacion = 's';
 
         //////////////////////////////////////
 
@@ -56,7 +57,8 @@ class Lanzador extends THREE.Object3D{
         this.visor.receiveShadow = true;
 
 
-        this.x = 0.5; 
+        this.x = 0.5;
+        this.z = this.visor.position.z; 
 
         this.add(this.visor);
 
@@ -79,6 +81,22 @@ class Lanzador extends THREE.Object3D{
     setEstado(estado){
         this.estado = estado;
     }
+
+    setPosicion(x, y, z, or){
+        this.orientacion = or;
+
+        switch(this.orientacion){
+            case 'n': this.visor.rotation.y = 0;this.z = z; break;
+            case 's': this.visor.rotation.y = Math.PI;this.z = z;  break;
+            case 'e': this.visor.rotation.y = Math.PI/2; this.x = x; break;
+            case 'o': this.visor.rotation.y = 3*Math.PI/2; this.x = x; break;
+        }
+
+        this.visor.position.x = x;
+        this.visor.position.y = y;
+        this.visor.position.z = z;
+    }
+
 /*
     actualizarInfoRobot(posGruesa,posFina1,posFina2,posFina3){
         this.posColisionGruesa = posGruesa;
@@ -124,12 +142,15 @@ class Lanzador extends THREE.Object3D{
        this.tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
 
         if( this.tiempoTranscurrido > this.tiempoEntreLanzamientos){   // tiempo entre bolas
-            this.meteo = new Meteorito({z:50,y:5,x:this.x,v:this.velocidadMeteoritos});
+            this.meteo = new Meteorito({z:this.z,y:5,x:this.x,o:this.orientacion,v:this.velocidadMeteoritos});
             this.meteoritos.add(this.meteo);
             //this.add(this.meteoritos);
         //    console.log(tiempoActual);
         this.tiempoAnterior = this.tiempoActual;
-        this.x = Math.floor(Math.random() * 121) - 60;
+        if(this.orientacion == 's' || this.orientacion == 'n')
+            this.x = Math.floor(Math.random() * 121) - 60;
+        else
+            this.z = Math.floor(Math.random() * 121) - 60;
         }
 
         var longitud  = this.meteoritos.children.length;

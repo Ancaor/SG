@@ -6,6 +6,7 @@ class Meteorito extends THREE.Object3D{
         this.tiempoActual = null;
 
         this.tiempoTranscurrido = 0;
+        this.orientacion = parameters.o;
 
         this.radioColisionGruesa = 5;
         this.posColisionGruesa = new THREE.Vector3(0,4.5,0);
@@ -101,7 +102,12 @@ class Meteorito extends THREE.Object3D{
 
         this.tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
         
-        this.meteorito.position.z -= this.velocidad * this.tiempoTranscurrido; // /1000 para ponerlo en ms.
+        switch(this.orientacion){
+            case 'n': this.meteorito.position.z += this.velocidad * this.tiempoTranscurrido; break;
+            case 's': this.meteorito.position.z -= this.velocidad * this.tiempoTranscurrido; break;
+            case 'e': this.meteorito.position.x += this.velocidad * this.tiempoTranscurrido; break;
+            case 'o': this.meteorito.position.x -= this.velocidad * this.tiempoTranscurrido; break;
+        }
         
         this.tiempoAnterior =this.tiempoActual;
 
@@ -135,10 +141,14 @@ class Meteorito extends THREE.Object3D{
            // console.log(this.posColisionFina.length)
         }else{
             
-            if(this.meteorito.position.z < -10){
-             //   console.log(this.meteorito.position.z)
-                return 2;
+            switch(this.orientacion){
+                case 'n': if(this.meteorito.position.z > 150) return 2; break;
+                case 's': if(this.meteorito.position.z < -150) return 2;  break;
+                case 'e': if(this.meteorito.position.x > 150) return 2; break;
+                case 'o': if(this.meteorito.position.x < -150) return 2; break;
             }
+
+            
             
         }
             
