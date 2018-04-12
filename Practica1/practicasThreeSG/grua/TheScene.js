@@ -53,17 +53,59 @@ mtlLoader.load('Millennium_Falcon.mtl', function(materials) {
   objLoader.setMaterials(materials);
   objLoader.setPath('modelos/');
   objLoader.load('Millennium_Falcon.obj', function(object) {
-    object.position.y = 3;
+    object.position.y = 8;
     object.rotation.y = Math.PI
+    object.rotation.x = -0.2;
 
     object.scale.set(0.3,0.3,0.3);
-    object.position.z = 180;
+    object.position.z = 280;
     object.castShadow = true;
     scene.add(object);
   }, onProgress, onError);
     
 });
+/*
+var mtlLoader = new THREE.MTLLoader();
+mtlLoader.setPath('modelos/');
+mtlLoader.load('tie-intercept.mtl', function(materials) {
+  materials.preload();
+  var objLoader = new THREE.OBJLoader();
+  objLoader.setMaterials(materials);
+  objLoader.setPath('modelos/');
+  objLoader.load('tie-intercept.obj', function(object) {
+    object.position.y = 15;
+    object.rotation.y = Math.PI
 
+    object.scale.set(2,2,2);
+    object.position.z = 150;
+    object.position.x = -50;
+    object.castShadow = true;
+    scene.add(object);
+  }, onProgress, onError);
+    
+});
+*/
+/*
+var geometria = new THREE.BoxGeometry (10000,10000,10000 );
+var cubematerial = 
+[
+  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_ft.png"), side: THREE.DoubleSide}),
+  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_bk.png"), side: THREE.DoubleSide}),
+  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_up.png"), side: THREE.DoubleSide}),
+  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_dn.png"), side: THREE.DoubleSide}),
+  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_rt.png"), side: THREE.DoubleSide}),
+  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_lf.png"), side: THREE.DoubleSide})
+
+];
+
+//var cubeMat = new THREE.MeshFaceMaterial(cubematerial);
+this.cube = new THREE.Mesh(geometria,cubematerial);
+scene.add(this.cube);
+*/
+
+this.background = new THREE.CubeTextureLoader()
+					.setPath( 'imgs/' )
+					.load( [ 'blood_ft.png', 'blood_bk.png', 'blood_up.png', 'blood_dn.png', 'blood_rt.png', 'blood_lf.png' ] );
 
 
 
@@ -312,6 +354,7 @@ mtlLoader.load('Millennium_Falcon.mtl', function(materials) {
     this.robot.restartPosicion();
     this.lanzador.restart();
     this.changeStateGame();
+    this.nivelDificultad = 1;
     restartVida();
     restartPuntos();
     MostrarMenu();
