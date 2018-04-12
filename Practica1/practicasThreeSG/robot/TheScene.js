@@ -434,6 +434,13 @@ this.background = new THREE.CubeTextureLoader()
     this.robot.restartPosicion();
     for(var i = 0; i < this.lanzadores.length; i++)
       this.lanzadores[i].restart();
+
+    for(var i = 1; i < this.lanzadores.length; i++){
+      this.lanzadores.pop();
+    }
+    this.spotLight.power = Math.PI;
+    this.nivelDificultad = 0;
+    this.cambiosNivel = [false, false, false, false, false, false, false, false];
     this.changeStateGame();
     restartVida();
     restartPuntos();
