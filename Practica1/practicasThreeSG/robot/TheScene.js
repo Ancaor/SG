@@ -28,8 +28,7 @@ class TheScene extends THREE.Scene {
 
     this.estadoPartida = false;
     this.nivelDificultad = 0;
-    this.cambiosNivel2 = false;
-    this.cambiosNivel3 = false;
+    this.cambiosNivel = [false, false, false, false, false, false, false, false];
 
 
     this.createLights ();
@@ -227,38 +226,91 @@ this.background = new THREE.CubeTextureLoader()
       case 1:
         for(var i = 0; i < this.lanzadores.length; i++){
           this.lanzadores[i].setTiempoEntreLanzamientos(0.5); 
-          this.lanzadores[i].setVelocidadMeteoritos(15);
+          this.lanzadores[i].setVelocidadMeteoritos(10);
         }
         break;
+
       case 2:
-        if(!this.cambiosNivel2){
+        if(!this.cambiosNivel[0]){
+          this.spotLight.power=Math.PI;
+          this.cambiosNivel[0] = true;
+          for(var i = 0; i < this.lanzadores.length; i++){
+            this.lanzadores[i].setTiempoEntreLanzamientos(0.4); 
+            this.lanzadores[i].setVelocidadMeteoritos(20);
+          }
+        }        
+        break;
+
+      case 3:
+      if(!this.cambiosNivel[1]){
+        this.spotLight.power=0;
+        this.cambiosNivel[1] = true;
+      }
+      break;
+
+      case 4:
+        if(!this.cambiosNivel[2]){
           this.lanzador = new Lanzador();
           this.lanzador.setPosicion(-150, 0, 0, 'e');
           this.lanzadores.push(this.lanzador);
+          this.lanzador.setTiempoEntreLanzamientos(0.4); 
+          this.lanzador.setVelocidadMeteoritos(20);
           this.model.add(this.lanzadores[this.lanzadores.length - 1]);
-          this.spotLight.power=0;
-          this.cambiosNivel2 = true;
+          this.spotLight.power=Math.PI;
+          this.cambiosNivel[2] = true;
         }
         
-        for(var i = 0; i < this.lanzadores.length; i++){
-          this.lanzadores[i].setTiempoEntreLanzamientos(0.2); 
-          this.lanzadores[i].setVelocidadMeteoritos(25);
-        }
         break;
-      case 3:
+      
+      case 5:
+        if(!this.cambiosNivel[3]){
+          this.spotLight.power=Math.PI;
+          for(var i = 0; i < this.lanzadores.length; i++){
+            this.lanzadores[i].setTiempoEntreLanzamientos(0.3); 
+            this.lanzadores[i].setVelocidadMeteoritos(30);
+          }
+          this.cambiosNivel[3] = true;
+        }        
+        break;
 
-      if(!this.cambiosNivel3){
-        this.lanzador = new Lanzador();
-        this.lanzador.setPosicion(150, 0, 0, 'o');
-        this.lanzadores.push(this.lanzador);
-        this.model.add(this.lanzadores[this.lanzadores.length - 1]);
-        this.cambiosNivel3 = true;
-      }
-      for(var i = 0; i < this.lanzadores.length; i++){
-        this.lanzadores[i].setTiempoEntreLanzamientos(0.1); 
-        this.lanzadores[i].setVelocidadMeteoritos(50);
-      }
-        break;      
+        case 6:
+          if(!this.cambiosNivel[4]){
+            this.spotLight.power=0;
+            this.cambiosNivel[4] = true;
+          }        
+        break;
+
+        case 7:
+          if(!this.cambiosNivel[5]){
+            this.lanzador = new Lanzador();
+            this.lanzador.setPosicion(150, 0, 0, 'o');
+            this.lanzadores.push(this.lanzador);
+            this.lanzador.setTiempoEntreLanzamientos(0.3); 
+            this.lanzador.setVelocidadMeteoritos(30);
+            this.model.add(this.lanzadores[this.lanzadores.length - 1]);
+            this.spotLight.power=Math.PI;
+            this.cambiosNivel[5] = true;
+          }        
+        break;
+
+        case 8:
+        if(!this.cambiosNivel[6]){
+          this.spotLight.power=Math.PI;
+          for(var i = 0; i < this.lanzadores.length; i++){
+            this.lanzadores[i].setTiempoEntreLanzamientos(0.2); 
+            this.lanzadores[i].setVelocidadMeteoritos(40);
+          }
+          this.cambiosNivel[6] = true;
+        }        
+        break;
+
+        case 9:
+          if(!this.cambiosNivel[7]){
+            this.spotLight.power=0;
+            this.cambiosNivel[7] = true;
+          }        
+        break;
+
     }
 
     for(var i = 0; i < this.lanzadores.length; i++){
@@ -308,14 +360,33 @@ this.background = new THREE.CubeTextureLoader()
             case 1:  darVida();break;//this.robot.life += 10; break;
             case 2:  this.puntos += 10; 
                     darPuntos();
-                    if(this.puntos < 50){
+                    if(this.puntos < 10){
                       this.nivelDificultad = 1;
-                    }else if(this.puntos < 100){
+                    }else if(this.puntos < 20){
                         this.nivelDificultad = 2;
                     }
-                    else if(this.puntos >= 100){
+                    else if(this.puntos < 30){
                       this.nivelDificultad = 3;
                     }
+                    else if(this.puntos < 40){
+                      this.nivelDificultad = 4;
+                    }
+                    else if(this.puntos < 50){
+                      this.nivelDificultad = 5;
+                    }
+                    else if(this.puntos < 60){
+                      this.nivelDificultad = 6;
+                    }
+                    else if(this.puntos < 70){
+                      this.nivelDificultad = 7;
+                    }
+                    else if(this.puntos < 80){
+                      this.nivelDificultad = 8;
+                    }
+                    else if(this.puntos >= 80){
+                      this.nivelDificultad = 9;
+                    }
+
 
                     actualizarNivel();
 
