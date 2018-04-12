@@ -152,6 +152,12 @@ function restartVida() {
   
 }
 
+function actualizarNivel(){
+  var elem = document.getElementById("nivel");
+
+  elem.innerHTML = "Level " + this.scene.nivelDificultad;
+}
+
 function restartPuntos(){
   var elem = document.getElementById("puntuacion");
   puntos = 0;

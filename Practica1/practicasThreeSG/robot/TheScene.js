@@ -141,7 +141,7 @@ this.background = new THREE.CubeTextureLoader()
 
     // add spotlight for the shadows
     this.spotLight = new THREE.SpotLight( 0xffffff );
-    this.spotLight.position.set( 60, 60, 40 );
+    this.spotLight.position.set( 0, 60, -80 );
     this.spotLight.castShadow = true;
     // the shadow resolution
     this.spotLight.shadow.mapSize.width=2048
@@ -204,7 +204,7 @@ this.background = new THREE.CubeTextureLoader()
    */
   animate (controls) {
     this.axis.visible = controls.axis;
-    this.spotLight.intensity = controls.lightIntensity;
+    //this.spotLight.intensity = controls.lightIntensity;
     
     this.robot.setHead(controls.rotation_head);
     this.robot.setCuerpo(controls.balanceo_cuerpo);
@@ -236,6 +236,7 @@ this.background = new THREE.CubeTextureLoader()
           this.lanzador.setPosicion(-150, 0, 0, 'e');
           this.lanzadores.push(this.lanzador);
           this.model.add(this.lanzadores[this.lanzadores.length - 1]);
+          this.spotLight.power=0;
           this.cambiosNivel2 = true;
         }
         
@@ -315,6 +316,9 @@ this.background = new THREE.CubeTextureLoader()
                     else if(this.puntos >= 100){
                       this.nivelDificultad = 3;
                     }
+
+                    actualizarNivel();
+
                     break;
           }
         }

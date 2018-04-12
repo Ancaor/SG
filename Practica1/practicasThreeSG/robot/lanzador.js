@@ -59,8 +59,9 @@ class Lanzador extends THREE.Object3D{
 
         this.x = 0.5;
         this.z = this.visor.position.z; 
+        this.visor.material.transparent = true;
 
-        this.add(this.visor);
+        //this.add(this.visor);
 
 
 
