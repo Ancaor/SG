@@ -27,8 +27,8 @@ class TheScene extends THREE.Scene {
     this.puntos = 0;
 
     this.estadoPartida = false;
-    this.nivelDificultad = 0;
-    this.cambiosNivel = [false, false, false, false, false, false, false, false];
+    this.nivelDificultad = 1;
+    this.cambiosNivel = [false, false, false, false, false, false, false, false, false];
 
 
     this.createLights ();
@@ -175,15 +175,6 @@ this.background = new THREE.CubeTextureLoader()
     this.ground = new Ground (300, 300, new THREE.MeshPhongMaterial ({map: textura}), 4);
     model.add (this.ground);
 
-    //lanzador oculto para meteoritos
-    this.lanzador = new Lanzador();
-    this.lanzador.setPosicion(0, 0, 150, 's');
-    this.lanzadores.push(this.lanzador);
-    
-    
-    for(var i = 0; i < this.lanzadores.length; i++)
-      model.add(this.lanzadores[i]);
-
 
 // pruebasz
     //this.meteorito = new Meteorito();
@@ -224,32 +215,37 @@ this.background = new THREE.CubeTextureLoader()
 
     switch(this.nivelDificultad){
       case 1:
-        for(var i = 0; i < this.lanzadores.length; i++){
-          this.lanzadores[i].setTiempoEntreLanzamientos(0.5); 
-          this.lanzadores[i].setVelocidadMeteoritos(10);
+        if(!this.cambiosNivel[0]){
+          this.lanzador = new Lanzador();
+          this.lanzador.setPosicion(0, 0, 150, 's');
+          this.lanzador.setTiempoEntreLanzamientos(0.5);
+          this.lanzador.setVelocidadMeteoritos(10);
+          this.lanzadores.push(this.lanzador);
+          this.model.add(this.lanzadores[this.lanzadores.length - 1]);
+          this.cambiosNivel[0] = true;
         }
         break;
 
       case 2:
-        if(!this.cambiosNivel[0]){
+        if(!this.cambiosNivel[1]){
           this.spotLight.power=Math.PI;
-          this.cambiosNivel[0] = true;
           for(var i = 0; i < this.lanzadores.length; i++){
             this.lanzadores[i].setTiempoEntreLanzamientos(0.4); 
             this.lanzadores[i].setVelocidadMeteoritos(20);
           }
+          this.cambiosNivel[1] = true;
         }        
         break;
 
       case 3:
-      if(!this.cambiosNivel[1]){
+      if(!this.cambiosNivel[2]){
         this.spotLight.power=0;
-        this.cambiosNivel[1] = true;
+        this.cambiosNivel[2] = true;
       }
       break;
 
       case 4:
-        if(!this.cambiosNivel[2]){
+        if(!this.cambiosNivel[3]){
           this.lanzador = new Lanzador();
           this.lanzador.setPosicion(-150, 0, 0, 'e');
           this.lanzadores.push(this.lanzador);
@@ -257,31 +253,31 @@ this.background = new THREE.CubeTextureLoader()
           this.lanzador.setVelocidadMeteoritos(20);
           this.model.add(this.lanzadores[this.lanzadores.length - 1]);
           this.spotLight.power=Math.PI;
-          this.cambiosNivel[2] = true;
+          this.cambiosNivel[3] = true;
         }
         
         break;
       
       case 5:
-        if(!this.cambiosNivel[3]){
+        if(!this.cambiosNivel[4]){
           this.spotLight.power=Math.PI;
           for(var i = 0; i < this.lanzadores.length; i++){
             this.lanzadores[i].setTiempoEntreLanzamientos(0.3); 
             this.lanzadores[i].setVelocidadMeteoritos(30);
           }
-          this.cambiosNivel[3] = true;
+          this.cambiosNivel[4] = true;
         }        
         break;
 
         case 6:
-          if(!this.cambiosNivel[4]){
+          if(!this.cambiosNivel[5]){
             this.spotLight.power=0;
-            this.cambiosNivel[4] = true;
+            this.cambiosNivel[5] = true;
           }        
         break;
 
         case 7:
-          if(!this.cambiosNivel[5]){
+          if(!this.cambiosNivel[6]){
             this.lanzador = new Lanzador();
             this.lanzador.setPosicion(150, 0, 0, 'o');
             this.lanzadores.push(this.lanzador);
@@ -289,25 +285,25 @@ this.background = new THREE.CubeTextureLoader()
             this.lanzador.setVelocidadMeteoritos(30);
             this.model.add(this.lanzadores[this.lanzadores.length - 1]);
             this.spotLight.power=Math.PI;
-            this.cambiosNivel[5] = true;
+            this.cambiosNivel[6] = true;
           }        
         break;
 
         case 8:
-        if(!this.cambiosNivel[6]){
+        if(!this.cambiosNivel[7]){
           this.spotLight.power=Math.PI;
           for(var i = 0; i < this.lanzadores.length; i++){
             this.lanzadores[i].setTiempoEntreLanzamientos(0.2); 
             this.lanzadores[i].setVelocidadMeteoritos(40);
           }
-          this.cambiosNivel[6] = true;
+          this.cambiosNivel[7] = true;
         }        
         break;
 
         case 9:
-          if(!this.cambiosNivel[7]){
+          if(!this.cambiosNivel[8]){
             this.spotLight.power=0;
-            this.cambiosNivel[7] = true;
+            this.cambiosNivel[8] = true;
           }        
         break;
 
@@ -432,15 +428,17 @@ this.background = new THREE.CubeTextureLoader()
    
   reiniciarPartida(){
     this.robot.restartPosicion();
-    for(var i = 0; i < this.lanzadores.length; i++)
+    for(var i = 0; i < this.lanzadores.length; i++){
       this.lanzadores[i].restart();
-
-    for(var i = 1; i < this.lanzadores.length; i++){
-      this.lanzadores.pop();
+      this.model.remove(this.lanzadores[i]);
     }
+
+    while(this.lanzadores.length)
+      this.lanzadores.pop();
+    
     this.spotLight.power = Math.PI;
-    this.nivelDificultad = 0;
-    this.cambiosNivel = [false, false, false, false, false, false, false, false];
+    this.nivelDificultad = 1;
+    this.cambiosNivel = [false, false, false, false, false, false, false, false, false];
     this.changeStateGame();
     restartVida();
     restartPuntos();
