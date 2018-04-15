@@ -341,19 +341,15 @@ this.background = new THREE.CubeTextureLoader()
         var longitud  = colisiones.length;
         for(var i = 0; i < longitud; i++){
           switch(colisiones[i]){
-            case 0: //console.log(this.robot.life)
+            case 0: 
                     if(this.vida <= 10){
-                      //console.log("restar vida")
                       this.reiniciarPartida();
-                      alert("Has perdido. Te has quedado sin vida"); 
-                      
-                    //  this.lanzador.restartColisiones();                 
+                      alert("Has perdido. Te has quedado sin vida");             
                     }else{
-                    //  console.log("quitamos vida");
-                    quitarVida() ;
-                    //this.robot.life -= 10;
+                      quitarVida() ;
                     } break;
-            case 1:  darVida();break;//this.robot.life += 10; break;
+            case 1:  darVida();break;
+
             case 2:  this.puntos += 10; 
                     darPuntos();
                     if(this.puntos < 10){
@@ -382,7 +378,6 @@ this.background = new THREE.CubeTextureLoader()
                     else if(this.puntos >= 80){
                       this.nivelDificultad = 9;
                     }
-
 
                     actualizarNivel();
 
@@ -422,9 +417,6 @@ this.background = new THREE.CubeTextureLoader()
     }
     
   }
-  //  this.meteorito.update();
-  
-  //}
    
   reiniciarPartida(){
     this.robot.restartPosicion();
@@ -442,11 +434,9 @@ this.background = new THREE.CubeTextureLoader()
     this.changeStateGame();
     restartVida();
     restartPuntos();
+    actualizarNivel();
     MostrarMenu();
   }
-    
-    
-
 
   /// It returns the camera
   /**
@@ -477,18 +467,3 @@ this.background = new THREE.CubeTextureLoader()
   }
 
 }
-
-  // class variables
-
-  // Application modes
-  TheScene.NO_ACTION = 0;
-  TheScene.ADDING_BOXES = 1;
-  TheScene.MOVING_BOXES = 2;
-  TheScene.DELETING_BOXES = 3;  // Modo de borrado de cajas
-
-  // Actions
-  TheScene.NEW_BOX = 0;
-  TheScene.MOVE_BOX = 1;
-  TheScene.SELECT_BOX = 2;
-  TheScene.ROTATE_BOX = 3;
-  TheScene.END_ACTION = 10;
