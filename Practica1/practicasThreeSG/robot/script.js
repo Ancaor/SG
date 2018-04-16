@@ -151,7 +151,6 @@ function actualizarNivel(){
 function restartPuntos(){
   var elem = document.getElementById("puntuacion");
   this.scene.puntos = 0;
-  //this.puntos = 0;
   elem.innerHTML =this.scene.puntos * 1;
 }
 
