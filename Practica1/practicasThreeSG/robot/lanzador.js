@@ -1,11 +1,8 @@
 class Lanzador extends THREE.Object3D{
     constructor () {
         super();
-
-
-
         
-////////////////////////////////////////////////////////////// Lanzador visible
+///////////////////  Mesh del lanzador de meteoritos
 
         this.material = new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xff, shininess: 3});
 
@@ -20,46 +17,36 @@ class Lanzador extends THREE.Object3D{
         this.visor.position.z = 0;
 
         this.visor.castShadow = true;
-        
+        this.visor.receiveShadow = true;
+  
+ ///////////////////
+  
         this.meteoritos = new THREE.Object3D();
 
         this.tiempoAnterior = Date.now();
         this.tiempoActual = null;
         this.tiempoTranscurrido = 0;
 
-        this.meteorito = new Meteorito({z:50,y:5,x:0});
         this.add(this.meteoritos);
-        //this.add(this.meteorito);
-
-        this.meteo = null;
-        
-        ///////////////////////////////////////
-        
-        this.radioColisionGruesa = 5;
-        this.posColisionGruesa = new THREE.Vector3(0,4.5,0);
-
-        this.radioColisionFina = 2.6;
-        this.posColisionFina = new Array(new THREE.Vector3(0,6.9,0),new THREE.Vector3(0,4.3,0),new THREE.Vector3(0,1.5,0));
 
         this.colisiones = new Array();
         this.orientacion = 's';
-
-        //////////////////////////////////////
 
 
         //////////NIVELES DE DIFICULTAD/////////
 
         this.tiempoEntreLanzamientos = 0.5;
         this.velocidadMeteoritos = 15;
+
         ////////////////////////////////////////
 
-        this.estado = 0; // 0 no empezado, 1 funcionando,2 pausado , 3 reanudada
-        this.visor.receiveShadow = true;
-
+        this.estado = 0; // Estados del lanzador : 0 no empezado, 1 funcionando,2 pausado , 3 reanudada
 
         this.x = 0.5;
         this.z = this.visor.position.z; 
-        this.visor.material.transparent = true;
+        
+
+        //Descomentar para ver fisicamente el lanzador
 
         //this.add(this.visor);
 
@@ -70,19 +57,27 @@ class Lanzador extends THREE.Object3D{
 
     }
 
+    /*Ajusta los tiempos para que los meteoritos conserven posición y velocidad tras la pausa
+    */
     reanudar(){
         this.tiempoActual = Date.now();
         this.tiempoAnterior = (this.tiempoActual - (this.tiempoTranscurrido*1000));
     }
 
+    /*Devuelve el estado del lanzador
+    */
     getEstado(){
         return this.estado;
     }
 
+    /*Cambia el estado del lanzador
+    */
     setEstado(estado){
         this.estado = estado;
     }
 
+    /*Cambia la posición y orientación de lanzador
+    */
     setPosicion(x, y, z, or){
         this.orientacion = or;
 
@@ -98,29 +93,24 @@ class Lanzador extends THREE.Object3D{
         this.visor.position.z = z;
     }
 
-/*
-    actualizarInfoRobot(posGruesa,posFina1,posFina2,posFina3){
-        this.posColisionGruesa = posGruesa;
 
-        this.posColisionFina[0] = posFina1;
-        this.posColisionFina[1] = posFina2;
-        this.posColisionFina[2] = posFina3;
+    /*Actualiza tiempos y el estado de los meteoritos.
+      También es el encargado de gestionar las colisiones de meteoritos con el robot.
 
-        for(var i = 0; i < this.meteoritos.children.length; i++){
-            this.meteoritos.children[i].setInfoRobot(posGruesa,);
-        }
-    }
-*/
-    update(posRobot,posGruesa,posFina1,posFina2,posFina3){
+      argumentos:
+        posRobot: vector con la posición del robot.
+        ColisionGruesaY: valor de la componente Y del centro de la esfera de colisiones gruesa.
+        ColisionFina1Y: valor de la componente Y del centro de la primera esfera de colisiones fina.
+        ColisionFina2Y: valor de la componente Y del centro de la segunda esfera de colisiones fina.
+        ColisionFina3Y: valor de la componente Y del centro de la tercera esfera de colisiones fina.
+      
+      return: Vector con todas las colisiones detectadas por los meteoritos del lanzador.
+    */
+    update(posRobot,ColisionGruesaY,ColisionFina1Y,ColisionFina2Y,ColisionFina3Y){
 
+        var posFina = new Array(ColisionFina1Y,ColisionFina2Y,ColisionFina3Y); // solo tiene la y de cada centro de colisiones
 
-        var posFina = new Array(posFina1,posFina2,posFina3); // solo tiene la y de cada centro de colisiones
-
-
-        //this.reanudar();
-        //console.log(this.tiempoActual);
-        //console.log(this.tiempoAnterior);
-        
+        // En función del estado, ajusta tiempos.
         switch(this.estado){
             case 0:    ;break;
             case 1: this.tiempoActual = Date.now();
@@ -137,27 +127,25 @@ class Lanzador extends THREE.Object3D{
         }
 
         
-       // console.log(tiempoActual);
-      // console.log()
-       // console.log(tiempoActual);
        this.tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
 
+        // Crea meteoritos pasado un tiempo
         if( this.tiempoTranscurrido > this.tiempoEntreLanzamientos){   // tiempo entre bolas
             this.meteo = new Meteorito({z:this.z,y:5,x:this.x,o:this.orientacion,v:this.velocidadMeteoritos});
             this.meteoritos.add(this.meteo);
-            //this.add(this.meteoritos);
-        //    console.log(tiempoActual);
-        this.tiempoAnterior = this.tiempoActual;
-        if(this.orientacion == 's' || this.orientacion == 'n')
-            this.x = Math.floor(Math.random() * 121) - 60;
-        else
-            this.z = Math.floor(Math.random() * 121) - 60;
+            this.tiempoAnterior = this.tiempoActual;
+            if(this.orientacion == 's' || this.orientacion == 'n')
+                this.x = Math.floor(Math.random() * 121) - 60;
+            else
+                this.z = Math.floor(Math.random() * 121) - 60;
         }
+
+        //Actualiza estado de meteoritos y detecta colisiones
 
         var longitud  = this.meteoritos.children.length;
 
         for(var i = 0; i < longitud ; i++){
-            var a = this.meteoritos.children[i].update(posRobot,posGruesa,posFina);
+            var a = this.meteoritos.children[i].update(posRobot,ColisionGruesaY,posFina);
 
             if(a == 1){
                 this.colisiones.push(this.meteoritos.children[i].getTipo());
@@ -171,26 +159,36 @@ class Lanzador extends THREE.Object3D{
 
         }
         return this.colisiones;
-        //this.meteorito.update();
+
     }
 
+    /*Devuelve el vector de colisiones
+    */
     getColisiones(){
         return this.colisiones;
     }
 
+    /*Ajusta el tiempo entre lanzamiento de meteoritos
+    */
     setTiempoEntreLanzamientos(t){
         this.tiempoEntreLanzamientos = t;
     }
 
+    /*Ajusta la velocidad de los meteoritos
+    */
     setVelocidadMeteoritos(v){
         this.velocidadMeteoritos = v;
     }
 
+    /*Vacia el vector de colisiones
+    */
     restartColisiones(){
         while(this.colisiones.length)
         this.colisiones.pop();
     }
 
+    /*Resetea el lanzador
+    */
     restart(){
         this.estado = 0;
         while(this.meteoritos.length)

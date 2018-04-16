@@ -16,10 +16,7 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.anguloRotacion = 10;
     this.velocidadRobot = 0.3;
 
-    this.life = 100;
 
-
-    this.brazo_1 = null;
     this.base = null;
     this.brazo_derecho= null;
     this.brazo_izquierdo = null;
@@ -27,18 +24,23 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.hombroDer = null;
     this.hombroIzq = null;
 
-  //  this.brazo_1 = this.createBrazo_1();
     this.brazo_der_completo = null;
     this.brazo_izq_completo = null;
     this.createBrazoDerComp();
     this.createBrazoIzqComp();
-    //this.brazo_2 = this.createBrazo_2();
     this.cabeza= null;
     this.cuerpo = this.createCuerpo();
 
 
     // esferas para colisiones
 
+    this.colisionGruesaY = 4.5;
+    this.colisionFina1Y = 6.9;
+    this.colisionFina2Y = 4.3;
+    this.colisionFina3Y = 1.5;
+
+    //Descomentar para ver las esferas de colisiones
+    /*
     this.colisionGruesa = null;
     this.generarColisionGuesa();
     this.add(this.colisionGruesa);
@@ -49,52 +51,22 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.add(this.colisionFina1);
     this.add(this.colisionFina2);
     this.add(this.colisionFina3);
-
-    this.colisionGruesaY = 4.5;
-    this.colisionFina1Y = 6.9;
-    this.colisionFina2Y = 4.3;
-    this.colisionFina3Y = 1.5;
-/*
-    //this.createFoco();
-    this.p = new THREE.Mesh (
-      new THREE.CylinderGeometry (0.5,1,1, 16, 8), this.material);
-    this.p.geometry.applyMatrix (new THREE.Matrix4().makeTranslation(0,1,5));
-
-    this.add(this.p)
-  */  
+    */
 
     ////////////////////////////
 
-
-    
-    //this.base = this.createBase();
-   // this.add(this.brazo_1);
-    //this.add(this.brazo_2);
     this.add(this.cuerpo);
     this.add(this.brazo_der_completo);
     this.add(this.brazo_izq_completo);
   }
 
 
-  createBrazo_1(){
-    var base = this.createBaseIzquierdo();
-    base.applyMatrix (new THREE.Matrix4().makeTranslation(-2,0,0));
-    return base;
-  }
-
-  createBrazo_2(){
-    var base = this.createBaseDerecha();
-    base.applyMatrix (new THREE.Matrix4().makeTranslation(2,0,0));
-    
-    return base;
-  }
-
   createBrazoDerComp(){
     this.brazo_der_completo = new THREE.Object3D();
     this.brazo_der_completo.applyMatrix (new THREE.Matrix4().makeTranslation(2,0,0));
-    var base = this.createBaseDerecha();
-    this.brazo_derecho = this.createBrazo_derecho();
-    this.hombroDer = this.createHombroDerecho();
+    var base = this.createBaseBrazo();
+    this.brazo_derecho = this.createBrazo();
+    this.hombroDer = this.createHombro();
     this.brazo_der_completo.add(base);
     this.brazo_der_completo.add(this.brazo_derecho);
     this.brazo_der_completo.add(this.hombroDer);
@@ -104,67 +76,39 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
   createBrazoIzqComp(){
     this.brazo_izq_completo = new THREE.Object3D();
     this.brazo_izq_completo.applyMatrix (new THREE.Matrix4().makeTranslation(-2,0,0));
-    var base = this.createBaseDerecha();
-    this.brazo_izquierdo = this.createBrazo_derecho();
-    this.hombroIzq = this.createHombroDerecho();
+    var base = this.createBaseBrazo();
+    this.brazo_izquierdo = this.createBrazo();
+    this.hombroIzq = this.createHombro();
     this.brazo_izq_completo.add(base);
     this.brazo_izq_completo.add(this.brazo_izquierdo);
     this.brazo_izq_completo.add(this.hombroIzq);
   }
 
 
-  createBaseDerecha(){
+  createBaseBrazo(){
     var base = new THREE.Mesh (
       new THREE.CylinderGeometry (0.5,1,1, 16, 8), this.material);
     base.geometry.applyMatrix (new THREE.Matrix4().makeTranslation(0,0.5,0));
-    //base.add(this.createBrazo_derecho());
-    //base.add(this.createHombroDerecho());
-    //base.applyMatrix (new THREE.Matrix4().makeTranslation(2,0,0));
       return base;
   }
 
-  createBaseIzquierdo(){
-    var base = new THREE.Mesh (
-      new THREE.CylinderGeometry (0.5,1,1, 16, 8), this.material);
-    base.geometry.applyMatrix (new THREE.Matrix4().makeTranslation(0,0.5,0));
-    base.add(this.createBrazo_izquierdo());
-    //base.applyMatrix (new THREE.Matrix4().makeTranslation(2,0,0));
-      return base;
-  }
-
-  createBrazo_derecho(){
+  createBrazo(){
     var cilindro = new THREE.CylinderGeometry (0.3, 0.3, 1, 16, 8);    // geometria cilindro
     cilindro.applyMatrix (new THREE.Matrix4().makeTranslation (0, 0.5, 0));   // pongo la geometria ciindro sobre el eje (se hace 1 vez en toda la ejecucion)
     var brazo_derecho = new THREE.Mesh (cilindro, this.material);             // asigno la geometria cilindro a un Mesh
       brazo_derecho.scale.set(1,this.altura,1);               //escala el Mesh
       brazo_derecho.position.y = 1;                           //mueve el mesh
       brazo_derecho.castShadow = true;                      
-     // this.brazo_derecho.add(this.createHombroDerecho());
     return brazo_derecho;
   }
 
-  createBrazo_izquierdo(){
-    this.brazo_izquierdo = new THREE.Mesh (
-      new THREE.CylinderGeometry (0.3, 0.3, this.altura, 16, 8), this.material);
-      this.brazo_izquierdo.geometry.applyMatrix (new THREE.Matrix4().makeTranslation (0, 3.5, 0));
-      this.brazo_izquierdo.castShadow = true;
-      this.brazo_izquierdo.add(this.createHombroIzquierdo());
-    return this.brazo_izquierdo;
-  }
-
-  createHombroDerecho(){
+  createHombro(){
     var hombroDer = new THREE.Mesh (
       new THREE.BoxGeometry (1,1,1),this.material);
       hombroDer.applyMatrix (new THREE.Matrix4().makeTranslation (0, this.altura+1.5, 0));
       return hombroDer;
   }
 
-  createHombroIzquierdo(){
-    this.hombroIzq = new THREE.Mesh (
-      new THREE.BoxGeometry (1,1,1),this.material);
-      this.hombroIzq.applyMatrix (new THREE.Matrix4().makeTranslation (0, this.altura+1.5, 0));
-      return this.hombroIzq;
-  }
 
   createCuerpo(){
     var cuerpo = new THREE.Mesh (
@@ -198,7 +142,7 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
       this.secondLight.decay = 2;
       this.secondLight.power = 1;
       this.secondLight.intensity = 0.7;
-      //this.secondLight.shadow.camera.fov = 10;
+
       this.secondLight.penumbra = 0.5;
       this.secondLight.angle = 0.5;
       this.secondLight.position.set( 0, 0, 1.5 );
@@ -210,9 +154,8 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
 
       this.objetivo = new THREE.Object3D();
       this.objetivo.position.set (0,-0.866025404,3);
-      this.secondLight.target = this.objetivo; //.copy(this.objetivo);
+      this.secondLight.target = this.objetivo;
       this.secondLight.castShadow = true;
-    // the shadow resolution
       this.secondLight.add(this.objetivo);
 
       this.camara = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -269,7 +212,6 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.hombroIzq.position.y = this.altura-0.5;
     this.brazo_derecho.scale.y = height-2;
     this.brazo_izquierdo.scale.y=height-2;
-    //this.applyMatrix(new THREE.Matrix4().makeTranslation(0,1, 0));
     
   }
 

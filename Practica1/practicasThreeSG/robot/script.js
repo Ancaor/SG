@@ -38,8 +38,6 @@ function createGUI (withStats) {
     this.altura = 5;
     this.distance = 10;
     this.height   = 7;
-    life=100;
-    puntos=0;
     this.startGame=false;
 
     // Funcion que muestra un Mensaje
@@ -69,7 +67,6 @@ function createGUI (withStats) {
     axisLights.add(GUIcontrols, 'lightIntensity', 0, 1.0).name('Light intensity :');
     axisLights.add(GUIcontrols, 'secondLightIsOn').name('Second light on/off :');
     axisLights.add(GUIcontrols, 'secondLightIntensity', 0, 1.0).name('Second Light intensity :');
-    axisLights.add(GUIcontrols, 'startGame').name('Start game:');
 
   var actions = gui.addFolder ('Actions');
     var showingMessage = actions.add (GUIcontrols,'showMessage').name(': Show message :');
@@ -79,7 +76,7 @@ function createGUI (withStats) {
     
 
 
-  var robotControls = gui.addFolder ('Crane Controls');
+  var robotControls = gui.addFolder ('Robot Controls');
     robotControls.add (GUIcontrols, 'rotation_head', -1.39626, 1.39626, 0.001).name('Rotation_head :').listen();
     robotControls.add (GUIcontrols, 'balanceo_cuerpo', -0.785398,  0.523599,  0.01).name('Balanceo :').listen();
     robotControls.add (GUIcontrols, 'height', 7, 8, 0.1).name('Height :').listen();
@@ -124,11 +121,11 @@ function setMessage (str) {
 function darPuntos() {
   var elem = document.getElementById("puntuacion"); 
   var id = setInterval(frame, 10);
-  var timeout = this.puntos+10;  
+  var timeout = this.scene.puntos+10;  
   function frame(){
-  if(this.puntos < timeout){
-      this.puntos++; 
-      elem.innerHTML = this.puntos * 1 ;
+  if(this.scene.puntos < timeout){
+      this.scene.puntos+=5; 
+      elem.innerHTML = this.scene.puntos * 1 ;
   }
   else clearInterval(id);
 }
@@ -138,17 +135,10 @@ function darPuntos() {
 //Reinicia la barra de vida
 
 function restartVida() {
- // console.log("restarteando");
   var elem = document.getElementById("myBar"); 
-//  var id = setInterval(frame, 1);
-//  function frame(){
-  //  if(life < 100){
       this.scene.vida = 100;
       elem.style.width = this.scene.vida + '%'; 
       elem.innerHTML = this.scene.vida * 1  + '%';
-      
-   // }else clearInterval(id);
-//}
   
 }
 
@@ -175,7 +165,6 @@ function quitarVida() {
   var timeout = this.scene.vida-10;  
   function frame(){
   if(this.scene.vida > timeout){
-    //console.log("quiteando");
     if (this.scene.vida <= 0) {
       clearInterval(id);
     } else {

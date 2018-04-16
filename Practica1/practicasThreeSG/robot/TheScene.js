@@ -39,7 +39,6 @@ class TheScene extends THREE.Scene {
     this.add (this.model);
 
 
-
     var onProgress = function ( xhr ) {
       if ( xhr.lengthComputable ) {
         var percentComplete = xhr.loaded / xhr.total * 100;
@@ -49,14 +48,16 @@ class TheScene extends THREE.Scene {
 
     var onError = function ( xhr ) { };
 
+    // Carga de modelo .obj
+ 
     var mtlLoader = new THREE.MTLLoader();
-mtlLoader.setPath('modelos/');
-mtlLoader.load('Millennium_Falcon.mtl', function(materials) {
-  materials.preload();
-  var objLoader = new THREE.OBJLoader();
-  objLoader.setMaterials(materials);
-  objLoader.setPath('modelos/');
-  objLoader.load('Millennium_Falcon.obj', function(object) {
+    mtlLoader.setPath('modelos/');
+    mtlLoader.load('Millennium_Falcon.mtl', function(materials) {
+    materials.preload();
+    var objLoader = new THREE.OBJLoader();
+    objLoader.setMaterials(materials);
+    objLoader.setPath('modelos/');
+    objLoader.load('Millennium_Falcon.obj', function(object) {
     object.position.y = 8;
     object.rotation.y = Math.PI
     object.rotation.x = -0.2;
@@ -68,44 +69,8 @@ mtlLoader.load('Millennium_Falcon.mtl', function(materials) {
   }, onProgress, onError);
     
 });
-/*
-var mtlLoader = new THREE.MTLLoader();
-mtlLoader.setPath('modelos/');
-mtlLoader.load('tie-intercept.mtl', function(materials) {
-  materials.preload();
-  var objLoader = new THREE.OBJLoader();
-  objLoader.setMaterials(materials);
-  objLoader.setPath('modelos/');
-  objLoader.load('tie-intercept.obj', function(object) {
-    object.position.y = 15;
-    object.rotation.y = Math.PI
 
-    object.scale.set(2,2,2);
-    object.position.z = 150;
-    object.position.x = -50;
-    object.castShadow = true;
-    scene.add(object);
-  }, onProgress, onError);
-    
-});
-*/
-/*
-var geometria = new THREE.BoxGeometry (10000,10000,10000 );
-var cubematerial = 
-[
-  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_ft.png"), side: THREE.DoubleSide}),
-  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_bk.png"), side: THREE.DoubleSide}),
-  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_up.png"), side: THREE.DoubleSide}),
-  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_dn.png"), side: THREE.DoubleSide}),
-  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_rt.png"), side: THREE.DoubleSide}),
-  new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load("imgs/blood_lf.png"), side: THREE.DoubleSide})
-
-];
-
-//var cubeMat = new THREE.MeshFaceMaterial(cubematerial);
-this.cube = new THREE.Mesh(geometria,cubematerial);
-scene.add(this.cube);
-*/
+// Cambia el fondo por una textura
 
 this.background = new THREE.CubeTextureLoader()
 					.setPath( 'imgs/' )
@@ -119,8 +84,8 @@ this.background = new THREE.CubeTextureLoader()
    */
   createCamera (renderer) {
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.set (0, 120, -10);
-    var look = new THREE.Vector3 (0,0,40);
+    this.camera.position.set (0, 240, -1);
+    var look = new THREE.Vector3 (0,0,0);
     this.camera.lookAt(look);
 
     this.trackballControls = new THREE.TrackballControls (this.camera, renderer);
@@ -140,7 +105,7 @@ this.background = new THREE.CubeTextureLoader()
 
     // add spotlight for the shadows
     this.spotLight = new THREE.SpotLight( 0xffffff );
-    this.spotLight.position.set( 0, 60, -80 );
+    this.spotLight.position.set( 0, 120, 0 );
     this.spotLight.castShadow = true;
     // the shadow resolution
     this.spotLight.shadow.mapSize.width=2048
@@ -172,14 +137,8 @@ this.background = new THREE.CubeTextureLoader()
     model.add (this.robot);
     
     var textura = loader.load ("imgs/ground.jpg");
-    this.ground = new Ground (300, 300, new THREE.MeshPhongMaterial ({map: textura}), 4);
+    this.ground = new Ground (200, 200, new THREE.MeshPhongMaterial ({map: textura}), 4);
     model.add (this.ground);
-
-
-// pruebasz
-    //this.meteorito = new Meteorito();
-    //model.add(this.meteorito);
-//pruebas
 
     return model;
   }
@@ -188,13 +147,12 @@ this.background = new THREE.CubeTextureLoader()
 
 
 
-  /// It sets the crane position according to the GUI
+  /// Actualiza la escena
   /**
    * @controls - The GUI information
    */
   animate (controls) {
     this.axis.visible = controls.axis;
-    //this.spotLight.intensity = controls.lightIntensity;
     
     this.robot.setHead(controls.rotation_head);
     this.robot.setCuerpo(controls.balanceo_cuerpo);
@@ -210,8 +168,9 @@ this.background = new THREE.CubeTextureLoader()
     var y = aux.y;
     var z = aux.z;
 
-    var pepe = new THREE.Vector3(x,y,z);
+    var posRobot = new THREE.Vector3(x,y,z);
 
+    // Ajusta el nivel de dificultado
 
     switch(this.nivelDificultad){
       case 1:
@@ -239,7 +198,7 @@ this.background = new THREE.CubeTextureLoader()
 
       case 3:
       if(!this.cambiosNivel[2]){
-        this.spotLight.power=0;
+        this.spotLight.power=Math.PI/2;
         this.cambiosNivel[2] = true;
       }
       break;
@@ -271,7 +230,7 @@ this.background = new THREE.CubeTextureLoader()
 
         case 6:
           if(!this.cambiosNivel[5]){
-            this.spotLight.power=0;
+            this.spotLight.power=Math.PI/2;
             this.cambiosNivel[5] = true;
           }        
         break;
@@ -291,7 +250,7 @@ this.background = new THREE.CubeTextureLoader()
 
         case 8:
         if(!this.cambiosNivel[7]){
-          this.spotLight.power=Math.PI;
+        this.spotLight.power=Math.PI;
           for(var i = 0; i < this.lanzadores.length; i++){
             this.lanzadores[i].setTiempoEntreLanzamientos(0.2); 
             this.lanzadores[i].setVelocidadMeteoritos(40);
@@ -309,15 +268,18 @@ this.background = new THREE.CubeTextureLoader()
 
     }
 
+
+    // Actualiza el estado de cada lanzador
+
     for(var i = 0; i < this.lanzadores.length; i++){
       if(this.estadoPartida){
         if(this.lanzadores[i].getEstado() == 0 || this.lanzadores[i].getEstado() == 1){
           this.lanzadores[i].setEstado(1);
-          this.lanzadores[i].update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
+          this.lanzadores[i].update(posRobot,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
           this.procesaColisiones(i);
         }else if(this.lanzadores[i].getEstado() == 2){
           this.lanzadores[i].setEstado(3);
-          this.lanzadores[i].update(pepe,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
+          this.lanzadores[i].update(posRobot,this.robot.colisionGruesaY,this.robot.colisionFina1Y,this.robot.colisionFina2Y,this.robot.colisionFina3Y);
           this.procesaColisiones(i);
         }
       }else {
@@ -326,8 +288,12 @@ this.background = new THREE.CubeTextureLoader()
         }
       }
     }    
+
   }
 
+  /*
+    Cambia la camara
+  */
   changeCamera(){
     if(this.primeraPersona == true)
       this.primeraPersona = false;
@@ -335,6 +301,9 @@ this.background = new THREE.CubeTextureLoader()
       this.primeraPersona = true; 
   }
 
+  /*
+    Actualiza la vida y puntuación según el tipo de meteorito con el que colisiona el robot
+  */
   procesaColisiones(indice){
       var colisiones = this.lanzadores[indice].getColisiones();
       if(colisiones.length > 0){
@@ -350,7 +319,7 @@ this.background = new THREE.CubeTextureLoader()
                     } break;
             case 1:  darVida();break;
 
-            case 2:  this.puntos += 10; 
+            case 2: 
                     darPuntos();
                     if(this.puntos < 10){
                       this.nivelDificultad = 1;
@@ -388,11 +357,18 @@ this.background = new THREE.CubeTextureLoader()
       }
   }
 
+  /*
+    Cambia e estado de la partida de jugando a parado
+  */
   changeStateGame(){
     if(this.estadoPartida)
       this.estadoPartida = false;
     else this.estadoPartida = true;
   }
+
+  /*
+  Mueve el robot y detecta si se ha salido del campo de juego
+  */
 
   moveRobot(key){
     if(this.estadoPartida){
@@ -410,7 +386,7 @@ this.background = new THREE.CubeTextureLoader()
             this.robot.moveBackward();
             break;
       }
-      if(this.robot.position.x > 150 || this.robot.position.z > 150 || this.robot.position.x < -150 || this.robot.position.z < -150 ){
+      if(this.robot.position.x > (this.ground.width/2) || this.robot.position.z > (this.ground.deep/2) || this.robot.position.x < -(this.ground.width/2) || this.robot.position.z < -(this.ground.deep/2) ){
         this.reiniciarPartida();
         alert("Has perdido. Te has salido de los límites del mapa");
       }
@@ -418,6 +394,9 @@ this.background = new THREE.CubeTextureLoader()
     
   }
    
+  /*
+  Reinicia la partida, cambiando el estado y eliminando tanto los lanzadores como meteoritos y reiniciando el nivel, vida y puntos
+  */
   reiniciarPartida(){
     this.robot.restartPosicion();
     for(var i = 0; i < this.lanzadores.length; i++){
