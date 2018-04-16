@@ -13,7 +13,7 @@ class Lanzador extends THREE.Object3D{
             geometria, this.material);
         
 
-        this.visor.scale.set(200,30,0.1);
+        this.visor.scale.set(120,30,0.1);
         this.visor.position.z = 0;
 
         this.visor.castShadow = true;
@@ -44,7 +44,7 @@ class Lanzador extends THREE.Object3D{
 
         this.x = 0.5;
         this.z = this.visor.position.z; 
-
+        
 
         //Descomentar para ver fisicamente el lanzador
 
@@ -135,9 +135,9 @@ class Lanzador extends THREE.Object3D{
             this.meteoritos.add(this.meteo);
             this.tiempoAnterior = this.tiempoActual;
             if(this.orientacion == 's' || this.orientacion == 'n')
-                this.x = Math.floor(Math.random() * 201) - 100;
+                this.x = Math.floor(Math.random() * 121) - 60;
             else
-                this.z = Math.floor(Math.random() * 201) - 100;
+                this.z = Math.floor(Math.random() * 121) - 60;
         }
 
         //Actualiza estado de meteoritos y detecta colisiones
