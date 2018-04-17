@@ -19,6 +19,12 @@ class TheScene extends THREE.Scene {
 
     this.personaje = character;
 
+    //this.lagrimas = new THREE.Object3D;
+
+    this.add(this.lagrimas)
+
+    //this.lanzador = new Launcher();
+
     
 
     this.createLights ();
@@ -28,6 +34,7 @@ class TheScene extends THREE.Scene {
     this.model = this.createModel ();
     this.add (this.model);
     this.add (this.personaje);
+    //this.add(this.lanzador);
   }
 
 
@@ -93,8 +100,18 @@ class TheScene extends THREE.Scene {
   animate (controls) {
     this.axis.visible = controls.axis;
 
-    if(this.personaje.cargado)   // Si se ha cargado ya la cara del mono
-      this.personaje.update()
+    
+
+   if(this.personaje.cargado) { // Si se ha cargado ya la cara del mono
+
+    //var a = new THREE.Vector3(this.personaje.ojoDer.position.x,this.personaje.ojoDer.position.y,this.personaje.ojoDer.position.z)
+
+//    this.lagrimas.position = a
+    this.personaje.update()
+   }  
+      
+
+    
     
   }
 
@@ -102,15 +119,19 @@ class TheScene extends THREE.Scene {
    // console.log(key)
       switch(key){
         case 37:
+            this.personaje.ajustarOrientacion(1);
             this.personaje.moveLeft();
             break;
         case 39:
+        this.personaje.ajustarOrientacion(3);
             this.personaje.moveRight();
             break;
         case 38:
+            this.personaje.ajustarOrientacion(0);
             this.personaje.moveForward();
             break;
         case 40:
+            this.personaje.ajustarOrientacion(2);
             this.personaje.moveBackward();
             break;
       }
