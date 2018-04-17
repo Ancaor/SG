@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html>
+
+    <style>
+        #myProgress {
+          width: 200px;
+          background-color: rgb(0, 0, 0);
+          position: absolute;
+          left:25px; 
+          top:50px;
+          border: 1px solid aqua;
+        }
+
+        #Menu{
+            width: 20%;
+            min-width: 300px;
+            height: 20%;
+            margin-left: 40%;
+            margin-right: 40%;
+            top: 10%;
+
+            border: 2px solid aqua;
+            padding: 10px;
+          
+            
+            position: absolute;
+            background-image: url("./imgs/fondo-menu.jpeg");
+            
+            
+        }
+        
+        #myBar {
+          width: 100%;
+          height: 30px;
+          background-color: rgb(0, 231, 31);
+          text-align: center;
+          line-height: 30px;
+          font-family: 'Audiowide';
+          color: black;
+          
+         
+        }
+
+        #hud{
+            
+            width: 425px;
+            height: 150px;
+            background-color: rgb(0, 0, 0);
+            position: absolute;
+            left:0px; 
+            top:0px;
+            
+            background-image: url(./imgs/hud-img.png);
+            background-size: 450px 150px;
+            background-repeat: no-repeat;
+        }
+
+        #levelHud{
+            
+            width: 175px;
+            height: 40px;
+            background-color: rgb(0, 0, 0);
+            position: absolute;
+            left:0px; 
+            top:150px;
+            background-color: black;
+        }
+        #nivel{
+            color:aqua;
+            font-family: 'Audiowide';
+            position: absolute;
+            left:20px; 
+            top:-25px;
+        }
+
+        #puntuacion{
+            color:aqua;
+            font-family: 'Audiowide';
+            position: absolute;
+            left:294px; 
+            top:26px;
+        }
+        #BotonInicio{
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            font-size: 16px;
+            margin: 0 auto;
+            cursor: pointer;
+
+           
+        }
+
+        </style>
+
+
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet'>
+    <title>Robot</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="../libs/three.js"></script>
+    <script type="text/javascript" src="../libs/jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="../libs/stats.js"></script>
+    <script type="text/javascript" src="../libs/dat.gui.js"></script>
+    <script type="text/javascript" src="../libs/TrackballControls.js"></script>
+    <script type="text/javascript" src="../libs/MTLLoader.js"></script>
+    <script type="text/javascript" src="../libs/OBJLoader.js"></script>
+    <script type="text/javascript" src="Mono.js"></script>
+    <script type="text/javascript" src="Meteorito.js"></script>
+    <script type="text/javascript" src="lanzador.js"></script>
+    <script type="text/javascript" src="Ground.js"></script>
+    <script type="text/javascript" src="Robot.js"></script>    
+    <script type="text/javascript" src="TheScene.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Div which will show statistical information -->
+<div  id="Stats-output" style="position:absolute; left:425px">
+</div>
+
+<!-- Div which will show several messages -->
+<div style="position:absolute; left:525px; top:10px" id="Messages">
+</div>
+
+<div id="hud">
+    <div id="myProgress">
+        <div id="myBar">100%</div>
+    </div>
+    <h1 id="puntuacion">0</h1>
+</div>
+
+<div id="levelHud">
+<h1 id = "nivel">Level 1</h1>
+</div>
+
+<!-- Div which will hold the Output -->
+<div id="WebGL-output">
+        
+</div>
+</body>
+</html>
