@@ -29,6 +29,8 @@ class TheScene extends THREE.Scene {
     this.tiempoActualDisparo = null;
     this.tiempoAnteriorDisparo = Date.now();
 
+    this.mapa = null;
+
         this.tiempoTranscurrido = 0;
 
     //this.lanzador = new Launcher();
@@ -43,6 +45,30 @@ class TheScene extends THREE.Scene {
     this.add (this.model);
     this.add (this.personaje);
     //this.add(this.lanzador);
+
+
+        var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( 'modelos/Sala_001/' );
+				mtlLoader.load( 'sala_001.mtl', function( materials ) {
+
+					materials.preload();
+
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( 'modelos/Sala_001/' );
+					objLoader.load( 'sala_001.obj', function ( object ) {
+
+          //	object.position.y = - 95;
+          scene.mapa = object;
+          object.scale.set(4,4,4);
+          object.castShadow = true;
+						scene.add( object );
+
+					}, null, null );
+
+				});
+
+
   }
 
 
@@ -92,7 +118,7 @@ class TheScene extends THREE.Scene {
     
     var textura = loader.load ("imgs/ground.jpg");
     this.ground = new Ground (200, 200, new THREE.MeshPhongMaterial ({map: textura}), 4);
-    model.add (this.ground);
+   // model.add (this.ground);
 
     return model;
   }
@@ -110,19 +136,20 @@ class TheScene extends THREE.Scene {
 
     
 
-   //if(this.personaje.cargado) { // Si se ha cargado ya la cara del mono
+   if(this.personaje.cargado) { // Si se ha cargado ya la cara del mono
 
     //var a = new THREE.Vector3(this.personaje.ojoDer.position.x,this.personaje.ojoDer.position.y,this.personaje.ojoDer.position.z)
 
 //    this.lagrimas.position = a
-  //  this.personaje.update()
-  // }  
-  var longitud  = this.lagrimas.children.length;
+    this.personaje.update()
+    var longitud  = this.lagrimas.children.length;
         //console.log(longitud)
 
         for(var i = 0; i < longitud ; i++){
             this.lagrimas.children[i].update();
         }
+   }  
+  
       
 
     

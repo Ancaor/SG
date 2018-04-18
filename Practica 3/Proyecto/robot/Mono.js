@@ -11,7 +11,7 @@ class Mono extends THREE.Object3D{
 
         ///
         this.subir_cara = false;
-        this.posicion_base = 8;
+        this.posicion_base = 5;
         //
 
         this.orientacion = 0 //0:z+ , 1:x+ , 2:z- , 3 :x-
@@ -51,7 +51,7 @@ class Mono extends THREE.Object3D{
             this.subir_cara = true;
       }
 
-      this.ojoDer.update();
+     // this.ojoDer.update();
 
     }
 
