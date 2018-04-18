@@ -1,4 +1,7 @@
 /// Several functions, including the main
+
+Physijs.scripts.worker = "../libs/physijs_worker.js";
+Physijs.scripts.ammo = "../libs/ammo.js"
 character = null;
 
 geometria_mono = null;
@@ -172,7 +175,7 @@ function render() {
   stats.update();
   scene.getCameraControls().update ();
   scene.animate(GUIcontrols);
-
+  scene.simulate();
   renderer.render(scene, scene.getCamera());
   keyboardInput();
 }
@@ -232,6 +235,7 @@ $(function () {
   character = new Mono();
   // create a scene, that will hold all our elements such as objects, cameras and lights.
   scene = new TheScene (renderer.domElement);
+  scene.setGravity(new THREE.Vector3(0, 1, 0));
 
   createGUI(true);
 

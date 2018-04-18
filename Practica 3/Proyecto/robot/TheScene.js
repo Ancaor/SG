@@ -3,7 +3,7 @@
 /**
  * @param renderer - The renderer to visualize the scene
  */
-class TheScene extends THREE.Scene {
+class TheScene extends Physijs.Scene {
 
   constructor (renderer) {
     super();
@@ -155,7 +155,7 @@ class TheScene extends THREE.Scene {
    if(geometria_mono != null && this.posiblemono ==null){
        var material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
 
-    this.posiblemono = new THREE.Mesh(geometria_mono,material);
+    this.posiblemono = new Physijs.BoxMesh(geometria_mono,material);
 
     //this,posiblemono.position.x = 5;
     console.log("creado")
