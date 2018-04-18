@@ -195,6 +195,10 @@ function keyboardInput(){
       //console.log("Abajo");
       scene.moveRobot(40);
     }
+    if(codeset[32] == true){
+      //console.log("Abajo");
+      scene.disparar();
+    }
 }
 
 /// The main function

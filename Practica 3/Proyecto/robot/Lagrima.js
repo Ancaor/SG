@@ -26,9 +26,7 @@ class Lagrima extends THREE.Object3D{
             geometria, this.material);
         
         this.lagrima.scale.set(this.radio,this.radio,this.radio);
-        this.posicionz = parameters.z;
-        this.posiciony = parameters.y;
-        this.posicionx = parameters.x;
+        this.position.set(this.posicionx,this.posiciony,this.posicionz)
 
 
         this.lagrima.castShadow = true;
@@ -44,15 +42,15 @@ class Lagrima extends THREE.Object3D{
         this.tiempoActual = Date.now();
 
         this.tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
-        /*
+        
         switch(this.orientacion){
             case 0: this.lagrima.position.z += this.velocidad * this.tiempoTranscurrido; break;
             case 2: this.lagrima.position.z -= this.velocidad * this.tiempoTranscurrido; break;
             case 1: this.lagrima.position.x += this.velocidad * this.tiempoTranscurrido; break;
             case 3: this.lagrima.position.x -= this.velocidad * this.tiempoTranscurrido; break;
         }
-        */
-       this.lagrima.position.z += this.velocidad * this.tiempoTranscurrido;
+        
+       //this.lagrima.position.z += this.velocidad * this.tiempoTranscurrido;
         this.tiempoAnterior =this.tiempoActual;
     }
     
