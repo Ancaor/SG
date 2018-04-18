@@ -1,6 +1,8 @@
 /// Several functions, including the main
 character = null;
 
+geometria_mono = null;
+
 // map de teclas para el control fluido
 codeset = { 37: false, 38: false, 39: false, 40: false, 32: false, 86: false };
 

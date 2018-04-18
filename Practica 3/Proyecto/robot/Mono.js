@@ -74,6 +74,16 @@ class Mono extends THREE.Object3D{
 
             function (object) {
                 character.cara = object;
+
+                character.cara.traverse(function (child){
+                    if (child instanceof THREE.Mesh) {
+
+                        geometria_mono = new THREE.Geometry().fromBufferGeometry( child.geometry );
+
+                    console.log("va haciendo algo");
+                    }
+                });
+
                 character.cara.scale.set(1.5,1.5,1.5);
                 //character.cara.position.y = character.posicion_base;
                 character.add (character.cara);

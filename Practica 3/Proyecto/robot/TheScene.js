@@ -31,6 +31,8 @@ class TheScene extends THREE.Scene {
 
     this.mapa = null;
 
+    this.posiblemono = null;
+
         this.tiempoTranscurrido = 0;
 
     //this.lanzador = new Launcher();
@@ -149,6 +151,20 @@ class TheScene extends THREE.Scene {
             this.lagrimas.children[i].update();
         }
    }  
+
+   if(geometria_mono != null && this.posiblemono ==null){
+       var material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
+
+    this.posiblemono = new THREE.Mesh(geometria_mono,material);
+
+    //this,posiblemono.position.x = 5;
+    console.log("creado")
+    scene.add(this.posiblemono);
+
+    this.posiblemono.position.y = 2;
+
+   }
+   // console.log(geometria_mono)
   
       
 
