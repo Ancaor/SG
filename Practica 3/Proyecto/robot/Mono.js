@@ -27,16 +27,17 @@ class Mono extends Physijs.BoxMesh{
 
     update(){
       //  console.log(this.mono);
-
+      this.__dirtyPosition = true;
+      this.__dirtyRotation = true;
       if(this.subir_cara){
         this.position.y +=0.005;
-        console.log("subiendo. Y="+this.position.y);
+        //console.log("subiendo. Y="+this.position.y);
         if(this.position.y >= (this.posicion_base+0.5))
             this.subir_cara = false;
 
       }else{
         this.position.y -=0.005;
-        console.log("bajandoY="+this.position.y);
+        //console.log("bajandoY="+this.position.y);
         if(this.position.y <= (this.posicion_base-0.5))
             this.subir_cara = true;
       }
@@ -68,13 +69,17 @@ class Mono extends Physijs.BoxMesh{
 
     ajustarOrientacion(o){
 
-        this.__dirtyRotation = true;
+
+     //   this.__dirtyRotation = true;
+      //  this.__dirtyRotation = true;
         switch(o){
             case 0: this.rotation.y = 0 ;break;
             case 1: this.rotation.y = (Math.PI/2) ;break;
             case 2: this.rotation.y = Math.PI ;break;
             case 3: this.rotation.y = -(Math.PI/2) ;break;
         }
+        console.log(this.rotation.y)
+        this.__dirtyRotation = true;
         this.orientacion = o;
 
     }

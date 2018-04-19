@@ -29,6 +29,29 @@ class OBJLoader extends THREE.Object3D{
         );
     }
 
+    LoadSuelo(OBJFile){
+        var loader = new THREE.OBJLoader();
+    
+        loader.load(
+    
+            OBJFile,
+    
+            function (object) {
+                object.traverse(function (child){
+      
+                if (child instanceof THREE.Mesh) {
+                    suelo = new THREE.Geometry().fromBufferGeometry( child.geometry );
+                    }
+                });
+            },function ( xhr ) {
+                console.log( (xhr.loaded / xhr.total * 100) + '% Geometría cargada' );
+            },function ( err ) {
+                console.error( 'Error al cargar geometría' );
+            }
+    
+        );
+    }
+
     LoadOBJ(){
         var loader = new THREE.OBJLoader();
 

@@ -32,12 +32,14 @@ class TheScene extends THREE.Scene {
 
 
     this.createLights ();
-    this.createCamera (renderer);
+    
     this.axis = new THREE.AxisHelper (25);
     this.add (this.axis);
     this.model = this.createModel ();
+    this.createCamera (renderer);
     this.add (this.model);
 
+    
 
     var onProgress = function ( xhr ) {
       if ( xhr.lengthComputable ) {
@@ -48,28 +50,39 @@ class TheScene extends THREE.Scene {
 
     var onError = function ( xhr ) { };
 
+    //this.mono = new Amelio();
+    this.subirmono = true;
+    this.pos_referencia = 5;
+
+
     // Carga de modelo .obj
- 
+ /*
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('modelos/');
-    mtlLoader.load('Millennium_Falcon.mtl', function(materials) {
+    mtlLoader.load('mono.mtl', function(materials) {
     materials.preload();
     var objLoader = new THREE.OBJLoader();
     objLoader.setMaterials(materials);
     objLoader.setPath('modelos/');
-    objLoader.load('Millennium_Falcon.obj', function(object) {
-    object.position.y = 8;
+    objLoader.load('mono.obj', function(object) {
+    object.position.y = scene.pos_referencia;
     object.rotation.y = Math.PI
-    object.rotation.x = -0.2;
+    //object.rotation.x = -0.2;
 
-    object.scale.set(0.3,0.3,0.3);
-    object.position.z = 280;
+    object.scale.set(3,3,3);
+    //object.position.z = 280;
     object.castShadow = true;
-    scene.add(object);
+    //scene.add(object);
+    scene.mono.copy(object);
+    //scene.add(scene.mono);
+  
   }, onProgress, onError);
     
 });
 
+scene.add(scene.mono);
+
+*/
 // Cambia el fondo por una textura
 
 this.background = new THREE.CubeTextureLoader()
@@ -84,15 +97,15 @@ this.background = new THREE.CubeTextureLoader()
    */
   createCamera (renderer) {
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.set (0, 250, -10);
-    var look = new THREE.Vector3 (0,0,5);
-    this.camera.lookAt(look);
+    this.camera.position.set (0, 30, -70);
+    var look = new THREE.Vector3 (0,0,30);
+    this.camera.lookAt(this.robot.position);
 
     this.trackballControls = new THREE.TrackballControls (this.camera, renderer);
     this.trackballControls.rotateSpeed = 5;
     this.trackballControls.zoomSpeed = -2;
     this.trackballControls.panSpeed = 0.5;
-    this.trackballControls.target = look;
+    this.trackballControls.target = this.robot.position;
 
     this.add(this.camera);
   }
@@ -121,6 +134,7 @@ this.background = new THREE.CubeTextureLoader()
     this.secondLight.shadow.mapSize.width=2048
     this.secondLight.shadow.mapSize.height=2048;
     this.add (this.secondLight);
+    
 
 
   }
@@ -134,11 +148,19 @@ this.background = new THREE.CubeTextureLoader()
     var loader = new THREE.TextureLoader();
     var textura2 = loader.load("imgs/r2d2_torso.jpg");
     this.robot = new Robot({material:new THREE.MeshPhongMaterial ({map: textura2})});
-    model.add (this.robot);
+    //model.add (this.robot);
     
     var textura = loader.load ("imgs/ground.jpg");
     this.ground = new Ground (200, 200, new THREE.MeshPhongMaterial ({map: textura}), 4);
     model.add (this.ground);
+
+    this.helicoidal = new Esfera_Helicoidal();
+
+    //this.mono = new Amelio();
+    //this.add(this.mono);
+    //this.add(this.helicoidal);
+    this.mono = character;
+    model.add(this.mono);
 
     return model;
   }
@@ -152,6 +174,7 @@ this.background = new THREE.CubeTextureLoader()
    * @controls - The GUI information
    */
   animate (controls) {
+    
     this.axis.visible = controls.axis;
     
     this.robot.setHead(controls.rotation_head);
@@ -161,6 +184,11 @@ this.background = new THREE.CubeTextureLoader()
     if(controls.secondLightIsOn)
       this.secondLight.intensity = controls.secondLightIntensity;  // Controla la intensidad de la segunda luz
     else this.secondLight.intensity = 0;
+
+
+    this.helicoidal.update(controls.radio);
+
+   // this.mono.update();
     
 
     var aux = this.robot.getPos();
@@ -381,9 +409,11 @@ this.background = new THREE.CubeTextureLoader()
             break;
         case 38:
             this.robot.moveForward();
+            this.mono.moveForward();
             break;
         case 40:
             this.robot.moveBackward();
+            this.mono.position.z ++;
             break;
       }
       if(this.robot.position.x > (this.ground.width/2) || this.robot.position.z > (this.ground.deep/2) || this.robot.position.x < -(this.ground.width/2) || this.robot.position.z < -(this.ground.deep/2) ){

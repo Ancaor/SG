@@ -33,6 +33,7 @@ class TheScene extends Physijs.Scene {
 
     this.loader = new OBJLoader();
     this.loader.LoadGeometry("modelos/Amelio.obj");
+    this.loader.LoadSuelo("modelos/Sala_001/sala.obj");
     this.personaje = null;
 
     
@@ -124,8 +125,8 @@ class TheScene extends Physijs.Scene {
     var loader = new THREE.TextureLoader();
     
     var textura = loader.load ("imgs/ground.jpg");
-    this.ground = new Ground (200, 200, new THREE.MeshPhongMaterial ({map: textura}), 4);
-    model.add (this.ground);
+    //this.ground = new Ground (200, 200, new THREE.MeshPhongMaterial ({map: textura}), 4);
+    //model.add (this.ground);
 
     return model;
   }
@@ -146,9 +147,21 @@ class TheScene extends Physijs.Scene {
 
         this.personaje = new Mono();
         scene.add(this.personaje);
+
+        this.ground = new Physijs.BoxMesh(suelo,material,0);
+        this.ground.scale.set(3,3,3);
+        this.ground.position.y=2;
+        this.ground.__dirtyPosition=true;
+        scene.add(this.ground)
+
+
         this.loader.restart();
+
+
+
    }
    if(this.personaje != null){
+    this.personaje.update()
    }
       
 

@@ -1,9 +1,13 @@
 /// Several functions, including the main
 
 
+var man = null;
+
 // map de teclas para el control fluido
 codeset = { 37: false, 38: false, 39: false, 40: false, 32: false, 86: false };
 
+
+character = null;
 
 //variable que indica que el juego se ha iniciado
 juegoiniciado = false;
@@ -39,6 +43,7 @@ function createGUI (withStats) {
     this.distance = 10;
     this.height   = 7;
     this.startGame=false;
+    this.radio = 5;
 
     // Funcion que muestra un Mensaje
 
@@ -80,6 +85,7 @@ function createGUI (withStats) {
     robotControls.add (GUIcontrols, 'rotation_head', -1.39626, 1.39626, 0.001).name('Rotation_head :').listen();
     robotControls.add (GUIcontrols, 'balanceo_cuerpo', -0.785398,  0.523599,  0.01).name('Balanceo :').listen();
     robotControls.add (GUIcontrols, 'height', 7, 8, 0.1).name('Height :').listen();
+    robotControls.add (GUIcontrols, 'radio', 1,10,0.1).name('Radio :').listen();
     
     // The method  listen()  allows the height attribute to be written, not only read
 
@@ -350,6 +356,7 @@ $(function () {
     }
   });
 
+  character = new Amelio();
   // create a scene, that will hold all our elements such as objects, cameras and lights.
   scene = new TheScene (renderer.domElement);
 

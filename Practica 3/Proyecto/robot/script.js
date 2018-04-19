@@ -4,6 +4,8 @@ Physijs.scripts.worker = "../libs/physijs_worker.js";
 Physijs.scripts.ammo = "../libs/ammo.js"
 character = null;
 
+suelo=null;
+
 geometria_mono = null;
 
 geometria = null;
@@ -175,12 +177,19 @@ function createRenderer () {
 
 /// It renders every frame
 function render() {
+  scene.simulate();
   requestAnimationFrame(render);
 
   stats.update();
   scene.getCameraControls().update ();
   scene.animate(GUIcontrols);
-  scene.simulate();
+
+  if(scene.personaje != null){
+    scene.personaje.__dirtyRotation = true;
+    scene.personaje.__dirtyPosition = true;
+   }
+
+  
   renderer.render(scene, scene.getCamera());
   keyboardInput();
 }
