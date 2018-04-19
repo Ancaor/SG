@@ -1,36 +1,30 @@
-class Mono extends THREE.Object3D{
+class Mono extends Physijs.BoxMesh{
 
     constructor(){
         
-        super();
 
-        this.material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
+        var material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
+        super(geometria, material, 0);
+        this.position.y = 5;
 
-        
-        this.cara =  new Physijs.BoxMesh(geometria, this.material, 0);
-        this.add(this.cara);
+
+        ///Movimiento
+
+        this.velocidad_X = 5;
+        this.velocidad_Y = 0;
+        this.velocidad_Z = 5;
 
         ///
         this.subir_cara = false;
-        this.posicion_base = 5;
+        this.posicion_base = 6;
         this.position.y = this.posicion_base;
         //
 
-        this.orientacion = 0 //0:z+ , 1:x+ , 2:z- , 3 :x-
-
-        this.ojoDer = new Launcher();
-        this.ojoDer.position.y = 5;
-
-        this.ojoDer.position.z = 1.2;
-        this.ojoDer.position.x = 0.6;
-        this.ojoDer.position.y = 0.4;
-
-        this.add(this.ojoDer);
-        
+        this.orientacion = 0 //0:z+ , 1:x+ , 2:z- , 3 :x-       
 
         
     }
-/*
+
     update(){
       //  console.log(this.mono);
 
@@ -53,23 +47,28 @@ class Mono extends THREE.Object3D{
 
 
     moveForward(){
+        this.__dirtyPosition = true;
         this.position.z += 0.5;
     }
 
     moveBackward(){
+        this.__dirtyPosition = true;
         this.position.z -= 0.5;
     }
 
     moveLeft(){
+        this.__dirtyPosition = true;
         this.position.x +=0.5;
     }
 
     moveRight(){
+        this.__dirtyPosition = true;
         this.position.x -=0.5;
     }
 
     ajustarOrientacion(o){
 
+        this.__dirtyRotation = true;
         switch(o){
             case 0: this.rotation.y = 0 ;break;
             case 1: this.rotation.y = (Math.PI/2) ;break;
@@ -79,6 +78,6 @@ class Mono extends THREE.Object3D{
         this.orientacion = o;
 
     }
-   */
+   
 
 }

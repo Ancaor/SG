@@ -35,11 +35,12 @@ class TheScene extends Physijs.Scene {
     this.loader.LoadGeometry("modelos/Amelio.obj");
     this.personaje = null;
 
-    /*
+    
     this.piedra = new Physijs.BoxMesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}) );
-    this.piedra.position.y = 15;
+    this.piedra.position.y = 25;
+
     this.add(this.piedra);
-    */
+    
     //this.lanzador = new Launcher();
 
     
@@ -124,7 +125,7 @@ class TheScene extends Physijs.Scene {
     
     var textura = loader.load ("imgs/ground.jpg");
     this.ground = new Ground (200, 200, new THREE.MeshPhongMaterial ({map: textura}), 4);
-   // model.add (this.ground);
+    model.add (this.ground);
 
     return model;
   }
@@ -140,37 +141,15 @@ class TheScene extends Physijs.Scene {
   animate (controls) {
     this.axis.visible = controls.axis;
 
-    
-/*
-   if(this.personaje.cargado) { // Si se ha cargado ya la cara del mono
-
-    //var a = new THREE.Vector3(this.personaje.ojoDer.position.x,this.personaje.ojoDer.position.y,this.personaje.ojoDer.position.z)
-
-//    this.lagrimas.position = a
-    this.personaje.update()
-    var longitud  = this.lagrimas.children.length;
-        //console.log(longitud)
-
-        for(var i = 0; i < longitud ; i++){
-            this.lagrimas.children[i].update();
-        }
-   }  
-*/
    if(geometriaCargada && this.personaje ==null){
        var material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
 
         this.personaje = new Mono();
         scene.add(this.personaje);
-        //objeto2.position.y = 5;
         this.loader.restart();
    }
    if(this.personaje != null){
-        //this.personaje.update();
-        //objeto2.position.y = 5;
-
    }
-   // console.log(geometria_mono)
-  
       
 
     
@@ -185,7 +164,7 @@ class TheScene extends Physijs.Scene {
             this.personaje.moveLeft();
             break;
         case 39:
-        this.personaje.ajustarOrientacion(3);
+            this.personaje.ajustarOrientacion(3);
             this.personaje.moveRight();
             break;
         case 38:
