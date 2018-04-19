@@ -17,8 +17,6 @@ class TheScene extends Physijs.Scene {
     this.trackballControls = null;
     this.ground = null;
 
-    this.personaje = character;
-
     this.lagrimas = new THREE.Object3D;
 
     this.add(this.lagrimas)
@@ -31,10 +29,17 @@ class TheScene extends Physijs.Scene {
 
     this.mapa = null;
 
-    this.posiblemono = null;
+    this.tiempoTranscurrido = 0;
 
-        this.tiempoTranscurrido = 0;
+    this.loader = new OBJLoader();
+    this.loader.LoadGeometry("modelos/Amelio.obj");
+    this.personaje = null;
 
+    /*
+    this.piedra = new Physijs.BoxMesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}) );
+    this.piedra.position.y = 15;
+    this.add(this.piedra);
+    */
     //this.lanzador = new Launcher();
 
     
@@ -45,9 +50,8 @@ class TheScene extends Physijs.Scene {
     this.add (this.axis);
     this.model = this.createModel ();
     this.add (this.model);
-    this.add (this.personaje);
     //this.add(this.lanzador);
-
+/*
 
         var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.setPath( 'modelos/Sala_001/' );
@@ -70,7 +74,7 @@ class TheScene extends Physijs.Scene {
 
 				});
 
-
+*/
   }
 
 
@@ -137,7 +141,7 @@ class TheScene extends Physijs.Scene {
     this.axis.visible = controls.axis;
 
     
-
+/*
    if(this.personaje.cargado) { // Si se ha cargado ya la cara del mono
 
     //var a = new THREE.Vector3(this.personaje.ojoDer.position.x,this.personaje.ojoDer.position.y,this.personaje.ojoDer.position.z)
@@ -151,17 +155,18 @@ class TheScene extends Physijs.Scene {
             this.lagrimas.children[i].update();
         }
    }  
-
-   if(geometria_mono != null && this.posiblemono ==null){
+*/
+   if(geometriaCargada && this.personaje ==null){
        var material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
 
-    this.posiblemono = new Physijs.BoxMesh(geometria_mono,material);
-
-    //this,posiblemono.position.x = 5;
-    console.log("creado")
-    scene.add(this.posiblemono);
-
-    this.posiblemono.position.y = 2;
+        this.personaje = new Mono();
+        scene.add(this.personaje);
+        //objeto2.position.y = 5;
+        this.loader.restart();
+   }
+   if(this.personaje != null){
+        //this.personaje.update();
+        //objeto2.position.y = 5;
 
    }
    // console.log(geometria_mono)

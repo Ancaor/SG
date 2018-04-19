@@ -6,6 +6,11 @@ character = null;
 
 geometria_mono = null;
 
+geometria = null;
+objeto = null;
+geometriaCargada = false;
+objetoCargado = false;
+
 // map de teclas para el control fluido
 codeset = { 37: false, 38: false, 39: false, 40: false, 32: false, 86: false };
 
@@ -232,10 +237,10 @@ $(function () {
     }
   });
 
-  character = new Mono();
+  //character = new Mono();
   // create a scene, that will hold all our elements such as objects, cameras and lights.
   scene = new TheScene (renderer.domElement);
-  scene.setGravity(new THREE.Vector3(0, 1, 0));
+  scene.setGravity(new THREE.Vector3(0, -1, 0));
 
   createGUI(true);
 
