@@ -15,7 +15,14 @@ class OBJLoader extends THREE.Object3D{
 					objLoader.setMaterials( materials );
 					objLoader.load( Path_Obj, function ( object ) {
 
-                        object.castShadow = true;
+                        object.traverse(function (child){
+                            if(child instanceof THREE.Mesh){
+                                child.castShadow = true;
+                                child.receiveShadow = true;
+                            }
+                        })
+
+                        
                         objeto = object;
                         objetoCargado = true;
 
@@ -31,7 +38,9 @@ class OBJLoader extends THREE.Object3D{
                 
                     } );
 
-				});
+                });
+                
+
 
     }
 

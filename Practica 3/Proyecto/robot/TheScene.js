@@ -36,9 +36,8 @@ class TheScene extends THREE.Scene {
 
     
     this.loader = new OBJLoader();
-    //this.loader.LoadOBJ('modelos/Amelio.mtl','modelos/Amelio.obj');
+    this.loader.LoadOBJ('modelos/Personaje/Amelio.mtl','modelos/Personaje/Amelio.obj');
     this.personaje = null;
-    this.loader.LoadOBJ('modelos/Sala_001/sala_001.mtl','modelos/Sala_001/sala_001.obj');
     this.mapa = null;
     this.createLights ();
     this.createCamera (renderer);
@@ -81,7 +80,7 @@ class TheScene extends THREE.Scene {
 
     // add spotlight for the shadows
     this.spotLight = new THREE.SpotLight( 0xffffff );
-    this.spotLight.position.set( 0, 120, 0 );
+    this.spotLight.position.set( 20, 120, 0 );
     this.spotLight.castShadow = true;
     // the shadow resolution
     this.spotLight.shadow.mapSize.width=2048
@@ -100,7 +99,7 @@ class TheScene extends THREE.Scene {
     
     var textura = loader.load ("imgs/ground.jpg");
     this.ground = new Ground (200, 200, new THREE.MeshPhongMaterial ({map: textura}), 4);
-   // model.add (this.ground);
+    //model.add (this.ground);
 
     return model;
   }
@@ -116,17 +115,20 @@ class TheScene extends THREE.Scene {
   animate (controls) {
     this.axis.visible = controls.axis;
 
-    /*if(this.personaje == null && objetoCargado) { 
+    if(this.personaje == null && objetoCargado) { 
         this.personaje = new Mono();
         this.loader.restart();
         this.add(this.personaje);
-    }*/
-    if(this.mapa == null && objetoCargado) { 
+        this.loader.LoadOBJ('modelos/Salas/Sala_01/sala_01.mtl','modelos/Salas/Sala_01/sala_01.obj');
+    }
+    if(this.personaje != null && this.mapa == null && objetoCargado) {
         this.mapa = objeto;
+        this.mapa.receiveShadow = true;
+        this.mapa.scale.set(3.5,3.5,3.5);
         this.loader.restart();
         this.add(this.mapa);
-    }  
-    
+    }
+   
   }
 
   moveRobot(key){

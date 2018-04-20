@@ -229,8 +229,6 @@ $(function () {
       codeset[event.keyCode] = false;
     }
   });
-
-  character = new Mono();
   // create a scene, that will hold all our elements such as objects, cameras and lights.
   scene = new TheScene (renderer.domElement);
 

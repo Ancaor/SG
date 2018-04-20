@@ -5,7 +5,10 @@ class Mono extends THREE.Object3D{
 
 
         this.objeto = objeto;
+        console.log("Objeto = "+this.objeto);
+        this.castShadow = true;  
         this.add(this.objeto);
+    
 
         ///
         this.subir_cara = false;
