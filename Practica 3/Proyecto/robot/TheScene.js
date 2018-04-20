@@ -24,51 +24,31 @@ class TheScene extends THREE.Scene {
     this.add(this.lagrimas)
 
     this.tiempoAnterior = Date.now();
-        this.tiempoActual = null;
+    this.tiempoActual = null;
 
     this.tiempoActualDisparo = null;
     this.tiempoAnteriorDisparo = Date.now();
 
-    this.mapa = null;
-
-    this.posiblemono = null;
-
-        this.tiempoTranscurrido = 0;
+    
+    this.tiempoTranscurrido = 0;
 
     //this.lanzador = new Launcher();
 
     
-
+    this.loader = new OBJLoader();
+    //this.loader.LoadOBJ('modelos/Amelio.mtl','modelos/Amelio.obj');
+    this.personaje = null;
+    this.loader.LoadOBJ('modelos/Sala_001/sala_001.mtl','modelos/Sala_001/sala_001.obj');
+    this.mapa = null;
     this.createLights ();
     this.createCamera (renderer);
     this.axis = new THREE.AxisHelper (25);
     this.add (this.axis);
     this.model = this.createModel ();
     this.add (this.model);
-    this.add (this.personaje);
     //this.add(this.lanzador);
 
 
-        var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( 'modelos/Sala_001/' );
-				mtlLoader.load( 'sala_001.mtl', function( materials ) {
-
-					materials.preload();
-
-					var objLoader = new THREE.OBJLoader();
-					objLoader.setMaterials( materials );
-					objLoader.setPath( 'modelos/Sala_001/' );
-					objLoader.load( 'sala_001.obj', function ( object ) {
-
-          //	object.position.y = - 95;
-          scene.mapa = object;
-          object.scale.set(4,4,4);
-          object.castShadow = true;
-						scene.add( object );
-
-					}, null, null );
-
-				});
 
 
   }
@@ -136,39 +116,16 @@ class TheScene extends THREE.Scene {
   animate (controls) {
     this.axis.visible = controls.axis;
 
-    
-
-   if(this.personaje.cargado) { // Si se ha cargado ya la cara del mono
-
-    //var a = new THREE.Vector3(this.personaje.ojoDer.position.x,this.personaje.ojoDer.position.y,this.personaje.ojoDer.position.z)
-
-//    this.lagrimas.position = a
-    this.personaje.update()
-    var longitud  = this.lagrimas.children.length;
-        //console.log(longitud)
-
-        for(var i = 0; i < longitud ; i++){
-            this.lagrimas.children[i].update();
-        }
-   }  
-
-   if(geometria_mono != null && this.posiblemono ==null){
-       var material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
-
-    this.posiblemono = new THREE.Mesh(geometria_mono,material);
-
-    //this,posiblemono.position.x = 5;
-    console.log("creado")
-    scene.add(this.posiblemono);
-
-    this.posiblemono.position.y = 2;
-
-   }
-   // console.log(geometria_mono)
-  
-      
-
-    
+    /*if(this.personaje == null && objetoCargado) { 
+        this.personaje = new Mono();
+        this.loader.restart();
+        this.add(this.personaje);
+    }*/
+    if(this.mapa == null && objetoCargado) { 
+        this.mapa = objeto;
+        this.loader.restart();
+        this.add(this.mapa);
+    }  
     
   }
 
