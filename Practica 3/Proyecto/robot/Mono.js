@@ -56,21 +56,33 @@ class Mono extends THREE.Object3D{
 
     moveForward(sala){
         if(this.position.z + 0.5 < sala.limite || ((sala.puertaSup) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) )){
-            this.position.z += 0.5;
+            if(this.PasilloHorizontal){
+                if( this.position.z + 0.5 < sala.tama_puerta)
+                    this.position.z +=0.5;
+            }
+            else{
+                this.position.z +=0.5;
+            }
             this.updatePasilloVertical(sala);
         }
     }
 
     moveBackward(sala){
         if(this.position.z - 0.5 > -sala.limite || ((sala.puertaInf) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) ) ){
-            this.position.z -= 0.5;
+            if(this.PasilloHorizontal){
+                if( this.position.z - 0.5 > -sala.tama_puerta)
+                    this.position.z -=0.5;
+            }
+            else{
+                this.position.z -=0.5;
+            }
             this.updatePasilloVertical(sala);
         }
 
     }
 
     moveLeft(sala){
-        if(this.position.x + 0.5 < sala.limite)
+        if(this.position.x + 0.5 < sala.limite || ((sala.puertaIzq) && (this.position.z < sala.tama_puerta) && (this.position.z > -sala.tama_puerta) )){
             if(this.PasilloVertical){
                 if( this.position.x + 0.5 < sala.tama_puerta)
                     this.position.x +=0.5;
@@ -78,26 +90,36 @@ class Mono extends THREE.Object3D{
             else{
                 this.position.x +=0.5;
             }
+            this.updatePasilloHorizontal(sala);
+        }
     }
 
     moveRight(sala){
-        if(this.position.x - 0.5 > -sala.limite)
+        if(this.position.x - 0.5 > -sala.limite || ((sala.puertaDer) && (this.position.z < sala.tama_puerta) && (this.position.z > -sala.tama_puerta) )){
             if(this.PasilloVertical){
-                if(this.position.x - 0.5 > -sala.tama_puerta)
+                if( this.position.x - 0.5 > -sala.tama_puerta)
                     this.position.x -=0.5;
             }
             else{
                 this.position.x -=0.5;
             }
-
+            this.updatePasilloHorizontal(sala);
+        }
         
     }
 
     updatePasilloVertical(sala){
-        if((sala.puertaInf) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) && (this.position.z <= -sala.limite || this.position.z >= sala.limite) )
+        if((sala.puertaInf || sala.puertaSup) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) && (this.position.z <= -sala.limite || this.position.z >= sala.limite) )
             this.PasilloVertical = true;
         else
             this.PasilloVertical = false;
+    }
+
+    updatePasilloHorizontal(sala){
+        if((sala.puertaIzq || sala.puertaDer) && (this.position.z < sala.tama_puerta) && (this.position.z > -sala.tama_puerta) && (this.position.x <= -sala.limite || this.position.x >= sala.limite) )
+            this.PasilloHorizontal = true;
+        else
+            this.PasilloHorizontal = false;
     }
 
 

@@ -120,7 +120,7 @@ class TheScene extends THREE.Scene {
         this.personaje = new Mono();
         this.loader.restart();
         this.add(this.personaje);
-        this.loader.LoadOBJ('modelos/Salas/Sala_09/sala_09.mtl','modelos/Salas/Sala_09/sala_09.obj');
+        this.loader.LoadOBJ('modelos/Salas/Sala_15/sala_15.mtl','modelos/Salas/Sala_15/sala_15.obj');
     }
     if(this.personaje != null && this.mapa == null && objetoCargado) {
         this.sala = new Sala();

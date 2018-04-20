@@ -13,8 +13,8 @@ class Sala extends THREE.Object3D{
 
         this.puertaSup = true;
         this.puertaInf = true;
-        this.puertaDer = false;
-        this.puertaIzq = false;
+        this.puertaDer = true;
+        this.puertaIzq = true;
 
         
     }
