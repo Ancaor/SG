@@ -5,8 +5,6 @@ class Mono extends THREE.Object3D{
 
 
         this.objeto = objeto;
-        console.log("Objeto = "+this.objeto);
-        this.castShadow = true;  
         this.add(this.objeto);
     
 
@@ -55,19 +53,23 @@ class Mono extends THREE.Object3D{
     }
 
 
-    moveForward(){
+    moveForward(limite){
+        if(this.position.z + 0.5 < limite)
         this.position.z += 0.5;
     }
 
-    moveBackward(){
+    moveBackward(limite){
+        if(this.position.z - 0.5 > -limite || (this.position.x < 2.5 && this.position.x > -2.5))
         this.position.z -= 0.5;
     }
 
-    moveLeft(){
+    moveLeft(limite){
+        if(this.position.x + 0.5 < limite)
         this.position.x +=0.5;
     }
 
-    moveRight(){
+    moveRight(limite){
+        if(this.position.x - 0.5 > -limite)
         this.position.x -=0.5;
     }
 

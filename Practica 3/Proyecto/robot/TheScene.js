@@ -38,7 +38,8 @@ class TheScene extends THREE.Scene {
     this.loader = new OBJLoader();
     this.loader.LoadOBJ('modelos/Personaje/Amelio.mtl','modelos/Personaje/Amelio.obj');
     this.personaje = null;
-    this.mapa = null;
+    this.sala = null;
+
     this.createLights ();
     this.createCamera (renderer);
     this.axis = new THREE.AxisHelper (25);
@@ -122,11 +123,9 @@ class TheScene extends THREE.Scene {
         this.loader.LoadOBJ('modelos/Salas/Sala_01/sala_01.mtl','modelos/Salas/Sala_01/sala_01.obj');
     }
     if(this.personaje != null && this.mapa == null && objetoCargado) {
-        this.mapa = objeto;
-        this.mapa.receiveShadow = true;
-        this.mapa.scale.set(3.5,3.5,3.5);
+        this.sala = new Sala();
         this.loader.restart();
-        this.add(this.mapa);
+        this.add(this.sala);
     }
    
   }
@@ -136,19 +135,19 @@ class TheScene extends THREE.Scene {
       switch(key){
         case 37:
             this.personaje.ajustarOrientacion(1);
-            this.personaje.moveLeft();
+            this.personaje.moveLeft(this.sala.limite);
             break;
         case 39:
         this.personaje.ajustarOrientacion(3);
-            this.personaje.moveRight();
+            this.personaje.moveRight(this.sala.limite);
             break;
         case 38:
             this.personaje.ajustarOrientacion(0);
-            this.personaje.moveForward();
+            this.personaje.moveForward(this.sala.limite);
             break;
         case 40:
             this.personaje.ajustarOrientacion(2);
-            this.personaje.moveBackward();
+            this.personaje.moveBackward(this.sala.limite);
             break;
       }
     
