@@ -120,7 +120,7 @@ class TheScene extends THREE.Scene {
         this.personaje = new Mono();
         this.loader.restart();
         this.add(this.personaje);
-        this.loader.LoadOBJ('modelos/Salas/Sala_01/sala_01.mtl','modelos/Salas/Sala_01/sala_01.obj');
+        this.loader.LoadOBJ('modelos/Salas/Sala_09/sala_09.mtl','modelos/Salas/Sala_09/sala_09.obj');
     }
     if(this.personaje != null && this.mapa == null && objetoCargado) {
         this.sala = new Sala();
@@ -135,19 +135,19 @@ class TheScene extends THREE.Scene {
       switch(key){
         case 37:
             this.personaje.ajustarOrientacion(1);
-            this.personaje.moveLeft(this.sala.limite);
+            this.personaje.moveLeft(this.sala);
             break;
         case 39:
         this.personaje.ajustarOrientacion(3);
-            this.personaje.moveRight(this.sala.limite);
+            this.personaje.moveRight(this.sala);
             break;
         case 38:
             this.personaje.ajustarOrientacion(0);
-            this.personaje.moveForward(this.sala.limite);
+            this.personaje.moveForward(this.sala);
             break;
         case 40:
             this.personaje.ajustarOrientacion(2);
-            this.personaje.moveBackward(this.sala.limite);
+            this.personaje.moveBackward(this.sala);
             break;
       }
     

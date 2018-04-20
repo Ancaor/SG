@@ -28,7 +28,8 @@ class Mono extends THREE.Object3D{
 
         this.position.y = this.posicion_base;
         
-
+        this.PasilloHorizontal = false;
+        this.PasilloVertical = false;
         
 
         
@@ -53,25 +54,53 @@ class Mono extends THREE.Object3D{
     }
 
 
-    moveForward(limite){
-        if(this.position.z + 0.5 < limite)
-        this.position.z += 0.5;
+    moveForward(sala){
+        if(this.position.z + 0.5 < sala.limite || ((sala.puertaSup) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) )){
+            this.position.z += 0.5;
+            this.updatePasilloVertical(sala);
+        }
     }
 
-    moveBackward(limite){
-        if(this.position.z - 0.5 > -limite || (this.position.x < 2.5 && this.position.x > -2.5))
-        this.position.z -= 0.5;
+    moveBackward(sala){
+        if(this.position.z - 0.5 > -sala.limite || ((sala.puertaInf) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) ) ){
+            this.position.z -= 0.5;
+            this.updatePasilloVertical(sala);
+        }
+
     }
 
-    moveLeft(limite){
-        if(this.position.x + 0.5 < limite)
-        this.position.x +=0.5;
+    moveLeft(sala){
+        if(this.position.x + 0.5 < sala.limite)
+            if(this.PasilloVertical){
+                if( this.position.x + 0.5 < sala.tama_puerta)
+                    this.position.x +=0.5;
+            }
+            else{
+                this.position.x +=0.5;
+            }
     }
 
-    moveRight(limite){
-        if(this.position.x - 0.5 > -limite)
-        this.position.x -=0.5;
+    moveRight(sala){
+        if(this.position.x - 0.5 > -sala.limite)
+            if(this.PasilloVertical){
+                if(this.position.x - 0.5 > -sala.tama_puerta)
+                    this.position.x -=0.5;
+            }
+            else{
+                this.position.x -=0.5;
+            }
+
+        
     }
+
+    updatePasilloVertical(sala){
+        if((sala.puertaInf) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) && (this.position.z <= -sala.limite || this.position.z >= sala.limite) )
+            this.PasilloVertical = true;
+        else
+            this.PasilloVertical = false;
+    }
+
+
 
     ajustarOrientacion(o){
 
