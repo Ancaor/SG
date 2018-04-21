@@ -24,10 +24,15 @@ class Mapa extends THREE.Object3D{
     generarMapa(){
         for(var i = 0; i < 3; i+=1){
             for(var j = 0; j < 3; j+=1){
-                console.log("InfoCasilla:\n\tCoordenada_X: "+this.mapa[i][j].Coordenada_X+"\n\tCoordenada_Z: "+this.mapa[i][j].Coordenada_Z);
                 var aux = this.mapa[i][j].Sala;
                 aux.position.x = this.mapa[i][j].Coordenada_X;
                 aux.position.z = this.mapa[i][j].Coordenada_Z;
+               
+                var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camara.position.set (aux.position.x, 70, aux.position.z-25);
+                camara.lookAt(new THREE.Vector3 (aux.position.x,0,aux.position.z));
+                aux.setCamara(camara);
+                
                 this.add(aux);
             }
         }
@@ -44,7 +49,6 @@ class Mapa extends THREE.Object3D{
 
                 if(z_mono <= lim_z_sup && z_mono >= lim_z_inf){
                     if(x_mono <= lim_x_sup && x_mono >= lim_x_inf){
-                        console.log("Fila: "+ i + "\tColumna: "+ j);
                         var info_sala_actual = this.mapa[i][j];
                     }
                 }
@@ -52,6 +56,15 @@ class Mapa extends THREE.Object3D{
         }
         
         return info_sala_actual;
+    }
+
+    setCameraAspect (anAspectRatio) {
+        for(var i = 0; i < 3; i+=1){
+            for(var j = 0; j < 3; j+=1){
+                this.mapa[i][j].Sala.camara.aspect = anAspectRatio;
+                this.mapa[i][j].Sala.camara.updateProjectionMatrix();
+            }
+        }
     }
 
 }

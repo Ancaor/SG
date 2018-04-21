@@ -143,7 +143,7 @@ class TheScene extends THREE.Scene {
     }
     if(this.salasCargadas == 15){
       this.salaActual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala;
-      console.log(this.salaActual.tipo_sala);
+      this.camera = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
     }
    
   }
@@ -240,6 +240,7 @@ class TheScene extends THREE.Scene {
   setCameraAspect (anAspectRatio) {
     this.camera.aspect = anAspectRatio;
     this.camera.updateProjectionMatrix();
+    this.mapa.setCameraAspect(anAspectRatio);
   }
 
 }
