@@ -54,69 +54,69 @@ class Mono extends THREE.Object3D{
     }
 
 
-    moveForward(sala){
-        if(this.position.z + 0.5 < sala.limite || ((sala.puertaSup) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) )){
+    moveForward(sala, Coordenada_X, Coordenada_Z){
+        if(this.position.z + 0.5 < sala.limite + Coordenada_Z|| ((sala.puertas[0]) && (this.position.x < sala.tama_puerta + Coordenada_X) && (this.position.x > -sala.tama_puerta + Coordenada_X) )){
             if(this.PasilloHorizontal){
-                if( this.position.z + 0.5 < sala.tama_puerta)
+                if( this.position.z + 0.5 < sala.tama_puerta + Coordenada_Z)
                     this.position.z +=0.5;
             }
             else{
                 this.position.z +=0.5;
             }
-            this.updatePasilloVertical(sala);
+            this.updatePasilloVertical(sala, Coordenada_X, Coordenada_Z);
         }
     }
 
-    moveBackward(sala){
-        if(this.position.z - 0.5 > -sala.limite || ((sala.puertaInf) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) ) ){
+    moveBackward(sala, Coordenada_X, Coordenada_Z){
+        if(this.position.z - 0.5 > -sala.limite + Coordenada_Z || ((sala.puertas[2]) && (this.position.x < sala.tama_puerta + Coordenada_X) && (this.position.x > -sala.tama_puerta + Coordenada_X) ) ){
             if(this.PasilloHorizontal){
-                if( this.position.z - 0.5 > -sala.tama_puerta)
+                if( this.position.z - 0.5 > -sala.tama_puerta + Coordenada_Z)
                     this.position.z -=0.5;
             }
             else{
                 this.position.z -=0.5;
             }
-            this.updatePasilloVertical(sala);
+            this.updatePasilloVertical(sala, Coordenada_X, Coordenada_Z);
         }
 
     }
 
-    moveLeft(sala){
-        if(this.position.x + 0.5 < sala.limite || ((sala.puertaIzq) && (this.position.z < sala.tama_puerta) && (this.position.z > -sala.tama_puerta) )){
+    moveLeft(sala, Coordenada_X, Coordenada_Z){
+        if(this.position.x + 0.5 < sala.limite+Coordenada_X || ((sala.puertas[3]) && (this.position.z < sala.tama_puerta + Coordenada_Z) && (this.position.z > -sala.tama_puerta + Coordenada_Z) )){
             if(this.PasilloVertical){
-                if( this.position.x + 0.5 < sala.tama_puerta)
+                if( this.position.x + 0.5 < sala.tama_puerta+Coordenada_X)
                     this.position.x +=0.5;
             }
             else{
                 this.position.x +=0.5;
             }
-            this.updatePasilloHorizontal(sala);
+            this.updatePasilloHorizontal(sala, Coordenada_X, Coordenada_Z);
         }
     }
 
-    moveRight(sala){
-        if(this.position.x - 0.5 > -sala.limite || ((sala.puertaDer) && (this.position.z < sala.tama_puerta) && (this.position.z > -sala.tama_puerta) )){
+    moveRight(sala, Coordenada_X, Coordenada_Z){
+        if(this.position.x - 0.5 > -sala.limite + Coordenada_X|| ((sala.puertas[1]) && (this.position.z < sala.tama_puerta + Coordenada_Z) && (this.position.z > -sala.tama_puerta + Coordenada_Z) )){
             if(this.PasilloVertical){
-                if( this.position.x - 0.5 > -sala.tama_puerta)
+                if( this.position.x - 0.5 > -sala.tama_puerta + Coordenada_X)
                     this.position.x -=0.5;
             }
             else{
                 this.position.x -=0.5;
             }
-            this.updatePasilloHorizontal(sala);
+            this.updatePasilloHorizontal(sala, Coordenada_X, Coordenada_Z);
         }
         
     }
 
-    updatePasilloVertical(sala){
-        if((sala.puertaInf || sala.puertaSup) && (this.position.x < sala.tama_puerta) && (this.position.x > -sala.tama_puerta) && (this.position.z <= -sala.limite || this.position.z >= sala.limite) )
+    updatePasilloVertical(sala, Coordenada_X, Coordenada_Z){
+        if((sala.puertas[2] || sala.puertas[0]) && (this.position.x < sala.tama_puerta + Coordenada_X) && (this.position.x > -sala.tama_puerta + Coordenada_X) && (this.position.z <= -sala.limite + Coordenada_Z || this.position.z >= sala.limite + Coordenada_Z) )
             this.PasilloVertical = true;
         else
             this.PasilloVertical = false;
     }
 
-    updatePasilloHorizontal(sala){
-        if((sala.puertaIzq || sala.puertaDer) && (this.position.z < sala.tama_puerta) && (this.position.z > -sala.tama_puerta) && (this.position.x <= -sala.limite || this.position.x >= sala.limite) )
+    updatePasilloHorizontal(sala, Coordenada_X, Coordenada_Z){
+        if((sala.puertas[1] || sala.puertas[3]) && (this.position.z < sala.tama_puerta + Coordenada_Z) && (this.position.z > -sala.tama_puerta + Coordenada_Z) && (this.position.x <= -sala.limite + Coordenada_X || this.position.x >= sala.limite + Coordenada_X) )
             this.PasilloHorizontal = true;
         else
             this.PasilloHorizontal = false;

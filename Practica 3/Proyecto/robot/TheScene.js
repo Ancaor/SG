@@ -38,7 +38,10 @@ class TheScene extends THREE.Scene {
     this.loader = new OBJLoader();
     this.loader.LoadOBJ('modelos/Personaje/Amelio.mtl','modelos/Personaje/Amelio.obj');
     this.personaje = null;
-    this.sala = null;
+    this.salas = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+    this.salasCargadas = 0;
+    this.salaActual = null;
+    this.mapa = null;
 
     this.createLights ();
     this.createCamera (renderer);
@@ -60,7 +63,7 @@ class TheScene extends THREE.Scene {
    */
   createCamera (renderer) {
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.set (0, 50, -50);
+    this.camera.position.set (0, 70, -25);
     var look = new THREE.Vector3 (0,0,0);
     this.camera.lookAt(look);
 
@@ -120,35 +123,50 @@ class TheScene extends THREE.Scene {
         this.personaje = new Mono();
         this.loader.restart();
         this.add(this.personaje);
-        this.loader.LoadOBJ('modelos/Salas/Sala_15/sala_15.mtl','modelos/Salas/Sala_15/sala_15.obj');
+        this.loader.LoadOBJ('modelos/Salas/sala_1.mtl','modelos/Salas/sala_1.obj');
     }
-    if(this.personaje != null && this.mapa == null && objetoCargado) {
-        this.sala = new Sala();
+    if(this.personaje != null && this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {
+        this.salas[this.salasCargadas] = new Sala(this.salasCargadas+1);
         this.loader.restart();
-        this.add(this.sala);
+        this.salasCargadas++;
+        var indice = this.salasCargadas+1;
+        this.loader.LoadOBJ('modelos/Salas/sala_'+indice+'.mtl','modelos/Salas/sala_'+indice+'.obj')
+    }
+    if(this.salasCargadas == 14 && this.salas[this.salasCargadas] == null && objetoCargado){
+        this.salas[this.salasCargadas] = new Sala(this.salasCargadas+1);
+        this.loader.restart();
+        this.salasCargadas++;
+        this.mapa = new Mapa(this.salas);
+        this.mapa.generarMapa();
+        this.add(this.mapa);
+        this.salaActual = this.mapa.getSalaActual(0, 0);
+    }
+    if(this.salasCargadas == 15){
+      this.salaActual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala;
+      console.log(this.salaActual.tipo_sala);
     }
    
   }
 
   moveRobot(key){
-   // console.log(key)
-      switch(key){
-        case 37:
-            this.personaje.ajustarOrientacion(1);
-            this.personaje.moveLeft(this.sala);
-            break;
-        case 39:
+    var info_sala_actual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z);
+    switch(key){
+      case 37:
+        this.personaje.ajustarOrientacion(1);
+        this.personaje.moveLeft(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
+        break;
+      case 39:
         this.personaje.ajustarOrientacion(3);
-            this.personaje.moveRight(this.sala);
-            break;
-        case 38:
-            this.personaje.ajustarOrientacion(0);
-            this.personaje.moveForward(this.sala);
-            break;
-        case 40:
-            this.personaje.ajustarOrientacion(2);
-            this.personaje.moveBackward(this.sala);
-            break;
+        this.personaje.moveRight(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
+        break;
+      case 38:
+        this.personaje.ajustarOrientacion(0);
+        this.personaje.moveForward(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
+        break;
+      case 40:
+        this.personaje.ajustarOrientacion(2);
+        this.personaje.moveBackward(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
+        break;
       }
     
     
