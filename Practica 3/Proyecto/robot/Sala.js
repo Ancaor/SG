@@ -3,7 +3,24 @@ class Sala extends THREE.Object3D{
     constructor(n_sala){
         super();
 
-        this.sala = objeto;
+        switch(n_sala){
+            case 1: this.sala = objetos_sala[0].clone(); break;
+            case 2: this.sala = objetos_sala[1].clone(); break;
+            case 3: this.sala = objetos_sala[2].clone(); break;
+            case 4: this.sala = objetos_sala[3].clone(); break;
+            case 5: this.sala = objetos_sala[4].clone(); break;
+            case 6: this.sala = objetos_sala[5].clone(); break;
+            case 7: this.sala = objetos_sala[6].clone(); break;
+            case 8: this.sala = objetos_sala[7].clone(); break;
+            case 9: this.sala = objetos_sala[8].clone(); break;
+            case 10: this.sala = objetos_sala[9].clone(); break;
+            case 11: this.sala = objetos_sala[10].clone(); break;
+            case 12: this.sala = objetos_sala[11].clone(); break;
+            case 13: this.sala = objetos_sala[12].clone(); break;
+            case 14: this.sala = objetos_sala[13].clone(); break;
+            case 15: this.sala = objetos_sala[14].clone(); break;
+        }
+
         this.sala.scale.set(3,3,3);
         this.add(this.sala);
 

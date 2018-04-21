@@ -126,24 +126,26 @@ class TheScene extends THREE.Scene {
         this.loader.LoadOBJ('modelos/Salas/sala_1.mtl','modelos/Salas/sala_1.obj');
     }
     if(this.personaje != null && this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {
-        this.salas[this.salasCargadas] = new Sala(this.salasCargadas+1);
+        objetos_sala[this.salasCargadas] = objeto;
+       // this.salas[this.salasCargadas] = new Sala(this.salasCargadas+1);
         this.loader.restart();
         this.salasCargadas++;
         var indice = this.salasCargadas+1;
         this.loader.LoadOBJ('modelos/Salas/sala_'+indice+'.mtl','modelos/Salas/sala_'+indice+'.obj')
     }
     if(this.salasCargadas == 14 && this.salas[this.salasCargadas] == null && objetoCargado){
-        this.salas[this.salasCargadas] = new Sala(this.salasCargadas+1);
+        objetos_sala[this.salasCargadas] = objeto;
+       // this.salas[this.salasCargadas] = new Sala(this.salasCargadas+1);
         this.loader.restart();
         this.salasCargadas++;
-        this.mapa = new Mapa(this.salas);
+        this.mapa = new Mapa();
         this.mapa.generarMapa();
         this.add(this.mapa);
         this.salaActual = this.mapa.getSalaActual(0, 0);
     }
     if(this.salasCargadas == 15){
-      this.salaActual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala;
-      this.camera = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
+   //   this.salaActual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala;
+      //this.camera = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
     }
    
   }

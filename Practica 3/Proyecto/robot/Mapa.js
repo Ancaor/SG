@@ -1,13 +1,13 @@
 class Mapa extends THREE.Object3D{
 
-    constructor(salas){
+    constructor(){
         super();
 
-        this.salas = salas;
+        this.salas = [null, null, null, null, null, null, null, null, null];
         this.InfoSalas = [
-                            new InfoSalaMapa(48, 48, salas[1]), new InfoSalaMapa(0, 48, salas[13]), new InfoSalaMapa(-48, 48, salas[3]),
-                            new InfoSalaMapa(48, 0, salas[4]), new InfoSalaMapa(0, 0, salas[14]), new InfoSalaMapa(-48, 0, salas[7]),
-                            new InfoSalaMapa(48, -48, salas[5]), new InfoSalaMapa(0, -48, salas[9]), new InfoSalaMapa(-48, -48, salas[6]),
+                            new InfoSalaMapa(48, 48, new Sala(5)), new InfoSalaMapa(0, 48, new Sala(14)), new InfoSalaMapa(-48, 48, new Sala(8)),
+                            new InfoSalaMapa(48, 0,new Sala(11)), new InfoSalaMapa(0, 0, new Sala(15)), new InfoSalaMapa(-48, 0, new Sala(13)),
+                            new InfoSalaMapa(48, -48, new Sala(6)), new InfoSalaMapa(0, -48, new Sala(12)), new InfoSalaMapa(-48, -48, new Sala(7))
                         ];
     
         this.mapa = [ 
@@ -24,16 +24,16 @@ class Mapa extends THREE.Object3D{
     generarMapa(){
         for(var i = 0; i < 3; i+=1){
             for(var j = 0; j < 3; j+=1){
-                var aux = this.mapa[i][j].Sala;
-                aux.position.x = this.mapa[i][j].Coordenada_X;
-                aux.position.z = this.mapa[i][j].Coordenada_Z;
+                this.salas[i*3+j] = this.mapa[i][j].Sala;
+                this.salas[i*3+j].position.x = this.mapa[i][j].Coordenada_X;
+                this.salas[i*3+j].position.z = this.mapa[i][j].Coordenada_Z;
                
                 var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-                camara.position.set (aux.position.x, 70, aux.position.z-25);
-                camara.lookAt(new THREE.Vector3 (aux.position.x,0,aux.position.z));
-                aux.setCamara(camara);
+                camara.position.set (this.salas[i*3+j].position.x, 70, this.salas[i*3+j].position.z-25);
+                camara.lookAt(new THREE.Vector3 (this.salas[i*3+j].position.x,0,this.salas[i*3+j].position.z));
+                this.salas[i*3+j].setCamara(camara);
                 
-                this.add(aux);
+                this.add(this.salas[i*3+j]);
             }
         }
     }

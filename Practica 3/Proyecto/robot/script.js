@@ -2,6 +2,7 @@
 character = null;
 
 objeto = null;
+objetos_sala = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 objetoCargado = false;
 
 // map de teclas para el control fluido
