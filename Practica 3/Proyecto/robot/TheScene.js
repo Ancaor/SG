@@ -127,7 +127,6 @@ class TheScene extends THREE.Scene {
     }
     if(this.personaje != null && this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {
         objetos_sala[this.salasCargadas] = objeto;
-       // this.salas[this.salasCargadas] = new Sala(this.salasCargadas+1);
         this.loader.restart();
         this.salasCargadas++;
         var indice = this.salasCargadas+1;
@@ -135,7 +134,6 @@ class TheScene extends THREE.Scene {
     }
     if(this.salasCargadas == 14 && this.salas[this.salasCargadas] == null && objetoCargado){
         objetos_sala[this.salasCargadas] = objeto;
-       // this.salas[this.salasCargadas] = new Sala(this.salasCargadas+1);
         this.loader.restart();
         this.salasCargadas++;
         this.mapa = new Mapa();
@@ -143,9 +141,8 @@ class TheScene extends THREE.Scene {
         this.add(this.mapa);
         this.salaActual = this.mapa.getSalaActual(0, 0);
     }
-    if(this.salasCargadas == 15){
-   //   this.salaActual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala;
-      //this.camera = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
+    if(this.salasCargadas == 15){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
+      this.camera = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
     }
    
   }
