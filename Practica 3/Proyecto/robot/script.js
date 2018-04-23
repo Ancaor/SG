@@ -6,7 +6,7 @@ objetos_sala = [null, null, null, null, null, null, null, null, null, null, null
 objetoCargado = false;
 
 // map de teclas para el control fluido
-codeset = { 37: false, 38: false, 39: false, 40: false, 32: false, 86: false };
+codeset = { 37: false, 38: false, 39: false, 40: false, 32: false, 86: false ,77:false};
 
 
 //variable que indica que el juego se ha iniciado
@@ -105,6 +105,7 @@ function restartCodeset(){
   codeset[40] = false
   codeset[32] = false
   codeset[86] = false
+  codeset[77] = false
 }
 
 /// It processes the clic-down of the mouse
@@ -181,8 +182,6 @@ function render() {
 
 function keyboardInput(){
 
-  
-
     if(codeset[37] == true){
       //console.log("Izquierda");
       scene.moveRobot(37);
@@ -202,6 +201,11 @@ function keyboardInput(){
     if(codeset[32] == true){
       //console.log("Abajo");
       scene.disparar();
+    }
+
+    if(codeset[77]==true){
+      scene.Mapa();
+      codeset[77]=false;
     }
 }
 

@@ -17,6 +17,11 @@ class TheScene extends THREE.Scene {
     this.trackballControls = null;
     this.ground = null;
 
+    this.mostrarMapa = false;
+
+
+
+
     this.personaje = character;
 
     this.lagrimas = new THREE.Object3D;
@@ -140,14 +145,44 @@ class TheScene extends THREE.Scene {
         this.mapa.generarMapa();
         this.add(this.mapa);
         this.salaActual = this.mapa.getSalaActual(0, 0);
+        this.sala_anterior=this.salaActual;
     }
     if(this.salasCargadas == 15){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
-      this.camera = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
+      this.salaActual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z);
+      this.salaActual.Sala.visible=true;
+      
+      if(this.salaActual != this.sala_anterior){
+        this.sala_anterior.Sala.visible=false;
+        
+      }
+
+      //console.log(this.mostrarMapa)
+      if(this.mostrarMapa){
+        this.camera = this.mapa.camaraMapa;
+      }else {this.camera = this.salaActual.Sala.camara;}
+      
+    //  this.camera = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
+      this.sala_anterior = this.salaActual
+
+      this.personaje.update();
+
+      var longitud = this.lagrimas.children.length;
+
+      for(var i=0;i < longitud; i++){
+        var muerta = this.lagrimas.children[i].update(this.salaActual.Sala,this.salaActual.Coordenada_X,this.salaActual.Coordenada_Z);
+        if(muerta){
+          this.lagrimas.remove(this.lagrimas.children[i]);
+        }
+        
+      }
+
     }
    
   }
 
   moveRobot(key){
+
+    if(!this.mostrarMapa){
     var info_sala_actual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z);
     switch(key){
       case 37:
@@ -167,6 +202,7 @@ class TheScene extends THREE.Scene {
         this.personaje.moveBackward(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
         break;
       }
+    }
     
     
   }
@@ -240,6 +276,20 @@ class TheScene extends THREE.Scene {
     this.camera.aspect = anAspectRatio;
     this.camera.updateProjectionMatrix();
     this.mapa.setCameraAspect(anAspectRatio);
+  }
+
+  Mapa(){
+    console.log("skjdkjss")
+    if(this.mostrarMapa == true){
+      this.mostrarMapa = false;
+      this.mapa.ocultaMapa();
+    }
+    else{
+      this.mostrarMapa = true; 
+      this.mapa.muestraMapa();
+      
+    }
+      
   }
 
 }

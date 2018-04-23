@@ -14,7 +14,13 @@ class Mapa extends THREE.Object3D{
                         [ this.InfoSalas[3], this.InfoSalas[4], this.InfoSalas[5] ],
                         [ this.InfoSalas[6], this.InfoSalas[7], this.InfoSalas[8] ],
                     ]
-        
+
+        this.salasVisitadas = new Array();
+
+        this.camaraMapa = new THREE.OrthographicCamera( 200 / - 2, 200 / 2, 200 / 2, 200 / - 2, 1, 100000 );
+        this.camaraMapa.position.set(0,200,-1);
+        var look = new THREE.Vector3 (0,0,0);
+        this.camaraMapa.lookAt(look);
         
     
     
@@ -26,9 +32,10 @@ class Mapa extends THREE.Object3D{
                 var aux = this.mapa[i][j].Sala;
                 aux.position.x = this.mapa[i][j].Coordenada_X;
                 aux.position.z = this.mapa[i][j].Coordenada_Z;
+                aux.visible=false;
                
                 var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-                camara.position.set (aux.position.x, 70, aux.position.z-25);
+                camara.position.set (aux.position.x, 70, aux.position.z-20);
                 camara.lookAt(new THREE.Vector3 (aux.position.x,0,aux.position.z));
                 aux.setCamara(camara);
                 
@@ -49,6 +56,7 @@ class Mapa extends THREE.Object3D{
                 if(z_mono <= lim_z_sup && z_mono >= lim_z_inf){
                     if(x_mono <= lim_x_sup && x_mono >= lim_x_inf){
                         var info_sala_actual = this.mapa[i][j];
+                        this.mapa[i][j].Visitada=true;
                     }
                 }
             }
@@ -62,6 +70,23 @@ class Mapa extends THREE.Object3D{
             for(var j = 0; j < 3; j+=1){
                 this.mapa[i][j].Sala.camara.aspect = anAspectRatio;
                 this.mapa[i][j].Sala.camara.updateProjectionMatrix();
+            }
+        }
+    }
+
+    muestraMapa(){
+        for(var i = 0; i < 3; i+=1){
+            for(var j = 0; j < 3; j+=1){
+                if(this.mapa[i][j].Visitada)
+                    this.mapa[i][j].Sala.visible=true;
+            }
+        }
+    }
+
+    ocultaMapa(){
+        for(var i = 0; i < 3; i+=1){
+            for(var j = 0; j < 3; j+=1){
+                    this.mapa[i][j].Sala.visible=false;
             }
         }
     }

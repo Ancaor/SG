@@ -38,20 +38,35 @@ class Lagrima extends THREE.Object3D{
 
     }
 
-    update(){
+    update(sala, Coordenada_X, Coordenada_Z){
         this.tiempoActual = Date.now();
 
         this.tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
         
         switch(this.orientacion){
-            case 0: this.lagrima.position.z += this.velocidad * this.tiempoTranscurrido; break;
-            case 2: this.lagrima.position.z -= this.velocidad * this.tiempoTranscurrido; break;
-            case 1: this.lagrima.position.x += this.velocidad * this.tiempoTranscurrido; break;
-            case 3: this.lagrima.position.x -= this.velocidad * this.tiempoTranscurrido; break;
+
+            case 0:
+            if(this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z)
+             this.position.z += this.velocidad * this.tiempoTranscurrido;
+             else return true;
+             
+              break;
+            case 2:
+            if(this.position.z - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_Z)
+             this.position.z -= this.velocidad * this.tiempoTranscurrido;
+             else return true; break;
+            case 1:
+            if(this.position.x + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_X)
+             this.position.x += this.velocidad * this.tiempoTranscurrido; else return true;break;
+            case 3:
+            if(this.position.x - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_X)
+             this.position.x -= this.velocidad * this.tiempoTranscurrido; else return true;break;
+        
         }
         
        //this.lagrima.position.z += this.velocidad * this.tiempoTranscurrido;
         this.tiempoAnterior =this.tiempoActual;
+        return false;
     }
     
 }
