@@ -1,6 +1,6 @@
 class Sala extends THREE.Object3D{
 
-    constructor(n_sala){
+    constructor(n_sala, n_enemigos){
         super();
 
         switch(n_sala){
@@ -51,10 +51,9 @@ class Sala extends THREE.Object3D{
             this.puertas[1] = true;
 
     
-        this.enemigos.add(new Seta(this));
-
-        this.add(this.enemigos);
-        
+        for(var i = 0; i < n_enemigos; i+=1)
+            this.enemigos.add(new Seta(this));
+            this.add(this.enemigos);
     }
 
     update(){

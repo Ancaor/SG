@@ -46,21 +46,30 @@ class Lagrima extends THREE.Object3D{
         switch(this.orientacion){
 
             case 0:
-            if(this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z)
+            if(this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z){
              this.position.z += this.velocidad * this.tiempoTranscurrido;
+             //console.log("Z_Lagrima : "+ this.position.z);
+            }
              else return true;
              
               break;
             case 2:
             if(this.position.z - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_Z)
              this.position.z -= this.velocidad * this.tiempoTranscurrido;
-             else return true; break;
+             else return true; 
+             break;
+
             case 1:
             if(this.position.x + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_X)
-             this.position.x += this.velocidad * this.tiempoTranscurrido; else return true;break;
+             this.position.x += this.velocidad * this.tiempoTranscurrido; 
+             else return true;
+             break;
+
             case 3:
             if(this.position.x - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_X)
-             this.position.x -= this.velocidad * this.tiempoTranscurrido; else return true;break;
+             this.position.x -= this.velocidad * this.tiempoTranscurrido; 
+             else return true;
+             break;
         
         }
         

@@ -161,11 +161,11 @@ class TheScene extends THREE.Scene {
       this.salaActual.Sala.update();
 
       //console.log(this.mostrarMapa)
-     /*
+     
       if(this.mostrarMapa){
         this.camera = this.mapa.camaraMapa;
       }else {this.camera = this.salaActual.Sala.camara;}
-      */
+      
 
     //  this.camera = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
       this.sala_anterior = this.salaActual
