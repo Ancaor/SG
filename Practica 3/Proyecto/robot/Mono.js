@@ -10,7 +10,7 @@ class Mono extends THREE.Object3D{
 
         ///
         this.subir_cara = false;
-        this.posicion_base = 5;
+        this.posicion_base = 3;
         //
 
         this.orientacion = 0 //0:z+ , 1:x+ , 2:z- , 3 :x-
@@ -18,11 +18,11 @@ class Mono extends THREE.Object3D{
 
 
         this.ojoDer = new Launcher();
-        this.ojoDer.position.y = 5;
+        //this.ojoDer.position.y = 5;
 
-        this.ojoDer.position.z = 1.2;
-        this.ojoDer.position.x = 0.6;
-        this.ojoDer.position.y = 0.4;
+       //this.ojoDer.position.z = 1.2;
+       //this.ojoDer.position.x = 0.6;
+       this.ojoDer.position.y = -0.7;
 
         this.add(this.ojoDer)
 

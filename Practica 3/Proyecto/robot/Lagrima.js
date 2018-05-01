@@ -1,7 +1,7 @@
 class Lagrima extends THREE.Object3D{
     constructor (parameters) {
         super();
-        this.velocidad = Math.random() * (parameters.v+10 - parameters.v) + parameters.v; //unidades / s
+        this.velocidad = parameters.v; //unidades / s
         this.tiempoAnterior = Date.now();
         this.tiempoActual = null;
 

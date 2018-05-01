@@ -4,6 +4,7 @@ character = null;
 objeto = null;
 objetos_sala = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 objetoCargado = false;
+enemigos = [null,null,null];
 
 // map de teclas para el control fluido
 codeset = { 37: false, 38: false, 39: false, 40: false, 32: false, 86: false ,77:false};
