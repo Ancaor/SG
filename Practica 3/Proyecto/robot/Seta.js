@@ -16,30 +16,20 @@ class Seta extends Enemigo{
             this.x = Math.random() * (20 - (-20)) + (-20);
             this.z = Math.random() * (20 - (-20)) + (-20);
 
-/************************ Código para evitar crear la seta en la puerta *************************************** /
+/************************ Código para evitar crear la seta en la puerta ***************************************/
 
 
 
-            if(this.salaActual.puertas[0] && this.z > 14 && this.x > -3.5 && this.x < 3.5){
+            if((this.salaActual.puertas[0] && this.z > 14 && this.x > -3.5 && this.x < 3.5) 
+                || (this.salaActual.puertas[2] && this.z < -14 && this.x > -3.5 && this.x < 3.5) 
+                || (this.salaActual.puertas[1] && this.x < -14 && this.z > -3.5 && this.z < 3.5)
+                || (this.salaActual.puertas[3] && this.x > 14 && this.z > -3.5 && this.z < 3.5)){
                 this.tapa_puerta = true;
-                console.log("Tapa puerta superior: ("+this.x+",1,"+this.z+")");
+                console.log("Tapa puerta: ("+this.x+",1,"+this.z+")");
+            }else{
+                this.tapa_puerta = false;
             }
-
-            if(this.salaActual.puertas[2] && this.z < -14 && this.x > -3.5 && this.x < 3.5){
-                this.tapa_puerta = true;
-                console.log("Tapa puerta inferior: ("+this.x+",1,"+this.z+")");
-            }
-
-            if(this.salaActual.puertas[1] && this.x < -14 && this.z > -3.5 && this.z < 3.5){
-                this.tapa_puerta = true;
-                console.log("Tapa puerta derecha: ("+this.x+",1,"+this.z+")");
-            }
-
-            if(this.salaActual.puertas[3] && this.x > 14 && this.z > -3.5 && this.z < 3.5){
-                this.tapa_puerta = true;
-                console.log("Tapa puerta izquierda: ("+this.x+",1,"+this.z+")");
-            }
-*/
+            
         }while( this.tapa_puerta );
 
         this.mesh.position.set(this.x,1,this.z);
