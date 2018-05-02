@@ -5,8 +5,9 @@ class Seta extends Enemigo{
         this.tiempoAnterior = Date.now();
         this.tiempoActual;
 
-        this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
+        //this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
 
+        this.mesh = enemigos[0].clone();
         this.salaActual = sala;
         this.tapa_puerta = false;
         this.x = 0;
@@ -74,11 +75,11 @@ class Seta extends Enemigo{
 
         if(porcentajeAnimacion <= porcentaje_inflandose){
             factor_escalado = 0.5 * porcentajeAnimacion / porcentaje_inflandose 
-            factor_escalado+=1;
+            factor_escalado+=0.75;
             this.mesh.scale.set(factor_escalado,factor_escalado,factor_escalado);
         }else{
             factor_escalado = (1-porcentajeAnimacion) / porcentaje_desinflandose * 0.5;
-            factor_escalado+=1;
+            factor_escalado+=0.75;
             this.mesh.scale.set(factor_escalado,factor_escalado,factor_escalado);
         }
         

@@ -130,9 +130,15 @@ class TheScene extends THREE.Scene {
         this.personaje = new Mono();
         this.loader.restart();
         this.add(this.personaje);
-        this.loader.LoadOBJ('modelos/Salas/sala_1.mtl','modelos/Salas/sala_1.obj');
+        this.loader.LoadOBJ('modelos/Enemigos/Mushroom.mtl','modelos/Enemigos/Mushroom.obj');
+        
     }
-    if(this.personaje != null && this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {
+    if(enemigos[0] == null && objetoCargado){
+      enemigos[0] = objeto;
+      this.loader.restart();
+      this.loader.LoadOBJ('modelos/Salas/sala_1.mtl','modelos/Salas/sala_1.obj');
+    }
+    if(this.personaje != null && enemigos[0] != null &&this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {
         objetos_sala[this.salasCargadas] = objeto;
         this.loader.restart();
         this.salasCargadas++;
