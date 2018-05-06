@@ -41,7 +41,7 @@ class Seta extends Enemigo{
 
         this.inflar = true;
 
-        this.cadencia = 2;
+        this.cadencia = 5;
 
         
 
@@ -90,6 +90,7 @@ class Seta extends Enemigo{
         var muerta = this.lagrimas.children[i].update(this.salaActual,0,0);
         if(muerta){
           this.lagrimas.remove(this.lagrimas.children[i]);
+          longitud-=1;
         }
         
       }

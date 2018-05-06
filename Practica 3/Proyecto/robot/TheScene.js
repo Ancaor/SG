@@ -184,6 +184,7 @@ class TheScene extends THREE.Scene {
         var muerta = this.lagrimas.children[i].update(this.salaActual.Sala,this.salaActual.Coordenada_X,this.salaActual.Coordenada_Z);
         if(muerta){
           this.lagrimas.remove(this.lagrimas.children[i]);
+          longitud-=1;
         }
         
       }
@@ -197,20 +198,16 @@ class TheScene extends THREE.Scene {
     if(!this.mostrarMapa){
     var info_sala_actual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z);
     switch(key){
-      case 37:
-        this.personaje.ajustarOrientacion(1);
+      case 65:
         this.personaje.moveLeft(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
         break;
-      case 39:
-        this.personaje.ajustarOrientacion(3);
+      case 68:
         this.personaje.moveRight(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
         break;
-      case 38:
-        this.personaje.ajustarOrientacion(0);
+      case 87:
         this.personaje.moveForward(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
         break;
-      case 40:
-        this.personaje.ajustarOrientacion(2);
+      case 83:
         this.personaje.moveBackward(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
         break;
       }
@@ -219,7 +216,7 @@ class TheScene extends THREE.Scene {
     
   }
 
-  disparar(){
+  disparar(orientacion){
    // console.log(this.personaje.position)
    // console.log(this.personaje.ojoDer.position)
   this.tiempoActualDisparo = Date.now()
@@ -228,11 +225,12 @@ class TheScene extends THREE.Scene {
    // console.log(tiempotransc)
    if( tiempotransc > 0.4){
     var a = new THREE.Vector3(this.personaje.position.x,this.personaje.position.y,this.personaje.position.z);
-
+    this.personaje.ajustarOrientacion(orientacion);
     a.add(this.personaje.ojoDer.position)
+    
 
     //var a;
-    var lagrima = new Lagrima({z:a.z,y:a.y,x:a.x,o:this.personaje.orientacion,v:30});
+    var lagrima = new Lagrima({z:a.z,y:a.y,x:a.x,o:orientacion,v:30});
 
     this.lagrimas.add(lagrima)
     //this.personaje.getWorldPosition(a);

@@ -7,7 +7,7 @@ objetoCargado = false;
 enemigos = [null,null,null];
 
 // map de teclas para el control fluido
-codeset = { 37: false, 38: false, 39: false, 40: false, 32: false, 86: false ,77:false};
+codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false};
 
 
 //variable que indica que el juego se ha iniciado
@@ -107,6 +107,10 @@ function restartCodeset(){
   codeset[32] = false
   codeset[86] = false
   codeset[77] = false
+  codeset[65] = false
+  codeset[68] = false
+  codeset[87] = false
+  codeset[83] = false
 }
 
 /// It processes the clic-down of the mouse
@@ -184,24 +188,28 @@ function render() {
 function keyboardInput(){
 
     if(codeset[37] == true){
-      //console.log("Izquierda");
-      scene.moveRobot(37);
+      scene.disparar(1);
     }
     if(codeset[38] == true){
-      //console.log("Arriba");
-      scene.moveRobot(38);
+      scene.disparar(0);
     }
     if(codeset[39] == true){
-      //console.log("Derecha");
-      scene.moveRobot(39);
+      scene.disparar(3);
     }
     if(codeset[40] == true){
-      //console.log("Abajo");
-      scene.moveRobot(40);
+      scene.disparar(2);
     }
-    if(codeset[32] == true){
-      //console.log("Abajo");
-      scene.disparar();
+    if(codeset[65] == true){
+      scene.moveRobot(65)
+    }
+    if(codeset[68] == true){
+      scene.moveRobot(68)
+    }
+    if(codeset[87] == true){
+      scene.moveRobot(87)
+    }
+    if(codeset[83] == true){
+      scene.moveRobot(83)
     }
 
     if(codeset[77]==true){
