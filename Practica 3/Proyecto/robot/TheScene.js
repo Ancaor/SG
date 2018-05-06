@@ -223,14 +223,14 @@ class TheScene extends THREE.Scene {
 
   var tiempotransc = (this.tiempoActualDisparo - this.tiempoAnteriorDisparo) / 1000
    // console.log(tiempotransc)
-   if( tiempotransc > 0.4){
+   if( tiempotransc > this.personaje.cadencia){
     var a = new THREE.Vector3(this.personaje.position.x,this.personaje.position.y,this.personaje.position.z);
     this.personaje.ajustarOrientacion(orientacion);
     a.add(this.personaje.ojoDer.position)
     
 
     //var a;
-    var lagrima = new Lagrima({z:a.z,y:a.y,x:a.x,o:orientacion,v:30});
+    var lagrima = new Lagrima({z:a.z,y:a.y,x:a.x,o:orientacion,v:this.personaje.velocidadLagrima,r:this.personaje.radioLagrima,c:this.personaje.colorLagrima});
 
     this.lagrimas.add(lagrima)
     //this.personaje.getWorldPosition(a);

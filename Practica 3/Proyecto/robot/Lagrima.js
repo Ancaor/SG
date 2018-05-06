@@ -12,13 +12,13 @@ class Lagrima extends THREE.Object3D{
         this.posiciony = parameters.y;
         this.posicionx = parameters.x;
 
-        this.radio=0.25;
+        this.radio = parameters.r;
 
 
 
         
 
-            this.material = new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7});
+        this.material = new THREE.MeshPhongMaterial ({color: parameters.c,transparent: false, opacity: 0.7});
         
         var geometria = new THREE.SphereGeometry (1,32,32);    // geometria esfera
 
@@ -48,7 +48,6 @@ class Lagrima extends THREE.Object3D{
             case 0:
             if(this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z){
              this.position.z += this.velocidad * this.tiempoTranscurrido;
-             //console.log("Z_Lagrima : "+ this.position.z);
             }
              else return true;
              
@@ -73,7 +72,6 @@ class Lagrima extends THREE.Object3D{
         
         }
         
-       //this.lagrima.position.z += this.velocidad * this.tiempoTranscurrido;
         this.tiempoAnterior =this.tiempoActual;
         return false;
     }

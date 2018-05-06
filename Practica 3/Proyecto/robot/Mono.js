@@ -6,6 +6,8 @@ class Mono extends THREE.Object3D{
 
         this.objeto = objeto;
         this.add(this.objeto);
+
+        this.velocidad = 0.25;
     
 
         ///
@@ -30,7 +32,13 @@ class Mono extends THREE.Object3D{
         
         this.PasilloHorizontal = false;
         this.PasilloVertical = false;
-        
+
+
+        //Propiedades de las lágrimas
+        this.cadencia = 1;
+        this.velocidadLagrima = 30;
+        this.radioLagrima = 0.35;
+        this.colorLagrima = 0xffffffff;
 
         
     }
@@ -53,28 +61,28 @@ class Mono extends THREE.Object3D{
 
     }
 
-
     moveForward(sala, Coordenada_X, Coordenada_Z){
-        if(this.position.z + 0.5 < sala.limite + Coordenada_Z|| ((sala.puertas[0]) && (this.position.x < sala.tama_puerta + Coordenada_X) && (this.position.x > -sala.tama_puerta + Coordenada_X) )){
+
+        if(this.position.z + this.velocidad < sala.limite + Coordenada_Z|| ((sala.puertas[0]) && (this.position.x < sala.tama_puerta + Coordenada_X) && (this.position.x > -sala.tama_puerta + Coordenada_X) )){
             if(this.PasilloHorizontal){
-                if( this.position.z + 0.5 < sala.tama_puerta + Coordenada_Z)
-                    this.position.z +=0.5;
+                if( this.position.z + this.velocidad < sala.tama_puerta + Coordenada_Z)
+                    this.position.z +=this.velocidad;
             }
             else{
-                this.position.z +=0.5;
+                this.position.z +=this.velocidad;
             }
             this.updatePasilloVertical(sala, Coordenada_X, Coordenada_Z);
         }
     }
 
     moveBackward(sala, Coordenada_X, Coordenada_Z){
-        if(this.position.z - 0.5 > -sala.limite + Coordenada_Z || ((sala.puertas[2]) && (this.position.x < sala.tama_puerta + Coordenada_X) && (this.position.x > -sala.tama_puerta + Coordenada_X) ) ){
+        if(this.position.z - this.velocidad > -sala.limite + Coordenada_Z || ((sala.puertas[2]) && (this.position.x < sala.tama_puerta + Coordenada_X) && (this.position.x > -sala.tama_puerta + Coordenada_X) ) ){
             if(this.PasilloHorizontal){
-                if( this.position.z - 0.5 > -sala.tama_puerta + Coordenada_Z)
-                    this.position.z -=0.5;
+                if( this.position.z - this.velocidad > -sala.tama_puerta + Coordenada_Z)
+                    this.position.z -=this.velocidad;
             }
             else{
-                this.position.z -=0.5;
+                this.position.z -=this.velocidad;
             }
             this.updatePasilloVertical(sala, Coordenada_X, Coordenada_Z);
         }
@@ -82,26 +90,26 @@ class Mono extends THREE.Object3D{
     }
 
     moveLeft(sala, Coordenada_X, Coordenada_Z){
-        if(this.position.x + 0.5 < sala.limite+Coordenada_X || ((sala.puertas[3]) && (this.position.z < sala.tama_puerta + Coordenada_Z) && (this.position.z > -sala.tama_puerta + Coordenada_Z) )){
+        if(this.position.x + this.velocidad < sala.limite+Coordenada_X || ((sala.puertas[3]) && (this.position.z < sala.tama_puerta + Coordenada_Z) && (this.position.z > -sala.tama_puerta + Coordenada_Z) )){
             if(this.PasilloVertical){
-                if( this.position.x + 0.5 < sala.tama_puerta+Coordenada_X)
-                    this.position.x +=0.5;
+                if( this.position.x + this.velocidad < sala.tama_puerta+Coordenada_X)
+                    this.position.x +=this.velocidad;
             }
             else{
-                this.position.x +=0.5;
+                this.position.x +=this.velocidad;
             }
             this.updatePasilloHorizontal(sala, Coordenada_X, Coordenada_Z);
         }
     }
 
     moveRight(sala, Coordenada_X, Coordenada_Z){
-        if(this.position.x - 0.5 > -sala.limite + Coordenada_X|| ((sala.puertas[1]) && (this.position.z < sala.tama_puerta + Coordenada_Z) && (this.position.z > -sala.tama_puerta + Coordenada_Z) )){
+        if(this.position.x - this.velocidad > -sala.limite + Coordenada_X|| ((sala.puertas[1]) && (this.position.z < sala.tama_puerta + Coordenada_Z) && (this.position.z > -sala.tama_puerta + Coordenada_Z) )){
             if(this.PasilloVertical){
-                if( this.position.x - 0.5 > -sala.tama_puerta + Coordenada_X)
-                    this.position.x -=0.5;
+                if( this.position.x - this.velocidad > -sala.tama_puerta + Coordenada_X)
+                    this.position.x -=this.velocidad;
             }
             else{
-                this.position.x -=0.5;
+                this.position.x -=this.velocidad;
             }
             this.updatePasilloHorizontal(sala, Coordenada_X, Coordenada_Z);
         }

@@ -41,7 +41,12 @@ class Seta extends Enemigo{
 
         this.inflar = true;
 
-        this.cadencia = 5;
+
+        //Propiedades de las lágrimas
+        this.cadencia = 1.5;
+        this.velocidadLagrima = 30;
+        this.radioLagrima = 0.35;
+        this.colorLagrima = 0xf90000;
 
         
 
@@ -59,10 +64,10 @@ class Seta extends Enemigo{
 
         var tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
         if(tiempoTranscurrido >= this.cadencia){
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y,x:this.mesh.position.x,o:0,v:10}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x+1,o:1,v:10}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y,x:this.mesh.position.x,o:2,v:10}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x-1,o:3,v:10}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y,x:this.mesh.position.x,o:0,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x+1,o:1,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y,x:this.mesh.position.x,o:2,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x-1,o:3,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima}));
             this.tiempoAnterior = this.tiempoActual;
 
             this.inflar = true;
