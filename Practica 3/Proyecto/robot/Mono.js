@@ -8,7 +8,7 @@ class Mono extends THREE.Object3D{
         this.add(this.objeto);
 
         this.velocidad = 0.25;
-        this.vida = 100;
+        this.vida = 3;
     
 
         ///

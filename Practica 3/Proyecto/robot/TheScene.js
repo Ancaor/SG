@@ -171,7 +171,7 @@ class TheScene extends THREE.Scene {
       var golpeaMono = this.salaActual.Sala.update(this.personaje);
 
       if(golpeaMono){
-        this.personaje.vida -= 50;
+        this.personaje.vida -= 1;
         console.log(this.personaje.vida);
         if(this.personaje.vida <= 0){
           alert("Has perdido. Te has quedado sin vida");
