@@ -20,6 +20,7 @@ class Mapa extends THREE.Object3D{
         this.camaraMapa = new THREE.OrthographicCamera( 200 / - 2, 200 / 2, 200 / 2, 200 / - 2, 1, 100000 );
         this.camaraMapa.position.set(0,200,-1);
         var look = new THREE.Vector3 (0,0,0);
+        this.salaActual = this.mapa[1][1];
         this.camaraMapa.lookAt(look);
         
     
@@ -44,25 +45,44 @@ class Mapa extends THREE.Object3D{
         }
     }
 
-    getSalaActual(x_mono, z_mono){
+    calculaSalaActual(x_mono, z_mono){
+
+        var lim_x_inf;
+        var lim_x_sup;
+        var lim_z_inf;
+        var lim_z_sup;
 
         for(var i = 0; i < 3; i+=1){
             for(var j = 0; j < 3; j+=1){
-                var lim_x_inf = this.mapa[i][j].Coordenada_X - this.mapa[i][j].Sala.limite - (2*this.mapa[i][j].Sala.long_pasillo);
-                var lim_x_sup = this.mapa[i][j].Coordenada_X + this.mapa[i][j].Sala.limite + 2*this.mapa[i][j].Sala.long_pasillo;
-                var lim_z_inf = this.mapa[i][j].Coordenada_Z - this.mapa[i][j].Sala.limite - 2*this.mapa[i][j].Sala.long_pasillo;
-                var lim_z_sup = this.mapa[i][j].Coordenada_Z + this.mapa[i][j].Sala.limite + 2*this.mapa[i][j].Sala.long_pasillo;
+
+                if(this.mapa[i][j] == this.salaActual){
+                    lim_x_inf = this.mapa[i][j].Coordenada_X - this.mapa[i][j].Sala.limite - 2*this.mapa[i][j].Sala.long_pasillo;
+                    lim_x_sup = this.mapa[i][j].Coordenada_X + this.mapa[i][j].Sala.limite + 2*this.mapa[i][j].Sala.long_pasillo;
+                    lim_z_inf = this.mapa[i][j].Coordenada_Z - this.mapa[i][j].Sala.limite - 2*this.mapa[i][j].Sala.long_pasillo;
+                    lim_z_sup = this.mapa[i][j].Coordenada_Z + this.mapa[i][j].Sala.limite + 2*this.mapa[i][j].Sala.long_pasillo;
+                }
+                else{
+                    lim_x_inf = this.mapa[i][j].Coordenada_X - this.mapa[i][j].Sala.limite ;
+                    lim_x_sup = this.mapa[i][j].Coordenada_X + this.mapa[i][j].Sala.limite ;
+                    lim_z_inf = this.mapa[i][j].Coordenada_Z - this.mapa[i][j].Sala.limite ;
+                    lim_z_sup = this.mapa[i][j].Coordenada_Z + this.mapa[i][j].Sala.limite ;
+                }
+               
 
                 if(z_mono <= lim_z_sup && z_mono >= lim_z_inf){
                     if(x_mono <= lim_x_sup && x_mono >= lim_x_inf){
-                        var info_sala_actual = this.mapa[i][j];
+                        //var info_sala_actual = this.mapa[i][j];
+                        this.salaActual = this.mapa[i][j];
                         this.mapa[i][j].Visitada=true;
                     }
                 }
             }
         }
         
-        return info_sala_actual;
+    }
+
+    getSalaActual(){
+        return this.salaActual;
     }
 
     setCameraAspect (anAspectRatio) {

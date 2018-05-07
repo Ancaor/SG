@@ -152,11 +152,13 @@ class TheScene extends THREE.Scene {
         this.mapa = new Mapa();
         this.mapa.generarMapa();
         this.add(this.mapa);
-        this.salaActual = this.mapa.getSalaActual(0, 0);
+        this.salaActual = this.mapa.getSalaActual();
+
         this.sala_anterior=this.salaActual;
     }
     if(this.salasCargadas == 15){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
-      this.salaActual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z);
+      this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z);
+      this.salaActual = this.mapa.getSalaActual(); 
       this.salaActual.Sala.visible=true;
       
       if(this.salaActual != this.sala_anterior){
@@ -175,7 +177,7 @@ class TheScene extends THREE.Scene {
       }else {this.camera = this.salaActual.Sala.camara;}
       
 
-    //  this.camera = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
+    //  this.camera = this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
       this.sala_anterior = this.salaActual
 
       this.personaje.update();
@@ -208,7 +210,7 @@ class TheScene extends THREE.Scene {
   moveRobot(key){
 
     if(!this.mostrarMapa){
-    var info_sala_actual = this.mapa.getSalaActual(this.personaje.position.x, this.personaje.position.z);
+    var info_sala_actual = this.mapa.getSalaActual(); 
     switch(key){
       case 65:
         this.personaje.moveLeft(info_sala_actual.Sala, info_sala_actual.Coordenada_X, info_sala_actual.Coordenada_Z );
