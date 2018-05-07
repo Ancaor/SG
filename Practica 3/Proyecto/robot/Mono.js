@@ -43,7 +43,7 @@ class Mono extends THREE.Object3D{
         this.velocidadLagrima = 30;
         this.radioLagrima = 0.35;
         this.colorLagrima = 0xffffffff;
-        this.damage = 20;
+        this.damage = 50;
 
         
     }

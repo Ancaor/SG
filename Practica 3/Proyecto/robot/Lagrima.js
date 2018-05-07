@@ -51,26 +51,26 @@ class Lagrima extends THREE.Object3D{
         switch(this.orientacion){
 
             case 0:
-            if(this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z){
+            if((this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z) && (this.position.x < sala.limite + Coordenada_X)&& (this.position.x > -sala.limite + Coordenada_X)){
              this.position.z += this.velocidad * this.tiempoTranscurrido;
             }
              else return -1;
              
               break;
             case 2:
-            if(this.position.z - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_Z)
+            if((this.position.z - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_Z) && (this.position.x < sala.limite + Coordenada_X)&& (this.position.x > -sala.limite + Coordenada_X))
              this.position.z -= this.velocidad * this.tiempoTranscurrido;
              else return -1; 
              break;
 
             case 1:
-            if(this.position.x + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_X)
+            if((this.position.x + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_X) && (this.position.z < sala.limite + Coordenada_Z)&& (this.position.z > -sala.limite + Coordenada_Z))
              this.position.x += this.velocidad * this.tiempoTranscurrido; 
              else return -1;
              break;
 
             case 3:
-            if(this.position.x - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_X)
+            if((this.position.x - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_X)&& (this.position.z < sala.limite + Coordenada_Z)&& (this.position.z > -sala.limite + Coordenada_Z))
              this.position.x -= this.velocidad * this.tiempoTranscurrido; 
              else return -1;
              break;
