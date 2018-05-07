@@ -217,6 +217,38 @@ function keyboardInput(){
     }
 }
 
+
+function quitarVida() {
+  
+  var elem = document.querySelectorAll("#vida li");
+  li = elem[elem.length-1];
+  console.log(li);
+  li.parentNode.removeChild(li);
+  
+}
+
+function initVida(vidaTotal) {
+  var elem = document.getElementById("vida");
+  
+  for(var i = 0; i < vidaTotal; i+=1){
+    darVida();
+  }
+  
+}
+
+function darVida(l) {
+  var elem = document.getElementById("vida");
+
+  var li = document.createElement("li");
+  li.id = "heart";
+  elem.appendChild(li);
+  
+  
+}
+
+
+
+
 /// The main function
 $(function () {
   // create a render and set the size

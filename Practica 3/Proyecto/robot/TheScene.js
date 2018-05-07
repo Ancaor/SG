@@ -128,6 +128,7 @@ class TheScene extends THREE.Scene {
 
     if(this.personaje == null && objetoCargado) { 
         this.personaje = new Mono();
+        initVida(this.personaje.vida);
         this.loader.restart();
         this.add(this.personaje);
         this.loader.LoadOBJ('modelos/Enemigos/Mushroom.mtl','modelos/Enemigos/Mushroom.obj');
@@ -172,7 +173,7 @@ class TheScene extends THREE.Scene {
 
       if(golpeaMono){
         this.personaje.vida -= 1;
-        console.log(this.personaje.vida);
+        quitarVida();
         if(this.personaje.vida <= 0){
           alert("Has perdido. Te has quedado sin vida");
           this.reiniciarPartida();          
@@ -225,6 +226,7 @@ reiniciarPartida(){
   this.add(this.mapa);
 
   codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false};
+  initVida(this.personaje.vida);
 }
 
   moveRobot(key){

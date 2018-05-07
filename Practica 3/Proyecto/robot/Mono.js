@@ -7,8 +7,10 @@ class Mono extends THREE.Object3D{
         this.objeto = objeto;
         this.add(this.objeto);
 
+        this.vidaInicial = 3;
+
         this.velocidad = 0.25;
-        this.vida = 3;
+        this.vida = this.vidaInicial;
     
 
         ///
@@ -156,7 +158,7 @@ class Mono extends THREE.Object3D{
     restart(){
         this.position.x = 0;
         this.position.z = 0;
-        this.vida = 100;
+        this.vida = this.vidaInicial;
 
         this.cadencia = 0.3;
         this.velocidadLagrima = 30;
