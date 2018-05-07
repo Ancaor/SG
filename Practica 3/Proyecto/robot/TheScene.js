@@ -164,7 +164,9 @@ class TheScene extends THREE.Scene {
         
       }
 
-      this.salaActual.Sala.update();
+      
+
+      this.salaActual.Sala.update(this.personaje);
 
       //console.log(this.mostrarMapa)
      
@@ -181,10 +183,20 @@ class TheScene extends THREE.Scene {
       var longitud = this.lagrimas.children.length;
 
       for(var i=0;i < longitud; i++){
-        var muerta = this.lagrimas.children[i].update(this.salaActual.Sala,this.salaActual.Coordenada_X,this.salaActual.Coordenada_Z);
-        if(muerta){
+        var muerta = this.lagrimas.children[i].update(this.salaActual.Sala,this.salaActual.Coordenada_X,this.salaActual.Coordenada_Z,this.salaActual.Sala.enemigos);
+        if(muerta == -1){
           this.lagrimas.remove(this.lagrimas.children[i]);
           longitud-=1;
+        }else if(muerta != -2){
+          this.lagrimas.remove(this.lagrimas.children[i]);
+          longitud-=1;
+          console.log("aaaaaaah colisionaste con " + muerta)
+
+          var enemEliminado = this.salaActual.Sala.enemigos.children[muerta].bajarVida(this.personaje.damage);
+
+          if(enemEliminado)
+            this.salaActual.Sala.eliminarEnemigo(muerta);
+
         }
         
       }
@@ -220,17 +232,17 @@ class TheScene extends THREE.Scene {
    // console.log(this.personaje.position)
    // console.log(this.personaje.ojoDer.position)
   this.tiempoActualDisparo = Date.now()
-
+  this.personaje.ajustarOrientacion(orientacion);
   var tiempotransc = (this.tiempoActualDisparo - this.tiempoAnteriorDisparo) / 1000
    // console.log(tiempotransc)
    if( tiempotransc > this.personaje.cadencia){
     var a = new THREE.Vector3(this.personaje.position.x,this.personaje.position.y,this.personaje.position.z);
-    this.personaje.ajustarOrientacion(orientacion);
+    
     a.add(this.personaje.ojoDer.position)
     
 
     //var a;
-    var lagrima = new Lagrima({z:a.z,y:a.y,x:a.x,o:orientacion,v:this.personaje.velocidadLagrima,r:this.personaje.radioLagrima,c:this.personaje.colorLagrima});
+    var lagrima = new Lagrima({z:a.z,y:a.y,x:a.x,o:orientacion,v:this.personaje.velocidadLagrima,r:this.personaje.radioLagrima,c:this.personaje.colorLagrima,t:1,xReal:0,zReal:0});
 
     this.lagrimas.add(lagrima)
     //this.personaje.getWorldPosition(a);

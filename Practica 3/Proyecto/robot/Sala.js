@@ -1,6 +1,6 @@
 class Sala extends THREE.Object3D{
 
-    constructor(n_sala, n_enemigos){
+    constructor(n_sala, n_enemigos,infoSala){
         super();
 
         switch(n_sala){
@@ -23,6 +23,8 @@ class Sala extends THREE.Object3D{
 
         this.sala.scale.set(3,3,3);
         this.add(this.sala);
+
+        this.infoSala = infoSala;
 
         this.limite = 21;
         this.tama_puerta = 2.5;
@@ -56,16 +58,20 @@ class Sala extends THREE.Object3D{
             this.add(this.enemigos);
     }
 
-    update(){
+    update(Mono){
         var longitud = this.enemigos.children.length;
 
       for(var i=0;i < longitud; i++){
-            this.enemigos.children[i].update();
+            this.enemigos.children[i].update(Mono);
         }
     }
 
     setCamara(una_camara){
         this.camara = una_camara;
+    }
+
+    eliminarEnemigo(enemigo){
+        this.enemigos.remove(this.enemigos.children[enemigo]);
     }
 
 }

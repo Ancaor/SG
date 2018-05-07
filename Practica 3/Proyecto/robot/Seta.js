@@ -2,6 +2,8 @@ class Seta extends Enemigo{
     constructor(sala){
         super();
 
+        this.vida = 100;
+
         this.tiempoAnterior = Date.now();
         this.tiempoActual;
 
@@ -41,7 +43,13 @@ class Seta extends Enemigo{
 
         this.inflar = true;
 
-
+        this.radioEsferaEnglobante = 2;
+        /*
+        this.esferaGeometria = new THREE.SphereGeometry (this.radioEsferaEnglobante,32,32);
+        this.esferaEnglobante = new THREE.Mesh(this.esferaGeometria,new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}))
+        this.esferaEnglobante.position.set(this.x,1,this.z);
+        this.add(this.esferaEnglobante)
+*/
         //Propiedades de las lágrimas
         this.cadencia = 1.5;
         this.velocidadLagrima = 30;
@@ -58,16 +66,18 @@ class Seta extends Enemigo{
         this.position.set(x,y,z);
     }
 
-    update(){
+    update(Mono){
 
         this.tiempoActual = Date.now();
 
+       
+
         var tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
         if(tiempoTranscurrido >= this.cadencia){
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y,x:this.mesh.position.x,o:0,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x+1,o:1,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y,x:this.mesh.position.x,o:2,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x-1,o:3,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y,x:this.mesh.position.x,o:0,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x+1,o:1,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y,x:this.mesh.position.x,o:2,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x-1,o:3,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
             this.tiempoAnterior = this.tiempoActual;
 
             this.inflar = true;
@@ -92,22 +102,28 @@ class Seta extends Enemigo{
         var longitud = this.lagrimas.children.length;
 
       for(var i=0;i < longitud; i++){
-        var muerta = this.lagrimas.children[i].update(this.salaActual,0,0);
-        if(muerta){
+        var muerta = this.lagrimas.children[i].update(this.salaActual,0,0,Mono);
+        if(muerta == -1){
           this.lagrimas.remove(this.lagrimas.children[i]);
           longitud-=1;
+        }else if(muerta != -2){
+            this.lagrimas.remove(this.lagrimas.children[i]);
+            longitud-=1;
+            console.log("te chocaste");
         }
         
       }
 
+    }
 
-      
+    bajarVida(damage){
+        this.vida -= damage;
+        console.log(this.vida);
 
+        if(this.vida <= 0)
+            return true;
 
-
-        
-        
-
+        return false;
     }
 
 }

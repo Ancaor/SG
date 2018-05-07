@@ -4,9 +4,9 @@ class Mapa extends THREE.Object3D{
         super();
 
         this.InfoSalas = [
-                            new InfoSalaMapa(48, 48, new Sala(5, 2)), new InfoSalaMapa(0, 48, new Sala(14, 3)), new InfoSalaMapa(-48, 48, new Sala(8, 1)),
-                            new InfoSalaMapa(48, 0,new Sala(11, 2)), new InfoSalaMapa(0, 0, new Sala(15, 0)), new InfoSalaMapa(-48, 0, new Sala(13, 1)),
-                            new InfoSalaMapa(48, -48, new Sala(6, 1)), new InfoSalaMapa(0, -48, new Sala(12, 1)), new InfoSalaMapa(-48, -48, new Sala(7, 1))
+                            new InfoSalaMapa(48, 48, 5,2), new InfoSalaMapa(0, 48, 14, 3), new InfoSalaMapa(-48, 48, 8, 1),
+                            new InfoSalaMapa(48, 0,11, 2), new InfoSalaMapa(0, 0, 15, 1), new InfoSalaMapa(-48, 0,13, 1),
+                            new InfoSalaMapa(48, -48, 6, 1), new InfoSalaMapa(0, -48, 12, 1), new InfoSalaMapa(-48, -48,7, 1)
                         ];
     
         this.mapa = [ 

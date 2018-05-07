@@ -14,6 +14,11 @@ class Lagrima extends THREE.Object3D{
 
         this.radio = parameters.r;
 
+        this.tipo = parameters.t;
+
+        this.xReal = parameters.xReal;
+        this.zReal = parameters.zReal;
+
 
 
         
@@ -38,7 +43,7 @@ class Lagrima extends THREE.Object3D{
 
     }
 
-    update(sala, Coordenada_X, Coordenada_Z){
+    update(sala, Coordenada_X, Coordenada_Z,objetivo){
         this.tiempoActual = Date.now();
 
         this.tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
@@ -49,31 +54,70 @@ class Lagrima extends THREE.Object3D{
             if(this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z){
              this.position.z += this.velocidad * this.tiempoTranscurrido;
             }
-             else return true;
+             else return -1;
              
               break;
             case 2:
             if(this.position.z - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_Z)
              this.position.z -= this.velocidad * this.tiempoTranscurrido;
-             else return true; 
+             else return -1; 
              break;
 
             case 1:
             if(this.position.x + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_X)
              this.position.x += this.velocidad * this.tiempoTranscurrido; 
-             else return true;
+             else return -1;
              break;
 
             case 3:
             if(this.position.x - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_X)
              this.position.x -= this.velocidad * this.tiempoTranscurrido; 
-             else return true;
+             else return -1;
              break;
         
         }
+
+        if(this.tipo == 0){
+           // console.log(this.position);
+
+           var posAux = new THREE.Vector3(objetivo.position.x,this.position.y,objetivo.position.z);
+           var posRealLagrima = new THREE.Vector3(this.position.x + this.xReal,this.position.y,this.position.z + this.zReal);
+
+            var diferencia_radios = this.radio + objetivo.radioEsferaEnglobante;
+            var distanciaReal = posAux.distanceTo(posRealLagrima);
+            //  console.log(distanciaReal);
+
+            if(distanciaReal <= diferencia_radios){ 
+                return 1;
+            }
+        }else if(this.tipo == 1){
+
+            var longitud = objetivo.children.length;
+
+            for(var i=0;i < longitud; i++){
+                    //console.log(objetivo.children[i]);
+
+                    var posAux = new THREE.Vector3(objetivo.children[i].mesh.position.x + objetivo.children[i].salaActual.infoSala.Coordenada_X,this.position.y,objetivo.children[i].mesh.position.z + objetivo.children[i].salaActual.infoSala.Coordenada_Z);
+                    var posRealLagrima = new THREE.Vector3(this.position.x ,this.position.y,this.position.z + this.zReal);
+                    //console.log(posRealLagrima)
+                    var diferencia_radios = this.radio + objetivo.children[i].radioEsferaEnglobante;
+                    var distanciaReal = posAux.distanceTo(posRealLagrima);
+                        //  console.log(distanciaReal);
+
+                    if(distanciaReal <= diferencia_radios){ 
+                        return i;
+                    }
+
+            }
+
+
+        }
+
+        
+        
         
         this.tiempoAnterior =this.tiempoActual;
-        return false;
+        return -2;
     }
     
 }
