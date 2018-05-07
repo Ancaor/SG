@@ -51,28 +51,27 @@ class Lagrima extends THREE.Object3D{
         switch(this.orientacion){
 
             case 0:
-            if((this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z) && (this.position.x < sala.limite + Coordenada_X)&& (this.position.x > -sala.limite + Coordenada_X)){
+            if((this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z) && (this.position.x < sala.limite + Coordenada_X)&& (this.position.x > -sala.limite + Coordenada_X))
              this.position.z += this.velocidad * this.tiempoTranscurrido;
-            }
-             else return -1;
+             else return -1;            //Ha colisionado con la pared
              
               break;
             case 2:
             if((this.position.z - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_Z) && (this.position.x < sala.limite + Coordenada_X)&& (this.position.x > -sala.limite + Coordenada_X))
              this.position.z -= this.velocidad * this.tiempoTranscurrido;
-             else return -1; 
+             else return -1;            //Ha colisionado con la pared 
              break;
 
             case 1:
             if((this.position.x + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_X) && (this.position.z < sala.limite + Coordenada_Z)&& (this.position.z > -sala.limite + Coordenada_Z))
              this.position.x += this.velocidad * this.tiempoTranscurrido; 
-             else return -1;
+             else return -1;            //Ha colisionado con la pared
              break;
 
             case 3:
             if((this.position.x - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_X)&& (this.position.z < sala.limite + Coordenada_Z)&& (this.position.z > -sala.limite + Coordenada_Z))
              this.position.x -= this.velocidad * this.tiempoTranscurrido; 
-             else return -1;
+             else return -1;            //Ha colisionado con la pared
              break;
         
         }
@@ -88,7 +87,7 @@ class Lagrima extends THREE.Object3D{
             //  console.log(distanciaReal);
 
             if(distanciaReal <= diferencia_radios){ 
-                return 1;
+                return 1;       //Ha colisionado con el mono
             }
         }else if(this.tipo == 1){
 
@@ -105,7 +104,7 @@ class Lagrima extends THREE.Object3D{
                         //  console.log(distanciaReal);
 
                     if(distanciaReal <= diferencia_radios){ 
-                        return i;
+                        return i;       //Ha colisionado con el enemigo con indice i
                     }
 
             }
@@ -117,7 +116,7 @@ class Lagrima extends THREE.Object3D{
         
         
         this.tiempoAnterior =this.tiempoActual;
-        return -2;
+        return -2;      //No ha colisionado
     }
     
 }

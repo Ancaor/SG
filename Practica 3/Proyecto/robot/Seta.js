@@ -28,7 +28,6 @@ class Seta extends Enemigo{
                 || (this.salaActual.puertas[1] && this.x < -14 && this.z > -3.5 && this.z < 3.5)
                 || (this.salaActual.puertas[3] && this.x > 14 && this.z > -3.5 && this.z < 3.5)){
                 this.tapa_puerta = true;
-                console.log("Tapa puerta: ("+this.x+",1,"+this.z+")");
             }else{
                 this.tapa_puerta = false;
             }
@@ -103,13 +102,15 @@ class Seta extends Enemigo{
 
       for(var i=0;i < longitud; i++){
         var muerta = this.lagrimas.children[i].update(this.salaActual,0,0,Mono);
-        if(muerta == -1){
+        if(muerta == -1){           //Si ha chocado con la pared
           this.lagrimas.remove(this.lagrimas.children[i]);
           longitud-=1;
-        }else if(muerta != -2){
+          return false;
+        }else if(muerta != -2){     //Si le ha dado al mono
             this.lagrimas.remove(this.lagrimas.children[i]);
             longitud-=1;
-            console.log("te chocaste");
+            console.log("Bajar vida mono");
+            return true;
         }
         
       }

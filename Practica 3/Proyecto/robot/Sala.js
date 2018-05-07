@@ -107,7 +107,9 @@ class Sala extends THREE.Object3D{
         var longitud = this.enemigos.children.length;
 
       for(var i=0;i < longitud; i++){
-            this.enemigos.children[i].update(Mono);
+            var colision_mono = this.enemigos.children[i].update(Mono);
+            if(colision_mono)
+                return true;
         }
 
         if(longitud != 0){
@@ -116,6 +118,7 @@ class Sala extends THREE.Object3D{
             this.abrirPuertas();
         }
         
+        return false;
     }
 
     setCamara(una_camara){

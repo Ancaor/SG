@@ -168,7 +168,16 @@ class TheScene extends THREE.Scene {
 
       
 
-      this.salaActual.Sala.update(this.personaje);
+      var golpeaMono = this.salaActual.Sala.update(this.personaje);
+
+      if(golpeaMono){
+        this.personaje.vida -= 50;
+        console.log(this.personaje.vida);
+        if(this.personaje.vida <= 0){
+          alert("Has perdido. Te has quedado sin vida");
+          this.reiniciarPartida();          
+        }
+      }
 
       //console.log(this.mostrarMapa)
      
@@ -185,19 +194,19 @@ class TheScene extends THREE.Scene {
       var longitud = this.lagrimas.children.length;
 
       for(var i=0;i < longitud; i++){
-        var muerta = this.lagrimas.children[i].update(this.salaActual.Sala,this.salaActual.Coordenada_X,this.salaActual.Coordenada_Z,this.salaActual.Sala.enemigos);
-        if(muerta == -1){
+        var impacto = this.lagrimas.children[i].update(this.salaActual.Sala,this.salaActual.Coordenada_X,this.salaActual.Coordenada_Z,this.salaActual.Sala.enemigos);
+        if(impacto == -1){    // Impacta con una pared
           this.lagrimas.remove(this.lagrimas.children[i]);
           longitud-=1;
-        }else if(muerta != -2){
+        }else if(impacto != -2){    // Si ha impactado con algo distinto a la pared
           this.lagrimas.remove(this.lagrimas.children[i]);
           longitud-=1;
-          console.log("aaaaaaah colisionaste con " + muerta)
+          console.log("Bajar vida enemigo numero " + impacto)
 
-          var enemEliminado = this.salaActual.Sala.enemigos.children[muerta].bajarVida(this.personaje.damage);
+          var enemEliminado = this.salaActual.Sala.enemigos.children[impacto].bajarVida(this.personaje.damage);
 
           if(enemEliminado)
-            this.salaActual.Sala.eliminarEnemigo(muerta);
+            this.salaActual.Sala.eliminarEnemigo(impacto);
 
         }
         
@@ -206,6 +215,17 @@ class TheScene extends THREE.Scene {
     }
    
   }
+
+reiniciarPartida(){
+  this.personaje.restart();
+  this.remove(this.mapa);
+  
+  this.mapa = new Mapa();
+  this.mapa.generarMapa();
+  this.add(this.mapa);
+
+  codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false};
+}
 
   moveRobot(key){
 
@@ -303,7 +323,6 @@ class TheScene extends THREE.Scene {
   }
 
   Mapa(){
-    console.log("skjdkjss")
     if(this.mostrarMapa == true){
       this.mostrarMapa = false;
       this.mapa.ocultaMapa();

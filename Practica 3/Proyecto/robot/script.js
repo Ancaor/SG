@@ -97,7 +97,6 @@ function setMessage (str) {
   document.getElementById ("Messages").innerHTML = "<h2>"+str+"</h2>";
 }
 
-// Quita vida
 
 function restartCodeset(){
   codeset[37] = false
