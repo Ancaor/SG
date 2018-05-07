@@ -39,15 +39,35 @@ class Sala extends THREE.Object3D{
         this.puertas = [false, false, false, false];
         this.puertasIniciales = [false, false, false, false];
 
+        this.puertas_mesh = [
+            new THREE.Mesh(new THREE.BoxGeometry (2*this.tama_puerta,13,this.long_pasillo),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0})),
+            new THREE.Mesh(new THREE.BoxGeometry (this.long_pasillo,13,2*this.tama_puerta),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0})),
+            new THREE.Mesh(new THREE.BoxGeometry (2*this.tama_puerta,13,this.long_pasillo),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0})),
+            new THREE.Mesh(new THREE.BoxGeometry (this.long_pasillo,13,2*this.tama_puerta),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0}))
+        ];
+
+        this.puertas_mesh[0].position.z = this.limite + this.long_pasillo;
+        this.puertas_mesh[1].position.x = -this.limite - this.long_pasillo;
+        this.puertas_mesh[2].position.z = -this.limite - this.long_pasillo;
+        this.puertas_mesh[3].position.x = this.limite + this.long_pasillo;
+
+        this.puertas_mesh[0].visible = false;
+        this.puertas_mesh[1].visible = false;
+        this.puertas_mesh[2].visible = false;
+        this.puertas_mesh[3].visible = false;
+
+        this.add(this.puertas_mesh[0]);
+        this.add(this.puertas_mesh[1]);
+        this.add(this.puertas_mesh[2]);
+        this.add(this.puertas_mesh[3]);
+
         
         
         if(this.tipo_sala == 3 || this.tipo_sala == 7 || this.tipo_sala == 6 || this.tipo_sala == 9 || this.tipo_sala == 13 || this.tipo_sala == 11 || this.tipo_sala == 12 || this.tipo_sala == 15){
             this.puertas[0] = true;
             this.puertasIniciales[0]=true;
             if(n_enemigos != 0){
-                this.puerta_norte = new THREE.Mesh(new THREE.BoxGeometry (2*this.tama_puerta,13,this.long_pasillo),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}));
-                this.puerta_norte.position.z = this.limite + this.long_pasillo;
-                this.add(this.puerta_norte);
+                this.puertas_mesh[0].visible = true;
             }
         }
 
@@ -55,9 +75,7 @@ class Sala extends THREE.Object3D{
             this.puertas[3] = true;
             this.puertasIniciales[3]=true;
             if(n_enemigos != 0){
-                this.puerta_oeste = new THREE.Mesh(new THREE.BoxGeometry (this.long_pasillo,13,2*this.tama_puerta),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}));
-                this.puerta_oeste.position.x = this.limite + this.long_pasillo;
-                this.add(this.puerta_oeste);
+                this.puertas_mesh[3].visible = true;
             }
         }
 
@@ -65,9 +83,7 @@ class Sala extends THREE.Object3D{
             this.puertas[2] = true;
             this.puertasIniciales[2]=true;
             if(n_enemigos != 0){
-                this.puerta_sur = new THREE.Mesh(new THREE.BoxGeometry (2*this.tama_puerta,13,this.long_pasillo),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}));
-                this.puerta_sur.position.z = -this.limite - this.long_pasillo;
-                this.add(this.puerta_sur);
+                this.puertas_mesh[2].visible = true;
             }
             
         }
@@ -76,9 +92,7 @@ class Sala extends THREE.Object3D{
             this.puertas[1] = true;
             this.puertasIniciales[1]=true;
             if(n_enemigos != 0){
-                this.puerta_este = new THREE.Mesh(new THREE.BoxGeometry (this.long_pasillo,13,2*this.tama_puerta),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}));
-                this.puerta_este.position.x = -this.limite - this.long_pasillo;
-                this.add(this.puerta_este);
+                this.puertas_mesh[1].visible = true;
             }
         }
 
@@ -118,19 +132,10 @@ class Sala extends THREE.Object3D{
      
     abrirPuertas(){
         this.puertas = this.puertasIniciales;
-        
-        if(this.puertas[0] == true)
-            this.puerta_norte.visible = false;
-        
-        if(this.puertas[1] == true)
-            this.puerta_este.visible = false;
-        
-        if(this.puertas[2] == true)
-            this.puerta_sur.visible = false;
-            
-        if(this.puertas[3] == true)
-            this.puerta_oeste.visible = false;
-        
+        this.puertas_mesh[0].visible = false;
+        this.puertas_mesh[1].visible = false;
+        this.puertas_mesh[2].visible = false;
+        this.puertas_mesh[3].visible = false;
         
     }
 
