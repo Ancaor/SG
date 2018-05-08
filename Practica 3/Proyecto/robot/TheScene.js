@@ -12,7 +12,7 @@ class TheScene extends THREE.Scene {
 
     this.ambientLight = null;
     this.spotLight = null;
-    this.secondLight = null;  // luz aniadida
+    this.pointLight = null;
     this.camera = null;
     this.trackballControls = null;
     this.ground = null;
@@ -88,7 +88,7 @@ class TheScene extends THREE.Scene {
     // add subtle ambient lighting
     this.ambientLight = new THREE.AmbientLight(0xccddee, 0.1);
     this.add (this.ambientLight);
-
+/*
     // add spotlight for the shadows
     this.spotLight = new THREE.SpotLight( 0xffffff );
     this.spotLight.position.set( 20, 120, 0 );
@@ -97,7 +97,15 @@ class TheScene extends THREE.Scene {
     this.spotLight.shadow.mapSize.width=2048
     this.spotLight.shadow.mapSize.height=2048;
     this.add (this.spotLight);
+*/
 
+    this.pointLight = new THREE.PointLight(0xffffff);
+    this.pointLight.position.set( 0, 120, -50 );
+    this.pointLight.castShadow = true;
+    // the shadow resolution
+    this.pointLight.shadow.mapSize.width=2048
+    this.pointLight.shadow.mapSize.height=2048;
+    this.add (this.pointLight);
   }
 
   /// It creates the geometric model: crane and ground

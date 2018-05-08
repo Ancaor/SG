@@ -39,8 +39,7 @@ class Mono extends THREE.Object3D{
         this.radioEsferaEnglobante = 0.7;
        // this.esferaGeometria = new THREE.SphereGeometry (this.radioEsferaEnglobante,32,32);
       //  this.esferaEnglobante = new THREE.Mesh(this.esferaGeometria,new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}))
-
-        this.add(this.esferaEnglobante);
+        //this.add(this.esferaEnglobante);
 
         //Propiedades de las lágrimas
         this.cadencia = 0.3;
