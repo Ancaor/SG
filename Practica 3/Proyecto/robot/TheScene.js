@@ -13,12 +13,13 @@ class TheScene extends THREE.Scene {
     this.ambientLight = null;
     this.spotLight = null;
     this.pointLight = null;
-    this.camera = null;
+    
     this.trackballControls = null;
     this.ground = null;
 
     this.mostrarMapa = false;
-
+    this.camaraSala = null;
+    this.camaraMapa = null;
 
 
 
@@ -48,6 +49,8 @@ class TheScene extends THREE.Scene {
     this.salaActual = null;
     this.mapa = null;
 
+    this.camarasCargadas = false;
+
     this.createLights ();
     this.createCamera (renderer);
     this.axis = new THREE.AxisHelper (25);
@@ -57,6 +60,16 @@ class TheScene extends THREE.Scene {
     //this.add(this.lanzador);
 
     //this.add(new Seta());
+
+
+    this.aux=new THREE.Mesh(new THREE.BoxGeometry(5,5,5), new THREE.MeshPhongMaterial ({color: 0xffffff,transparent: false, opacity: 0.7}))
+    //this.aux.layers.set(1);
+    //this.aux.layers.toggle(2);
+    this.aux.layers.enable(2);
+    this.aux.layers.disable(0);
+    this.aux.layers.disable(1);
+
+    this.add(this.aux);
 
 
 
@@ -69,18 +82,26 @@ class TheScene extends THREE.Scene {
    * @param renderer - The renderer associated with the camera
    */
   createCamera (renderer) {
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.set (0, 70, -25);
+    this.camaraSala = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.camaraSala.position.set (0, 70, -25);
+    this.camaraSala.layers.enable(2);
     var look = new THREE.Vector3 (0,0,0);
-    this.camera.lookAt(look);
+    this.camaraSala.lookAt(look);
 
-    this.trackballControls = new THREE.TrackballControls (this.camera, renderer);
+
+    this.camaraMapa = new THREE.OrthographicCamera( 200 / - 2, 200 / 2, 200 / 2, 200 / - 2, 1, 100000 );
+    this.camaraMapa.position.set(0,200,-1);
+    var look = new THREE.Vector3 (0,0,0);
+    this.camaraMapa.lookAt(look);
+    this.camaraMapa.layers.enable(2);
+
+    this.trackballControls = new THREE.TrackballControls (this.camaraSala, renderer);
     this.trackballControls.rotateSpeed = 5;
     this.trackballControls.zoomSpeed = -2;
     this.trackballControls.panSpeed = 0.5;
     this.trackballControls.target = look;
 
-    this.add(this.camera);
+    this.add(this.camaraSala);
   }
 
   /// It creates lights and adds them to the graph
@@ -159,7 +180,10 @@ class TheScene extends THREE.Scene {
         this.loader.restart();
         this.salasCargadas++;
         this.mapa = new Mapa();
+        this.camaraMapa = this.mapa.camaraMapa;
         this.mapa.generarMapa();
+        this.mapa.layers.set(1);
+        this.mapa.layers.enable(1);
         this.add(this.mapa);
         this.salaActual = this.mapa.getSalaActual();
 
@@ -172,10 +196,9 @@ class TheScene extends THREE.Scene {
       
       if(this.salaActual != this.sala_anterior){
         this.sala_anterior.Sala.visible=false;
-        
-      }
 
-      
+        
+      }      
 
       var golpeaMono = this.salaActual.Sala.update(this.personaje);
 
@@ -188,14 +211,16 @@ class TheScene extends THREE.Scene {
         }
       }
 
-      //console.log(this.mostrarMapa)
+
+      if(this.aux.layers.test(this.mapa.camaraMapa.layers))
+          console.log("funciona");
      
       if(this.mostrarMapa){
-        this.camera = this.mapa.camaraMapa;
-      }else {this.camera = this.salaActual.Sala.camara;}
+        this.camaraSala = this.mapa.camaraMapa;
+      }else {this.camaraSala = this.salaActual.Sala.camara;}
       
 
-    //  this.camera = this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
+    //  this.camaraSala = this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
       this.sala_anterior = this.salaActual
 
       this.personaje.update();
@@ -311,7 +336,7 @@ reiniciarPartida(){
    * @return The camera
    */
   getCamera () {
-      return this.camera;
+      return this.camaraSala;
   }
 
   /// It returns the camera controls
@@ -327,19 +352,23 @@ reiniciarPartida(){
    * @param anAspectRatio - The new aspect ratio for the camera
    */
   setCameraAspect (anAspectRatio) {
-    this.camera.aspect = anAspectRatio;
-    this.camera.updateProjectionMatrix();
+    this.camaraSala.aspect = anAspectRatio;
+    this.camaraSala.updateProjectionMatrix();
     this.mapa.setCameraAspect(anAspectRatio);
+  }
+
+  getCameraMapa(){
+    return this.camaraMapa;
   }
 
   Mapa(){
     if(this.mostrarMapa == true){
       this.mostrarMapa = false;
-      this.mapa.ocultaMapa();
+//this.mapa.ocultaMapa();
     }
     else{
       this.mostrarMapa = true; 
-      this.mapa.muestraMapa();
+      //this.mapa.muestraMapa();
       
     }
       

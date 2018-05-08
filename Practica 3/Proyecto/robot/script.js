@@ -180,7 +180,9 @@ function render() {
   scene.getCameraControls().update ();
   scene.animate(GUIcontrols);
 
-  renderer.render(scene, scene.getCamera());
+  renderViewport(scene, scene.getCamera(),0,0,1,1);
+  renderViewport(scene, scene.getCameraMapa(),0.75,0.75,0.25,0.25);
+  //renderer.render(scene, scene.getCamera());
   keyboardInput();
 }
 
@@ -247,6 +249,19 @@ function darVida(l) {
 }
 
 
+function renderViewport(escena, camara, left, top, width, height){
+  var l = left * window.innerWidth;
+  var t = top * window.innerHeight;
+  var w = width * window.innerWidth;
+  var h = height * window.innerHeight;
+  renderer.setViewport(l,t,w,h);
+  renderer.setScissor(l,t,w,h);
+  renderer.setScissorTest(true);
+  camara.aspect = w/h;
+  renderer.render(escena, camara);
+
+}
+
 
 
 /// The main function
@@ -278,6 +293,5 @@ $(function () {
   scene = new TheScene (renderer.domElement);
 
   createGUI(true);
-
   render();
 });
