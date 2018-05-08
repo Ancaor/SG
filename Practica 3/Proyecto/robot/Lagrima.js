@@ -36,6 +36,7 @@ class Lagrima extends THREE.Object3D{
 
         this.lagrima.castShadow = true;
 
+        this.lagrima.layers.set(1);
         this.add(this.lagrima);
 
 /////////////////////////////////////////////////////////////////////

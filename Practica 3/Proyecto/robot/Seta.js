@@ -9,6 +9,7 @@ class Seta extends Enemigo{
 
         //this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
 
+
         this.mesh = enemigos[0].clone();
         this.salaActual = sala;
         this.tapa_puerta = false;
@@ -34,7 +35,7 @@ class Seta extends Enemigo{
             
         }while( this.tapa_puerta );
 
-        this.mesh.position.set(this.x,1,this.z);
+        this.mesh.position.set(this.x,0,this.z);
 
         this.lagrimas = new THREE.Object3D;
         
@@ -55,10 +56,12 @@ class Seta extends Enemigo{
         this.radioLagrima = 0.35;
         this.colorLagrima = 0xf90000;
 
-        
+        var longitud = this.mesh.children.lenght;
 
+        this.mesh.children[0].layers.set(1);
         this.add(this.lagrimas);
         this.add(this.mesh);
+
     }
 
     setPosicion(x,y,z){
@@ -73,10 +76,10 @@ class Seta extends Enemigo{
 
         var tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
         if(tiempoTranscurrido >= this.cadencia){
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y,x:this.mesh.position.x,o:0,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x+1,o:1,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y,x:this.mesh.position.x,o:2,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y,x:this.mesh.position.x-1,o:3,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:0,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x+1,o:1,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:2,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x-1,o:3,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
             this.tiempoAnterior = this.tiempoActual;
 
             this.inflar = true;

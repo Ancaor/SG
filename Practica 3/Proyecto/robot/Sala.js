@@ -100,6 +100,8 @@ class Sala extends THREE.Object3D{
         for(var i = 0; i < n_enemigos; i+=1)
             this.enemigos.add(new Seta(this));
 
+        
+
         this.add(this.enemigos);
 
     }
@@ -141,5 +143,42 @@ class Sala extends THREE.Object3D{
         this.puertas_mesh[2].visible = false;
         this.puertas_mesh[3].visible = false;
         
+    }
+
+    enableLayers(layer){
+        var longitud = this.sala.children.length;
+
+        for(var i = 0; i < longitud; i+=1){
+            this.sala.children[i].layers.enable(layer);
+        }
+
+
+        this.puertas_mesh[0].layers.enable(layer);
+        this.puertas_mesh[1].layers.enable(layer);
+        this.puertas_mesh[2].layers.enable(layer);
+        this.puertas_mesh[3].layers.enable(layer);
+        
+
+    }
+
+    disableLayers(layer){
+        var longitud = this.sala.children.length;
+
+        for(var i = 0; i < longitud; i+=1){
+            this.sala.children[i].layers.disable(layer);
+        }
+
+        this.puertas_mesh[0].layers.disable(layer);
+        this.puertas_mesh[1].layers.disable(layer);
+        this.puertas_mesh[2].layers.disable(layer);
+        this.puertas_mesh[3].layers.disable(layer);
+    }
+
+    setLayers(layer){
+
+        for(var i = 0; i < 32; i+=1)
+            this.disableLayers(i);
+
+        this.enableLayers(layer);
     }
 }

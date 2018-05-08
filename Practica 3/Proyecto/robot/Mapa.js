@@ -22,6 +22,7 @@ class Mapa extends THREE.Object3D{
         var look = new THREE.Vector3 (0,0,0);
         this.salaActual = this.mapa[1][1];
         this.camaraMapa.lookAt(look);
+        this.camaraMapa.layers.enable(2);
 
     }
 
@@ -31,10 +32,12 @@ class Mapa extends THREE.Object3D{
                 var aux = this.mapa[i][j].Sala;
                 aux.position.x = this.mapa[i][j].Coordenada_X;
                 aux.position.z = this.mapa[i][j].Coordenada_Z;
+                aux.enableLayers(1);
 
                
                 var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
                 camara.position.set (aux.position.x, 70, aux.position.z-20);
+                camara.layers.enable(1);
 
                 camara.lookAt(new THREE.Vector3 (aux.position.x,0,aux.position.z));
                 aux.setCamara(camara);

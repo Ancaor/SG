@@ -87,12 +87,14 @@ class TheScene extends THREE.Scene {
     this.camaraSala.position.set (0, 70, -25);
     var look = new THREE.Vector3 (0,0,0);
     this.camaraSala.lookAt(look);
+    this.camaraSala.layers.enable(1);
 
 
     this.camaraMapa = new THREE.OrthographicCamera( 200 / - 2, 200 / 2, 200 / 2, 200 / - 2, 1, 100000 );
     this.camaraMapa.position.set(0,200,-1);
     var look = new THREE.Vector3 (0,0,0);
     this.camaraMapa.lookAt(look);
+    this.camaraMapa.layers.enable(2);
 
 
     this.trackballControls = new THREE.TrackballControls (this.camaraSala, renderer);
@@ -192,9 +194,12 @@ class TheScene extends THREE.Scene {
     if(this.salasCargadas == 15){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
       this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z);
       this.salaActual = this.mapa.getSalaActual(); 
+      this.salaActual.Sala.setLayers(1);
+      this.salaActual.Sala.enableLayers(2);
       this.salaActual.Sala.visible=true;
       
       if(this.salaActual != this.sala_anterior){
+        this.sala_anterior.Sala.disableLayers(1);
         this.sala_anterior.Sala.visible=false;
 
         
@@ -213,11 +218,12 @@ class TheScene extends THREE.Scene {
 
 
       this.mapa.muestraMapa();
+      
       if(this.mostrarMapa){
         this.camaraSala = this.mapa.camaraMapa;
       }else {this.camaraSala = this.salaActual.Sala.camara;}
       
-
+    
     //  this.camaraSala = this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
       this.sala_anterior = this.salaActual;
 
