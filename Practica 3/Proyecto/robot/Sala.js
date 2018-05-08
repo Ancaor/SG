@@ -97,8 +97,14 @@ class Sala extends THREE.Object3D{
         }
 
 
-        for(var i = 0; i < n_enemigos; i+=1)
+        for(var i = 0; i < n_enemigos; i+=1){
+            var rand = Math.floor(Math.random() * 2) + 1;
+            if(rand == 1)
+            this.enemigos.add(new enemigo2(this));
+            else if (rand == 2)
             this.enemigos.add(new Seta(this));
+        }   
+            
 
         
 

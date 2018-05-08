@@ -102,9 +102,10 @@ class Lagrima extends THREE.Object3D{
                     //console.log(posRealLagrima)
                     var diferencia_radios = this.radio + objetivo.children[i].radioEsferaEnglobante;
                     var distanciaReal = posAux.distanceTo(posRealLagrima);
-                        //  console.log(distanciaReal);
+                          //console.log(distanciaReal);
 
                     if(distanciaReal <= diferencia_radios){ 
+                        console.log("colision");
                         return i;       //Ha colisionado con el enemigo con indice i
                     }
 
