@@ -62,17 +62,18 @@ class TheScene extends THREE.Scene {
     //this.add(new Seta());
 
 
-    this.aux=new THREE.Mesh(new THREE.BoxGeometry(5,5,5), new THREE.MeshPhongMaterial ({color: 0xffffff,transparent: false, opacity: 0.7}))
-    //this.aux.layers.set(1);
+/*
+
+    this.aux2=new THREE.Mesh(new THREE.BoxGeometry(5,5,5), new THREE.MeshPhongMaterial ({color: 0x666666,transparent: false, opacity: 0.7}))
     //this.aux.layers.toggle(2);
-    this.aux.layers.enable(2);
-    this.aux.layers.disable(0);
-    this.aux.layers.disable(1);
+    this.aux2.layers.enable(2);
+    this.aux2.layers.disable(0);
+    this.aux2.position.z = 10;
 
-    this.add(this.aux);
+    this.aux.add(this.aux2);
 
-
-
+    
+*/
 
   }
 
@@ -84,7 +85,6 @@ class TheScene extends THREE.Scene {
   createCamera (renderer) {
     this.camaraSala = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.camaraSala.position.set (0, 70, -25);
-    this.camaraSala.layers.enable(2);
     var look = new THREE.Vector3 (0,0,0);
     this.camaraSala.lookAt(look);
 
@@ -93,7 +93,7 @@ class TheScene extends THREE.Scene {
     this.camaraMapa.position.set(0,200,-1);
     var look = new THREE.Vector3 (0,0,0);
     this.camaraMapa.lookAt(look);
-    this.camaraMapa.layers.enable(2);
+
 
     this.trackballControls = new THREE.TrackballControls (this.camaraSala, renderer);
     this.trackballControls.rotateSpeed = 5;
@@ -182,10 +182,10 @@ class TheScene extends THREE.Scene {
         this.mapa = new Mapa();
         this.camaraMapa = this.mapa.camaraMapa;
         this.mapa.generarMapa();
-        this.mapa.layers.set(1);
-        this.mapa.layers.enable(1);
+        this.mapa.ocultaMapa();
         this.add(this.mapa);
         this.salaActual = this.mapa.getSalaActual();
+        this.camaraSala = this.salaActual.Sala.camara;
 
         this.sala_anterior=this.salaActual;
     }
@@ -212,16 +212,14 @@ class TheScene extends THREE.Scene {
       }
 
 
-      if(this.aux.layers.test(this.mapa.camaraMapa.layers))
-          console.log("funciona");
-     
+      this.mapa.muestraMapa();
       if(this.mostrarMapa){
         this.camaraSala = this.mapa.camaraMapa;
       }else {this.camaraSala = this.salaActual.Sala.camara;}
       
 
     //  this.camaraSala = this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z).Sala.camara;          /// Comentar si no se quiere que la cámara siga a la sala del mono
-      this.sala_anterior = this.salaActual
+      this.sala_anterior = this.salaActual;
 
       this.personaje.update();
 
@@ -256,6 +254,7 @@ reiniciarPartida(){
   
   this.mapa = new Mapa();
   this.mapa.generarMapa();
+  this.mapa.ocultaMapa();
   this.add(this.mapa);
 
   codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false};
@@ -364,11 +363,11 @@ reiniciarPartida(){
   Mapa(){
     if(this.mostrarMapa == true){
       this.mostrarMapa = false;
-//this.mapa.ocultaMapa();
+      this.mapa.ocultaMapa();
     }
     else{
       this.mostrarMapa = true; 
-      //this.mapa.muestraMapa();
+      this.mapa.muestraMapa();
       
     }
       

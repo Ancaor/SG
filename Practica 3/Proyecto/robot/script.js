@@ -47,26 +47,17 @@ function createGUI (withStats) {
     }
 
   }
-
   var gui = new dat.GUI();
   var axisLights = gui.addFolder ('Axis and Lights');
     axisLights.add(GUIcontrols, 'axis').name('Axis on/off :');
-    axisLights.add(GUIcontrols, 'lightIntensity', 0, 1.0).name('Light intensity :');
-    axisLights.add(GUIcontrols, 'secondLightIsOn').name('Second light on/off :');
-    axisLights.add(GUIcontrols, 'secondLightIntensity', 0, 1.0).name('Second Light intensity :');
-
-  var actions = gui.addFolder ('Actions');
-    var showingMessage = actions.add (GUIcontrols,'showMessage').name(': Show message :');
     
-
-
-  var robotControls = gui.addFolder ('Robot Controls');
     
     // The method  listen()  allows the height attribute to be written, not only read
 
 
   if (withStats)
     stats = initStats();
+    
 }
 
 /// It adds statistics information to a previously created Div
@@ -166,7 +157,7 @@ function onWindowResize () {
  */
 function createRenderer () {
   var renderer = new THREE.WebGLRenderer();
-  renderer.setClearColor(new THREE.Color(0x000000), 1.0);
+  renderer.setClearColor(new THREE.Color(0x00000000),1);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
   return renderer;
@@ -181,7 +172,8 @@ function render() {
   scene.animate(GUIcontrols);
 
   renderViewport(scene, scene.getCamera(),0,0,1,1);
-  renderViewport(scene, scene.getCameraMapa(),0.75,0.75,0.25,0.25);
+
+  renderViewport(scene, scene.getCameraMapa(),0.85,0.85,0.15,0.15);
   //renderer.render(scene, scene.getCamera());
   keyboardInput();
 }

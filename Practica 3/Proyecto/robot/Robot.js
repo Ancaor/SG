@@ -5,7 +5,7 @@ class Robot extends THREE.Object3D {
   constructor (parameters) {
     super();
 
-this.material    = (parameters.material === undefined ? new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}) : parameters.material);
+this.material = new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70});
     this.balanceo = 0;
     this.cabeceo = 0;
     this.altura = 5;
@@ -253,4 +253,5 @@ this.material    = (parameters.material === undefined ? new THREE.MeshPhongMater
     this.position.x = 0;
     this.position.z = 0;
   }
+
 }

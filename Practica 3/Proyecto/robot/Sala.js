@@ -101,6 +101,7 @@ class Sala extends THREE.Object3D{
             this.enemigos.add(new Seta(this));
 
         this.add(this.enemigos);
+
     }
 
     update(Mono){
@@ -141,5 +142,4 @@ class Sala extends THREE.Object3D{
         this.puertas_mesh[3].visible = false;
         
     }
-
 }

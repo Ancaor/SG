@@ -10,8 +10,4 @@ class InfoSalaMapa extends THREE.Object3D{
     
     }
 
-    MuestraSalaMinimapa(){
-        this.Sala.layers.set(1);
-        this.Sala.layers.enable(1);
-    }
 }
