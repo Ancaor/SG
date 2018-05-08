@@ -9,15 +9,41 @@ class enemigo2 extends Enemigo{
 
         this.vector_inicial = new THREE.Vector3(0,0,1);
 
-        this.velocidad = 0.1;
+        this.velocidad = 0.2;
 
         this.vida = 60;
+
+
+        this.tapa_puerta = false;
+        this.x = 0;
+        this.z = 0;
+
+        do{
+            this.x = Math.random() * (20 - (-20)) + (-20);
+            this.z = Math.random() * (20 - (-20)) + (-20);
+
+/************************ Código para evitar crear la seta en la puerta ***************************************/
+
+
+
+            if((this.salaActual.puertas[0] && this.z > 14 && this.x > -3.5 && this.x < 3.5) 
+                || (this.salaActual.puertas[2] && this.z < -14 && this.x > -3.5 && this.x < 3.5) 
+                || (this.salaActual.puertas[1] && this.x < -14 && this.z > -3.5 && this.z < 3.5)
+                || (this.salaActual.puertas[3] && this.x > 14 && this.z > -3.5 && this.z < 3.5)){
+                this.tapa_puerta = true;
+            }else{
+                this.tapa_puerta = false;
+            }
+            
+        }while( this.tapa_puerta );
+
+        this.mesh.position.set(this.x,0,this.z);
         
         this.add(this.mesh);
 
         
 
-        this.mesh.position.set(5,1,5);
+        //this.mesh.position.set(5,1,5);
 
         this.tiempoAnterior = Date.now();
         this.tiempoActual;
