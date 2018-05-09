@@ -15,7 +15,7 @@ class InfoSalaMapa extends THREE.Object3D{
         this.Coordenada_Z = z;
 
 
-        var max_enemigos = 4;
+        var max_enemigos = 0;
 
         var numeroEnemigos = Math.floor(Math.random() * (max_enemigos -0) + (0));
 

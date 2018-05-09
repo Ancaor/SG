@@ -22,17 +22,33 @@ class Mapa extends THREE.Object3D{
 
         this.salasVisitadas = new Array();
 
-        this.camaraMapa = new THREE.OrthographicCamera( 200 / - 2, 200 / 2, 200 / 2, 200 / - 2, 1, 100000 );
-        this.camaraMapa.position.set(0,50,-1);
-        var look = new THREE.Vector3 (0,0,0);
         this.salaActual = this.mapa[1][1];
-
-
         this.salaInicio = null;
 
         
+        if(this.n_filas > this.n_columnas)
+            this.camaraMapa = new THREE.OrthographicCamera( (this.n_filas*48+6) / - 2, (this.n_filas*48+6) / 2, (this.n_filas*48+6) / 2, (this.n_filas*48+6) / - 2, 1, 100000 );
+        else
+            this.camaraMapa = new THREE.OrthographicCamera( (this.n_columnas*48+6) / - 2, (this.n_columnas*48+6) / 2, (this.n_columnas*48+6) / 2, (this.n_columnas*48+6) / - 2, 1, 100000 );
         
 
+        if(this.n_filas %2 == 0){
+            if(this.n_columnas %2 == 0){
+                var look = new THREE.Vector3 (24,0,24);
+                this.camaraMapa.position.set(24,200,23);
+            }else{
+                var look = new THREE.Vector3 (0,0,24);
+                this.camaraMapa.position.set(0,200,23);
+            }
+        }else{
+            if(this.n_columnas %2 == 0){
+                var look = new THREE.Vector3 (24,0,0);
+                this.camaraMapa.position.set(24,200,-1);
+            }else{
+                var look = new THREE.Vector3 (0,0,0);
+                this.camaraMapa.position.set(0,200,-1);
+            }
+        }
 
         this.camaraMapa.lookAt(look);
         this.camaraMapa.layers.enable(2);

@@ -266,6 +266,7 @@ reiniciarPartida(){
   
   this.mapa = new Mapa();
   this.mapa.generarMapa();
+  this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z);
   this.mapa.ocultaMapa();
   this.add(this.mapa);
 
