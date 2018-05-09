@@ -6,11 +6,12 @@ class Mapa extends THREE.Object3D{
         this.n_filas = 3;
         this.n_columnas = 3;
         
+        var infoMapa = [this.n_filas, this.n_columnas];
 
         this.InfoSalas = [
-                            new InfoSalaMapa(48, 48, 5,2), new InfoSalaMapa(0, 48, 14, 3), new InfoSalaMapa(-48, 48, 8, 1),
-                            new InfoSalaMapa(48, 0,11, 2), new InfoSalaMapa(0, 0, 15, 1), new InfoSalaMapa(-48, 0,13, 1),
-                            new InfoSalaMapa(48, -48, 6, 1), new InfoSalaMapa(0, -48, 12, 1), new InfoSalaMapa(-48, -48,7, 1)
+                            new InfoSalaMapa(0, 0, infoMapa, 5), new InfoSalaMapa(0, 1, infoMapa, 14), new InfoSalaMapa(0,2, infoMapa, 8),
+                            new InfoSalaMapa(1, 0, infoMapa, 11), new InfoSalaMapa(1, 1, infoMapa, 15), new InfoSalaMapa(1, 2, infoMapa, 13),
+                            new InfoSalaMapa(2, 0, infoMapa, 6), new InfoSalaMapa(2, 1, infoMapa, 12), new InfoSalaMapa(2, 2,infoMapa, 7)
                         ];
     
         this.mapa = [ 
