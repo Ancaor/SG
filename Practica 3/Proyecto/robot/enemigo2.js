@@ -5,6 +5,7 @@ class enemigo2 extends Enemigo{
         this.salaActual = sala;
         this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
 
+        this.mesh = enemigos[1].clone();
         this.radioEsferaEnglobante = 2;
 
         this.vector_inicial = new THREE.Vector3(0,0,1);
@@ -39,6 +40,14 @@ class enemigo2 extends Enemigo{
 
         this.mesh.position.set(this.x,0,this.z);
         
+
+
+
+        var longitud = this.mesh.children.length;
+
+        for(var i = 0; i < longitud; i +=1)
+            this.mesh.children[i].layers.set(1);
+
         this.add(this.mesh);
 
         
@@ -131,21 +140,21 @@ class enemigo2 extends Enemigo{
        var distanciaReal = posReal.distanceTo(Mono.position);
      
        var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
-        console.log(tiempoTranscurrido)
+        //console.log(tiempoTranscurrido)
 
-       if(tiempoTranscurrido > 2){
+      
             if(distanciaReal <= difRadios){
                 this.tiempoAnterior = this.tiempoActual;
 
-                this.mesh.position.x -= (3 * vector_unitario.x);   // para que se despegue
-                this.mesh.position.z -= (3 * vector_unitario.z);   // para que se despegue
+                this.mesh.position.x -= (10 * vector_unitario.x);   // para que se despegue
+                this.mesh.position.z -= (10 * vector_unitario.z);   // para que se despegue
 
               //  this.tiempoInicioAnimacion = Date.now();
               //  this.parpadeo = true; // descomenta para parpadeo
                 return true;
                 
             }
-        }
+        
 
     }
 
