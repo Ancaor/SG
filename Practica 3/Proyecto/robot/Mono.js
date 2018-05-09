@@ -167,5 +167,9 @@ class Mono extends THREE.Object3D{
         this.damage = 20;
     }
    
+    setPosicion(x,z){
+        this.position.x = x;
+        this.position.z = z;
+    }
 
 }

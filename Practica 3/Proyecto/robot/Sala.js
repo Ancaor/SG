@@ -21,6 +21,8 @@ class Sala extends THREE.Object3D{
             case 15: this.sala = objetos_sala[14].clone(); break;
         }
 
+        this.n_enemigos = n_enemigos;
+
         this.sala.scale.set(3,3,3);
         this.add(this.sala);
 
@@ -66,7 +68,7 @@ class Sala extends THREE.Object3D{
         if(this.tipo_sala == 3 || this.tipo_sala == 7 || this.tipo_sala == 6 || this.tipo_sala == 9 || this.tipo_sala == 13 || this.tipo_sala == 11 || this.tipo_sala == 12 || this.tipo_sala == 15){
             this.puertas[0] = true;
             this.puertasIniciales[0]=true;
-            if(n_enemigos != 0){
+            if( this.n_enemigos != 0){
                 this.puertas_mesh[0].visible = true;
             }
         }
@@ -74,7 +76,7 @@ class Sala extends THREE.Object3D{
         if(this.tipo_sala == 4 || this.tipo_sala == 7 || this.tipo_sala == 8 || this.tipo_sala == 10 || this.tipo_sala == 13 || this.tipo_sala == 14 || this.tipo_sala == 12 || this.tipo_sala == 15){
             this.puertas[3] = true;
             this.puertasIniciales[3]=true;
-            if(n_enemigos != 0){
+            if( this.n_enemigos != 0){
                 this.puertas_mesh[3].visible = true;
             }
         }
@@ -82,7 +84,7 @@ class Sala extends THREE.Object3D{
         if(this.tipo_sala ==1 || this.tipo_sala == 8 || this.tipo_sala == 5 || this.tipo_sala == 9 || this.tipo_sala == 13 || this.tipo_sala == 14 || this.tipo_sala == 11 || this.tipo_sala == 15){
             this.puertas[2] = true;
             this.puertasIniciales[2]=true;
-            if(n_enemigos != 0){
+            if( this.n_enemigos != 0){
                 this.puertas_mesh[2].visible = true;
             }
             
@@ -91,7 +93,7 @@ class Sala extends THREE.Object3D{
         if(this.tipo_sala == 2 || this.tipo_sala ==5 || this.tipo_sala == 6 || this.tipo_sala == 10 || this.tipo_sala == 14 || this.tipo_sala == 11 || this.tipo_sala == 12 || this.tipo_sala == 15){
             this.puertas[1] = true;
             this.puertasIniciales[1]=true;
-            if(n_enemigos != 0){
+            if( this.n_enemigos != 0){
                 this.puertas_mesh[1].visible = true;
             }
         }
