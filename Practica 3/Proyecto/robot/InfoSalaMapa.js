@@ -22,12 +22,12 @@ class InfoSalaMapa extends THREE.Object3D{
         var rand = Math.floor(Math.random() * (10 -0) + (0))
 
         if(rand <= 4)
-           var tieneObjeto = false;
+           var tieneObjeto = true;
         else
            var tieneObjeto = true;
 
 
-        this.Sala = new Sala(tipoSala,numeroEnemigos, tieneObjeto, this);
+        this.Sala = new Sala(tipoSala,0, tieneObjeto, this);
         this.Visitada=false;
     
     }

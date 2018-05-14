@@ -8,7 +8,9 @@ class PotenciadorCadencia extends Objeto{
         this.visible = false;
         this.salaActual = sala;
 
-        this.mesh = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial ({color: 0x666666,transparent: false, opacity: 0.7}));
+        //this.mesh = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial ({color: 0x666666,transparent: false, opacity: 0.7}));
+
+        this.mesh = Potenciadores[2].clone();
 
         this.radioEsferaEnglobante = 2;
         this.mesh.layers.set(2);

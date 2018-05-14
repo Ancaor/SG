@@ -173,6 +173,21 @@ class TheScene extends THREE.Scene {
     if(enemigos[1] == null && objetoCargado){
       enemigos[1] = objeto;
       this.loader.restart();
+      this.loader.LoadOBJ('modelos/Objetos/Espada.mtl','modelos/Objetos/Espada.obj');
+    }
+    if(Potenciadores[0] == null && objetoCargado){
+      Potenciadores[0] = objeto;
+      this.loader.restart();
+      this.loader.LoadOBJ('modelos/Objetos/Bola.mtl','modelos/Objetos/Bola.obj');
+    }
+    if(Potenciadores[1] == null && objetoCargado){
+      Potenciadores[1] = objeto;
+      this.loader.restart();
+      this.loader.LoadOBJ('modelos/Objetos/Cadencia.mtl','modelos/Objetos/Cadencia.obj');
+    }
+    if(Potenciadores[2] == null && objetoCargado){
+      Potenciadores[2] = objeto;
+      this.loader.restart();
       this.loader.LoadOBJ('modelos/Salas/sala_1.mtl','modelos/Salas/sala_1.obj');
     }
     if(this.personaje != null && enemigos[0] != null &&this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {
