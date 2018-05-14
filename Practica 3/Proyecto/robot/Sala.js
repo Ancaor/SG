@@ -1,6 +1,6 @@
 class Sala extends THREE.Object3D{
 
-    constructor(n_sala, n_enemigos,infoSala){
+    constructor(n_sala, n_enemigos, tieneObjeto, infoSala){
         super();
 
         switch(n_sala){
@@ -33,6 +33,7 @@ class Sala extends THREE.Object3D{
         this.long_pasillo = 3;
 
         this.enemigos = new THREE.Object3D;
+        this.objeto = new THREE.Object3D;
 
         this.camara = null;
 
@@ -105,11 +106,23 @@ class Sala extends THREE.Object3D{
                 this.enemigos.add(new enemigo2(this));
             else if (rand == 2)
                 this.enemigos.add(new Seta(this));
-        }   
-            
+        }
 
+
+
+        if(tieneObjeto){
+            var rand = Math.floor(Math.random() * (3 -0) + (0));
+            if(rand == 0)
+                this.objeto.add(new PotenciadorCadencia(this));
+            else if(rand == 1)
+                this.objeto.add(new PotenciadorDamage(this));
+            else if(rand == 2)
+                this.objeto.add(new PotenciadorRadioLagrima(this));
         
 
+            this.add(this.objeto);
+
+        }
         this.add(this.enemigos);
 
     }
@@ -117,19 +130,33 @@ class Sala extends THREE.Object3D{
     update(Mono){
         var longitud = this.enemigos.children.length;
 
-      for(var i=0;i < longitud; i++){
+        for(var i=0;i < longitud; i++){
             var colision_mono = this.enemigos.children[i].update(Mono);
             if(colision_mono)
-                return true;
+                return this.enemigos.children[i];
         }
+
+        if(this.objeto.children.length == 1){
+            if(this.objeto.children[0].visible){
+                var colision_mono = this.objeto.children[0].update(Mono);
+                if(colision_mono){
+                    var aux = this.objeto.children[0].clone();
+                    this.objeto.remove(this.objeto.children[0]);
+                    return aux;
+                }
+            }
+        }
+
 
         if(longitud != 0){
             this.cerrarPuertas();
         }else{
             this.abrirPuertas();
+            if(this.objeto.children.length == 1)
+                this.muestraObjeto();
         }
         
-        return false;
+        return null;
     }
 
     setCamara(una_camara){
@@ -138,6 +165,14 @@ class Sala extends THREE.Object3D{
 
     eliminarEnemigo(enemigo){
         this.enemigos.remove(this.enemigos.children[enemigo]);
+    }
+
+    eliminarObjeto(enemigo){
+        this.objeto.remove(this.objeto.children[0]);
+    }
+
+    muestraObjeto(){
+        this.objeto.children[0].visible = true;
     }
 
     cerrarPuertas(){
@@ -165,6 +200,8 @@ class Sala extends THREE.Object3D{
         this.puertas_mesh[1].layers.enable(layer);
         this.puertas_mesh[2].layers.enable(layer);
         this.puertas_mesh[3].layers.enable(layer);
+        if(this.objeto.children.length == 1)
+            this.objeto.children[0].children[0].layers.enable(layer);
         
 
     }
@@ -180,6 +217,8 @@ class Sala extends THREE.Object3D{
         this.puertas_mesh[1].layers.disable(layer);
         this.puertas_mesh[2].layers.disable(layer);
         this.puertas_mesh[3].layers.disable(layer);
+        if(this.objeto.children.length == 1)
+            this.objeto.children[0].children[0].layers.disable(layer);
     }
 
     setLayers(layer){

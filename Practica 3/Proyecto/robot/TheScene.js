@@ -211,15 +211,19 @@ class TheScene extends THREE.Scene {
         
       }      
 
-      var golpeaMono = this.salaActual.Sala.update(this.personaje);
+      var colisionMono = this.salaActual.Sala.update(this.personaje);
 
-      if(golpeaMono){
+      if(colisionMono instanceof Enemigo){
         this.personaje.vida -= 1;
         quitarVida();
         if(this.personaje.vida <= 0){
           alert("Has perdido. Te has quedado sin vida");
           this.reiniciarPartida();          
         }
+      }
+      else if(colisionMono instanceof Objeto){
+        this.personaje.aplicarBonificador(colisionMono.tipo, colisionMono.bonificacion)
+        console.log("cogiste " + colisionMono.tipo);
       }
 
 

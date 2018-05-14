@@ -15,12 +15,19 @@ class InfoSalaMapa extends THREE.Object3D{
         this.Coordenada_Z = z;
 
 
-        var max_enemigos = 0;
+        var max_enemigos = 4;
 
         var numeroEnemigos = Math.floor(Math.random() * (max_enemigos -0) + (0));
 
+        var rand = Math.floor(Math.random() * (10 -0) + (0))
 
-        this.Sala = new Sala(tipoSala,numeroEnemigos,this);
+        if(rand <= 4)
+           var tieneObjeto = false;
+        else
+           var tieneObjeto = true;
+
+
+        this.Sala = new Sala(tipoSala,numeroEnemigos, tieneObjeto, this);
         this.Visitada=false;
     
     }

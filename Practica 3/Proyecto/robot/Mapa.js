@@ -25,7 +25,7 @@ class Mapa extends THREE.Object3D{
         this.salaActual = this.mapa[1][1];
         this.salaInicio = null;
 
-        
+
         if(this.n_filas > this.n_columnas)
             this.camaraMapa = new THREE.OrthographicCamera( (this.n_filas*48+6) / - 2, (this.n_filas*48+6) / 2, (this.n_filas*48+6) / 2, (this.n_filas*48+6) / - 2, 1, 100000 );
         else
@@ -49,7 +49,7 @@ class Mapa extends THREE.Object3D{
                 this.camaraMapa.position.set(0,200,-1);
             }
         }
-
+        
         this.camaraMapa.lookAt(look);
         this.camaraMapa.layers.enable(2);
 
@@ -86,6 +86,8 @@ class Mapa extends THREE.Object3D{
         
         for(var i = this.salaInicio.Sala.n_enemigos-1; i >= 0; i-=1)
             this.salaInicio.Sala.eliminarEnemigo(i);
+        
+        this.salaInicio.Sala.eliminarObjeto();
         
     }
 

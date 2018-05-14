@@ -42,7 +42,7 @@ class Mono extends THREE.Object3D{
         //this.add(this.esferaEnglobante);
 
         //Propiedades de las lágrimas
-        this.cadencia = 0.3;
+        this.cadencia = 0.5;
         this.velocidadLagrima = 30;
         this.radioLagrima = 0.35;
         this.colorLagrima = 0xffffffff;
@@ -70,6 +70,19 @@ class Mono extends THREE.Object3D{
 
      // this.ojoDer.update();
 
+    }
+
+    aplicarBonificador(tipo, bonificacion){
+        if(tipo == "PotenciadorCadencia"){
+            if(this.cadencia > 0.2)
+                this.cadencia -= bonificacion;
+        }else if(tipo == "PotenciadorDamage"){
+            if(this.damage < 100)
+                this.damage += bonificacion;
+        }else if(tipo == "PotenciadorRadioLagrima"){
+        if(this.radioLagrima < 1)
+            this.radioLagrima += bonificacion;
+        }
     }
 
     moveForward(sala, Coordenada_X, Coordenada_Z){
@@ -160,7 +173,7 @@ class Mono extends THREE.Object3D{
         this.position.z = 0;
         this.vida = this.vidaInicial;
 
-        this.cadencia = 0.3;
+        this.cadencia = 0.5;
         this.velocidadLagrima = 30;
         this.radioLagrima = 0.35;
         this.colorLagrima = 0xffffffff;
