@@ -53,7 +53,7 @@ class Seta extends Enemigo{
         //Propiedades de las lágrimas
         this.cadencia = 1.5;
         this.velocidadLagrima = 30;
-        this.radioLagrima = 0.35;
+        this.radioLagrima = 0.6;
         this.colorLagrima = 0xf90000;
 
         var longitud = this.mesh.children.lenght;

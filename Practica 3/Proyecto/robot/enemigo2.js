@@ -10,7 +10,7 @@ class enemigo2 extends Enemigo{
 
         this.vector_inicial = new THREE.Vector3(0,0,1);
 
-        this.velocidad = 0.2;
+        this.velocidad = 0.3;
 
         this.vida = 60;
 

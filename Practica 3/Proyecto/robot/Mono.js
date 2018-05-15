@@ -66,7 +66,7 @@ class Mono extends THREE.Object3D{
             this.subir_cara = true;
       }
 
-    //  console.log(this.position);
+      console.log(this.vida);
 
      // this.ojoDer.update();
 
@@ -82,7 +82,11 @@ class Mono extends THREE.Object3D{
         }else if(tipo == "PotenciadorRadioLagrima"){
         if(this.radioLagrima < 1)
             this.radioLagrima += bonificacion;
+        }else if(tipo == "PotenciadorVida"){   
+                this.vida += bonificacion;
+                darVida();
         }
+            
     }
 
     moveForward(sala, Coordenada_X, Coordenada_Z){
