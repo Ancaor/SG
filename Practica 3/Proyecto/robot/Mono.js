@@ -74,14 +74,20 @@ class Mono extends THREE.Object3D{
 
     aplicarBonificador(tipo, bonificacion){
         if(tipo == "PotenciadorCadencia"){
-            if(this.cadencia > 0.2)
+            if(this.cadencia > 0.2){
                 this.cadencia -= bonificacion;
+                actualizaCadencia(this.cadencia);
+            }
         }else if(tipo == "PotenciadorDamage"){
-            if(this.damage < 100)
+            if(this.damage < 100){
                 this.damage += bonificacion;
+                actualizaAtaque(this.damage);
+            }
         }else if(tipo == "PotenciadorRadioLagrima"){
-        if(this.radioLagrima < 1)
+        if(this.radioLagrima < 1){
             this.radioLagrima += bonificacion;
+            actualizaRadioLagrima(this.radioLagrima);
+            }
         }else if(tipo == "PotenciadorVida"){   
                 this.vida += bonificacion;
                 darVida();

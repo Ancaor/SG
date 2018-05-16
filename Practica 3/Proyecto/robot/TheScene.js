@@ -189,6 +189,11 @@ class TheScene extends THREE.Scene {
     if(Potenciadores[2] == null && objetoCargado){
       Potenciadores[2] = objeto;
       this.loader.restart();
+      this.loader.LoadOBJ('modelos/Objetos/heart.mtl','modelos/Objetos/heart.obj');
+    }
+    if(Potenciadores[3] == null && objetoCargado){
+      Potenciadores[3] = objeto;
+      this.loader.restart();
       this.loader.LoadOBJ('modelos/Salas/sala_1.mtl','modelos/Salas/sala_1.obj');
     }
     if(this.personaje != null && enemigos[0] != null &&this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {

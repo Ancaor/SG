@@ -5,7 +5,7 @@ objeto = null;
 objetos_sala = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 objetoCargado = false;
 enemigos = [null,null,null];
-Potenciadores = [null,null,null];
+Potenciadores = [null,null,null, null];
 
 // map de teclas para el control fluido
 codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false};
@@ -237,9 +237,49 @@ function darVida(l) {
   var li = document.createElement("li");
   li.id = "heart";
   elem.appendChild(li);
-  
-  
 }
+
+function actualizaAtaque(atk) {
+
+  var elem = document.querySelectorAll("#ataque p");
+  var p =  elem[elem.length-1];
+  p.parentNode.removeChild(p);
+
+  elem = document.getElementById("ataque");
+
+  p = document.createElement("p");
+  var t = document.createTextNode("Ataque: "+atk);
+  p.appendChild(t);
+  elem.appendChild(p);
+}
+
+function actualizaCadencia(cad) {
+  var elem = document.querySelectorAll("#cadencia p");
+  var p =  elem[elem.length-1];
+  p.parentNode.removeChild(p);
+
+  elem = document.getElementById("cadencia");
+
+  p = document.createElement("p");
+  var t = document.createTextNode("Cadencia: "+cad);
+  p.appendChild(t);
+  elem.appendChild(p);
+}
+
+function actualizaRadioLagrima(rad){
+
+  var elem = document.querySelectorAll("#radioLagrima p");
+  var p =  elem[elem.length-1];
+  p.parentNode.removeChild(p);
+
+  elem = document.getElementById("radioLagrima");
+
+  p = document.createElement("p");
+  var t = document.createTextNode("Radio Proyectil: "+rad);
+  p.appendChild(t);
+  elem.appendChild(p);
+}
+
 
 
 function renderViewport(escena, camara, left, top, width, height){
