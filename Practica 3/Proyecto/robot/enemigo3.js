@@ -1,4 +1,4 @@
-class enemigo2 extends Enemigo{
+class enemigo3 extends Enemigo{
     constructor(sala){
         super();
 
@@ -10,7 +10,7 @@ class enemigo2 extends Enemigo{
 
         this.vector_inicial = new THREE.Vector3(0,0,1);
 
-        this.velocidad = 0.3;
+        this.velocidad = 0.2;
 
         this.vida = 60;
 
@@ -64,74 +64,67 @@ class enemigo2 extends Enemigo{
         this.setVisible = true;
         this.tiempoInicioAnimacion;
         this.tiempoActualAnimacion;
+
+
+        this.direccion = new THREE.Vector3(-1,0,0);
+
+
+
     }
-
-
-
-
 
     update(Mono){
 
         this.tiempoActual = Date.now();
 
-
-
-        
         /* movimiento */
-
-        
 
         var posicionZreal =  (this.mesh.position.z + this.salaActual.infoSala.Coordenada_Z)
         var posicionXreal =  (this.mesh.position.x + this.salaActual.infoSala.Coordenada_X)
 
-
-
-
-       var vector_unitario = new THREE.Vector3(Mono.position.x - posicionXreal ,0,Mono.position.z - posicionZreal);
-       vector_unitario = vector_unitario.normalize();
+      // var vector_unitario = new THREE.Vector3(Mono.position.x - posicionXreal ,0,Mono.position.z - posicionZreal);
+      // vector_unitario = vector_unitario.normalize();
         
-
-       this.mesh.position.x += (vector_unitario.x * this.velocidad);  // tiempo ?
+      // this.mesh.position.x + (this.direccion.x * this.velocidad)  // tiempo ?
        
-       this.mesh.position.z += (vector_unitario.z * this.velocidad); // tiempo ?
+      // this.mesh.position.z + (this.direccion.z * this.velocidad); // tiempo ?
+      //console.log('Avance ' + (this.direccion.x * this.velocidad))
 
-       var angulo_rot = this.vector_inicial.angleTo(vector_unitario);
+       var posicionNueva = new THREE.Vector3( this.mesh.position.x + (this.direccion.x * this.velocidad),this.mesh.position.y,this.mesh.position.z + (this.direccion.z * this.velocidad));
 
-       if(vector_unitario.x > 0)
-       this.mesh.rotation.y = angulo_rot;
-       else this.mesh.rotation.y = -angulo_rot;
+       //console.log('Pos ' + posicionNueva.x)
+
+       //console.log(this.salaActual.limite+this.salaActual.infoSala.Coordenada_X)
+
+     //  console.log( this.mesh.position.x)
+
+
+       if(posicionNueva.x > (this.salaActual.limite)){
+              // Ha chocado con el muro izquierdo;
+
+              this.calcularNuevaDireccion(new THREE.Vector3(0,0,1));
+             
+
+        //  console.log("ejntra")
+        //console.log("choca-izquierda")
+       //    this.mesh.position.z += (posicionNueva.z * this.velocidad); // tiempo ?
+       }else if(posicionNueva.x < ((-this.salaActual.limite))){
+        //choca con muro derecho
+        this.calcularNuevaDireccion(new THREE.Vector3(0,0,-1));
+        //console.log("choca-der")
+       }else if(posicionNueva.z > ((this.salaActual.limite))){
+        //choca muro arriba
+        this.calcularNuevaDireccion(new THREE.Vector3(-1,0,0));
+       }else if(posicionNueva.z < ((-this.salaActual.limite))){
+        //choca muro abajo
+        this.calcularNuevaDireccion(new THREE.Vector3(1,0,0));
+       }else{
+        this.mesh.position.x = posicionNueva.x;
+        this.mesh.position.z = posicionNueva.z;
+       }
+
 
 
        /*         fin-movimiento          */
-
-
-        //animacion si ha chocado con personaje
-
-        /*
-       if(this.parpadeo){
-           console.log("entra")
-           this.tiempoActualAnimacion = Date.now();
-           var tiempoTranscurridoAnimacion = (this.tiempoActualAnimacion - this.tiempoInicioAnimacion)/1000;
-
-           if(tiempoTranscurridoAnimacion < 2){
-                if(this.setVisible){
-                    this.mesh.visible = true;
-                    this.setVisible = false;
-                }else {
-                    this.mesh.visible = false;
-                    this.setVisible = true;
-                }
-           }else{
-                this.parpadeo = false;
-                this.setVisible = true;
-           } 
-
-       }
-
-       */
-
-
-       //colisiones
 
        var difRadios = this.radioEsferaEnglobante + Mono.radioEsferaEnglobante;
 
@@ -142,22 +135,18 @@ class enemigo2 extends Enemigo{
        var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
         //console.log(tiempoTranscurrido)
 
-      
+            if(tiempoTranscurrido > 1){
             if(distanciaReal <= difRadios){
                 this.tiempoAnterior = this.tiempoActual;
 
-                this.mesh.position.x -= (10 * vector_unitario.x);   // para que se despegue
-                this.mesh.position.z -= (10 * vector_unitario.z);   // para que se despegue
-
-              //  this.tiempoInicioAnimacion = Date.now();
-              //  this.parpadeo = true; // descomenta para parpadeo
+                var muroChoque = this.direccion.applyAxisAngle(new THREE.Vector3(0,1,0),-Math.PI/2)
+                this.calcularNuevaDireccion(muroChoque)
+              
                 return true;
                 
             }
-        
-
+        }
     }
-
 
     bajarVida(damage){
         this.vida -= damage;
@@ -167,6 +156,21 @@ class enemigo2 extends Enemigo{
             return true;
 
         return false;
+    }
+
+    calcularNuevaDireccion(muro){
+        var angulo = Math.floor(Math.random() * (290) + (24));
+              angulo = angulo/100;
+              //console.log("angulo: " + angulo);
+
+            
+              var ref = new THREE.Vector3(0,1,0);
+
+              muro = muro.applyAxisAngle(ref,-angulo);
+
+             // console.log("Nueva dir = " + muro.x + " , " + muro.z);
+
+              this.direccion = muro;
     }
 
 }

@@ -66,7 +66,7 @@ class Mono extends THREE.Object3D{
             this.subir_cara = true;
       }
 
-      console.log(this.vida);
+      //console.log(this.vida);
 
      // this.ojoDer.update();
 
