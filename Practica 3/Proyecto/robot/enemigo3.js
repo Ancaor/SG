@@ -6,11 +6,11 @@ class enemigo3 extends Enemigo{
         //this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
 
         this.mesh = enemigos[2].clone();
-        this.radioEsferaEnglobante = 1.5;
+        this.radioEsferaEnglobante = 1;
 
         this.vector_inicial = new THREE.Vector3(0,0,1);
 
-        this.velocidad = 0.3;
+        this.velocidad = 0.1;
 
         this.vida = 60;
 
@@ -98,22 +98,22 @@ class enemigo3 extends Enemigo{
      //  console.log( this.mesh.position.x)
 
 
-       if(posicionNueva.x > (this.salaActual.limite)){
+       if((posicionNueva.x + this.radioEsferaEnglobante) > (this.salaActual.limite)){
               // Ha chocado con el muro izquierdo;
         this.calcularNuevaDireccion(new THREE.Vector3(0,0,1));
         
-       }else if(posicionNueva.x < ((-this.salaActual.limite))){
+       }else if((posicionNueva.x - this.radioEsferaEnglobante) < ((-this.salaActual.limite))){
         //choca con muro derecho
         this.calcularNuevaDireccion(new THREE.Vector3(0,0,-1));
 
 
         //console.log("choca-der")
-       }else if(posicionNueva.z > ((this.salaActual.limite))){
+       }else if((posicionNueva.z + this.radioEsferaEnglobante) > ((this.salaActual.limite))){
         //choca muro arriba
         this.calcularNuevaDireccion(new THREE.Vector3(-1,0,0));
 
 
-       }else if(posicionNueva.z < ((-this.salaActual.limite))){
+       }else if((posicionNueva.z - this.radioEsferaEnglobante)< ((-this.salaActual.limite))){
         //choca muro abajo
         this.calcularNuevaDireccion(new THREE.Vector3(1,0,0));
 
@@ -140,9 +140,14 @@ class enemigo3 extends Enemigo{
             if(distanciaReal <= difRadios){
                 this.tiempoAnterior = this.tiempoActual;
 
-                var muroChoque = this.direccion.applyAxisAngle(new THREE.Vector3(0,1,0),-Math.PI/2)
+                var muroChoque = new THREE.Vector3(this.direccion.x,this.direccion.y,this.direccion.z);
+
+                muroChoque = muroChoque.applyAxisAngle(new THREE.Vector3(0,1,0),-Math.PI/2);
+                muroChoque.normalize();
+                
+                
                 this.calcularNuevaDireccion(muroChoque)
-              
+                
                 return true;
                 
             }
@@ -164,7 +169,13 @@ class enemigo3 extends Enemigo{
               angulo = angulo/100;
               //console.log("angulo: " + angulo);
 
-            
+             
+
+              this.mesh.rotation.y -= (this.direccion.angleTo(muro));
+
+
+              this.mesh.rotation.y -= angulo;
+
               var ref = new THREE.Vector3(0,1,0);
 
               muro = muro.applyAxisAngle(ref,-angulo);
