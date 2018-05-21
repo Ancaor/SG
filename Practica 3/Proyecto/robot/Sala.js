@@ -35,6 +35,13 @@ class Sala extends THREE.Object3D{
         this.enemigos = new THREE.Object3D;
         this.objeto = new THREE.Object3D;
 
+        this.teleport = new THREE.Mesh(new THREE.BoxGeometry (1,1,1),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0}));
+
+        this.ultimaSala = false;
+
+        this.finMapa = false;
+
+
         this.camara = null;
 
         this.tipo_sala = n_sala;
@@ -150,16 +157,29 @@ class Sala extends THREE.Object3D{
             }
         }
 
+        if(this.finMapa){
+            console.log("entra en finmapa")
+            return true;
+        }
+
 
         if(longitud != 0){
             this.cerrarPuertas();
         }else{
+            if(this.ultimaSala && !this.finMapa){
+                this.add(this.teleport);
+                this.finMapa = true;
+            }
             this.abrirPuertas();
             if(this.objeto.children.length == 1)
                 this.muestraObjeto();
         }
         
         return null;
+    }
+
+    activaTeleport(){
+        this.add(this.teleport);
     }
 
     setCamara(una_camara){

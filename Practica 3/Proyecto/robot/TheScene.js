@@ -59,6 +59,8 @@ class TheScene extends THREE.Scene {
     this.add (this.model);
     //this.add(this.lanzador);
 
+    this.generadorPartida = null;
+
     //this.add(new Seta());
 
 
@@ -213,7 +215,8 @@ class TheScene extends THREE.Scene {
         objetos_sala[this.salasCargadas] = objeto;
         this.loader.restart();
         this.salasCargadas++;
-        this.mapa = new Mapa();
+        this.generadorPartida = new GeneradorPartida();
+        this.mapa = this.generadorPartida.getMapaActual();
         this.camaraMapa = this.mapa.camaraMapa;
         this.mapa.generarMapa();
         this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z );
@@ -251,6 +254,24 @@ class TheScene extends THREE.Scene {
       else if(colisionMono instanceof Objeto){
         this.personaje.aplicarBonificador(colisionMono.tipo, colisionMono.bonificacion)
         console.log("cogiste " + colisionMono.tipo);
+      }else if(colisionMono ==true){
+        this.remove(this.mapa);
+        this.generadorPartida.mapaAtual +=1;
+        if(this.generadorPartida.mapaAtual > 1){
+          alert("AAAAAAH GANASTE");
+          this.reiniciarPartida();
+        }
+        this.mapa = this.generadorPartida.getMapaActual();  
+        this.camaraMapa = this.mapa.camaraMapa;
+        this.mapa.generarMapa();
+        this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z );
+        this.mapa.ocultaMapa();
+        this.salaActual = this.mapa.getSalaActual();
+        this.camaraSala = this.salaActual.Sala.camara;
+        this.add(this.mapa);
+
+        this.sala_anterior=this.salaActual;
+        console.log("te fuiste " );
       }
 
 
@@ -294,11 +315,16 @@ class TheScene extends THREE.Scene {
 reiniciarPartida(){
   this.personaje.restart();
   this.remove(this.mapa);
-  
-  this.mapa = new Mapa();
+
+  this.generadorPartida = new GeneradorPartida();
+
+  this.mapa = this.generadorPartida.getMapaActual();
+  this.camaraMapa = this.mapa.camaraMapa;
   this.mapa.generarMapa();
-  this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z);
+  this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z );
   this.mapa.ocultaMapa();
+  this.salaActual = this.mapa.getSalaActual();
+  this.camaraSala = this.salaActual.Sala.camara;
   this.add(this.mapa);
 
   codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false};

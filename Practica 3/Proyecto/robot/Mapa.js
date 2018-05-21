@@ -20,10 +20,11 @@ class Mapa extends THREE.Object3D{
                         [ this.InfoSalas[6], this.InfoSalas[7], this.InfoSalas[8] ],
                     ]
 
-        this.salasVisitadas = new Array();
-
         this.salaActual = this.mapa[1][1];
         this.salaInicio = null;
+
+        this.finMapa = false;
+        this.salasVisitadas = 0;
 
 
         if(this.n_filas > this.n_columnas)
@@ -118,6 +119,15 @@ class Mapa extends THREE.Object3D{
                 if(z_mono <= lim_z_sup && z_mono >= lim_z_inf){
                     if(x_mono <= lim_x_sup && x_mono >= lim_x_inf){
                         //var info_sala_actual = this.mapa[i][j];
+                        if(this.mapa[i][j].Visitada==false)
+                            this.salasVisitadas += 1;
+
+                        if((this.salasVisitadas == (this.n_filas * this.n_columnas)) && !this.finMapa){
+                            this.mapa[i][j].Sala.ultimaSala = true;
+                            this.finMapa = true;
+
+                        }
+
                         this.salaActual = this.mapa[i][j];
                         this.mapa[i][j].Visitada=true;
                     }

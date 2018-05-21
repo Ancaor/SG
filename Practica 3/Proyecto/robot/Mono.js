@@ -42,11 +42,11 @@ class Mono extends THREE.Object3D{
         //this.add(this.esferaEnglobante);
 
         //Propiedades de las lágrimas
-        this.cadencia = 0.5;
+        this.cadencia = 0.03;
         this.velocidadLagrima = 30;
         this.radioLagrima = 0.35;
         this.colorLagrima = 0xffffffff;
-        this.damage = 20;
+        this.damage = 70;
 
 
         
