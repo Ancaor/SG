@@ -3,14 +3,14 @@ class enemigo3 extends Enemigo{
         super();
 
         this.salaActual = sala;
-        this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
+        //this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
 
-        this.mesh = enemigos[1].clone();
+        this.mesh = enemigos[2].clone();
         this.radioEsferaEnglobante = 1.5;
 
         this.vector_inicial = new THREE.Vector3(0,0,1);
 
-        this.velocidad = 0.2;
+        this.velocidad = 0.3;
 
         this.vida = 60;
 
@@ -100,23 +100,24 @@ class enemigo3 extends Enemigo{
 
        if(posicionNueva.x > (this.salaActual.limite)){
               // Ha chocado con el muro izquierdo;
-
-              this.calcularNuevaDireccion(new THREE.Vector3(0,0,1));
-             
-
-        //  console.log("ejntra")
-        //console.log("choca-izquierda")
-       //    this.mesh.position.z += (posicionNueva.z * this.velocidad); // tiempo ?
+        this.calcularNuevaDireccion(new THREE.Vector3(0,0,1));
+        
        }else if(posicionNueva.x < ((-this.salaActual.limite))){
         //choca con muro derecho
         this.calcularNuevaDireccion(new THREE.Vector3(0,0,-1));
+
+
         //console.log("choca-der")
        }else if(posicionNueva.z > ((this.salaActual.limite))){
         //choca muro arriba
         this.calcularNuevaDireccion(new THREE.Vector3(-1,0,0));
+
+
        }else if(posicionNueva.z < ((-this.salaActual.limite))){
         //choca muro abajo
         this.calcularNuevaDireccion(new THREE.Vector3(1,0,0));
+
+
        }else{
         this.mesh.position.x = posicionNueva.x;
         this.mesh.position.z = posicionNueva.z;
