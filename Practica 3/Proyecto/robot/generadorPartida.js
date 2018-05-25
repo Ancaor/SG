@@ -3,7 +3,7 @@ class GeneradorPartida extends THREE.Object3D {
     constructor(){
         super();
 
-        this.mapas = [new Mapa(2), new Mapa(2)];
+        this.mapas = [new Mapa(1), new Mapa(2), new Mapa(3)];
         this.mapaAtual = 0;
     }
 

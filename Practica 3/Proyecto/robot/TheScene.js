@@ -257,7 +257,7 @@ class TheScene extends THREE.Scene {
       }else if(colisionMono ==true){
         this.remove(this.mapa);
         this.generadorPartida.mapaAtual +=1;
-        if(this.generadorPartida.mapaAtual > 1){
+        if(this.generadorPartida.mapaAtual == this.generadorPartida.mapas.length){
           alert("AAAAAAH GANASTE");
           this.reiniciarPartida();
         }
