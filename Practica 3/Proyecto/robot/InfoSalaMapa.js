@@ -9,11 +9,8 @@ class InfoSalaMapa extends THREE.Object3D{
         var z = -(fila-fila_centro)*48;
         var x = -(columna-columna_centro)*48;
 
-
-        console.log("Sala["+fila+"]["+columna+"] está en X = "+x+"   Z = "+z);
         this.Coordenada_X = x;
         this.Coordenada_Z = z;
-
 
         var max_enemigos = 4;
 
