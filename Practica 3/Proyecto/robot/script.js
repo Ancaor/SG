@@ -5,7 +5,7 @@ objeto = null;
 objetos_sala = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 objetoCargado = false;
 enemigos = [null,null,null];
-Potenciadores = [null,null,null, null];
+Potenciadores = [null,null,null,null,null];
 
 // map de teclas para el control fluido
 codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false};

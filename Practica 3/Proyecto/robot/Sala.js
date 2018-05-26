@@ -127,7 +127,7 @@ class Sala extends THREE.Object3D{
                 this.objeto.add(new PotenciadorDamage(this));
             else if(rand == 2)
                 this.objeto.add(new PotenciadorRadioLagrima(this));
-                else if(rand == 3)
+            else if(rand == 3)
                 this.objeto.add(new PotenciadorVida(this));
 
             this.add(this.objeto);
@@ -157,17 +157,13 @@ class Sala extends THREE.Object3D{
             }
         }
 
-        if(this.finMapa){
-            console.log("entra en finmapa")
-            return true;
-        }
-
-
         if(longitud != 0){
             this.cerrarPuertas();
         }else{
             if(this.ultimaSala && !this.finMapa){
-                this.add(this.teleport);
+                //this.remove(this.objeto);
+                this.objeto.remove(this.objeto.children[0]);
+                this.objeto.add( new teleport(this));
                 this.finMapa = true;
             }
             this.abrirPuertas();

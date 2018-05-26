@@ -202,6 +202,11 @@ class TheScene extends THREE.Scene {
     if(Potenciadores[3] == null && objetoCargado){
       Potenciadores[3] = objeto;
       this.loader.restart();
+      this.loader.LoadOBJ('modelos/Objetos/teleport.mtl','modelos/Objetos/teleport.obj');
+    }
+    if(Potenciadores[4] == null && objetoCargado){
+      Potenciadores[4] = objeto;
+      this.loader.restart();
       this.loader.LoadOBJ('modelos/Salas/sala_1.mtl','modelos/Salas/sala_1.obj');
     }
     if(this.personaje != null && enemigos[0] != null &&this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {
@@ -252,27 +257,29 @@ class TheScene extends THREE.Scene {
         }
       }
       else if(colisionMono instanceof Objeto){
-        this.personaje.aplicarBonificador(colisionMono.tipo, colisionMono.bonificacion)
-        console.log("cogiste " + colisionMono.tipo);
-      }else if(colisionMono ==true){
-        this.remove(this.mapa);
-        this.generadorPartida.mapaAtual +=1;
-        if(this.generadorPartida.mapaAtual == this.generadorPartida.mapas.length){
-          alert("AAAAAAH GANASTE");
-          this.reiniciarPartida();
-        }
-        this.mapa = this.generadorPartida.getMapaActual();  
-        this.camaraMapa = this.mapa.camaraMapa;
-        this.mapa.generarMapa();
-        this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z );
-        this.mapa.ocultaMapa();
-        this.salaActual = this.mapa.getSalaActual();
-        this.camaraSala = this.salaActual.Sala.camara;
-        this.add(this.mapa);
 
-        this.sala_anterior=this.salaActual;
-        console.log("te fuiste " );
+        if(colisionMono.tipo != "Teleport"){
+          this.personaje.aplicarBonificador(colisionMono.tipo, colisionMono.bonificacion);
+          console.log("cogiste " + colisionMono.tipo);
+        }else{
+          this.remove(this.mapa);
+          this.generadorPartida.mapaAtual +=1;
+          if(this.generadorPartida.mapaAtual == this.generadorPartida.mapas.length){
+            alert("AAAAAAH GANASTE");
+            this.reiniciarPartida();
+          }
+          this.mapa = this.generadorPartida.getMapaActual();  
+          this.camaraMapa = this.mapa.camaraMapa;
+          this.mapa.generarMapa();
+          this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z );
+          this.mapa.ocultaMapa();
+          this.salaActual = this.mapa.getSalaActual();
+          this.camaraSala = this.salaActual.Sala.camara;
+          this.add(this.mapa);
+
+          this.sala_anterior=this.salaActual;
       }
+    }
 
 
       this.mapa.muestraMapa();
