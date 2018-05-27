@@ -132,7 +132,21 @@ class Sala extends THREE.Object3D{
         }
 
         this.add(this.enemigos);
-        this.add(this.objeto);
+        
+        if(tieneObjeto){
+            var rand = Math.floor(Math.random() * (4 -0) + (0));
+            if(rand == 0)
+                this.objeto.add(new PotenciadorCadencia(this));
+            else if(rand == 1)
+                this.objeto.add(new PotenciadorDamage(this));
+            else if(rand == 2)
+                this.objeto.add(new PotenciadorRadioLagrima(this));
+            else if(rand == 3)
+                this.objeto.add(new PotenciadorVida(this));
+
+            this.add(this.objeto);
+
+        }
         
 
     }
