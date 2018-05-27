@@ -90,6 +90,18 @@ function setMessage (str) {
 }
 
 
+
+function seleccionarModoAleatorio(){
+  scene.modoJuego = 1;
+  console.log(scene.modoJuego)
+}
+
+function seleccionarModoPredeterminado(){
+  scene.modoJuego = 0;
+  console.log(scene.modoJuego)
+}
+
+
 function restartCodeset(){
   codeset[37] = false
   codeset[38] = false

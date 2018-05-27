@@ -61,6 +61,8 @@ class TheScene extends THREE.Scene {
 
     this.generadorPartida = null;
 
+    this.modoJuego = -1;
+
     //this.add(new Seta());
 
 
@@ -216,11 +218,11 @@ class TheScene extends THREE.Scene {
         var indice = this.salasCargadas+1;
         this.loader.LoadOBJ('modelos/Salas/sala_'+indice+'.mtl','modelos/Salas/sala_'+indice+'.obj')
     }
-    if(this.salasCargadas == 14 && this.salas[this.salasCargadas] == null && objetoCargado){
+    if(this.salasCargadas == 14 && this.salas[this.salasCargadas] == null && objetoCargado && this.modoJuego != -1){
         objetos_sala[this.salasCargadas] = objeto;
         this.loader.restart();
         this.salasCargadas++;
-        this.generadorPartida = new GeneradorPartida();
+        this.generadorPartida = new GeneradorPartida(this.modoJuego);
         this.mapa = this.generadorPartida.getMapaActual();
         this.camaraMapa = this.mapa.camaraMapa;
         this.mapa.generarMapa();

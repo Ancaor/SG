@@ -6,7 +6,6 @@ class Enemigo extends THREE.Object3D{
         this.damage;
         this.mesh=null;
 
-        //this.add(this.mesh);
     }
 
 
