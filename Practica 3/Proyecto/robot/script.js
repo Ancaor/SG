@@ -90,6 +90,13 @@ function setMessage (str) {
   document.getElementById ("Messages").innerHTML = "<h2>"+str+"</h2>";
 }
 
+function seleccionarModoAleatorio() {
+  scene.modoJuego = 1;
+}
+
+function seleccionarModoPredeterminado(){
+  scene.modoJuego = 0;
+}
 
 function restartCodeset(){
   codeset[37] = false

@@ -211,6 +211,27 @@
             margin: 0;
             overflow: hidden;
         }
+
+         #menu-principal{
+            position: absolute;
+            width: 30%;
+            height: 300px;
+            left: 35%;
+            top:35%;
+            background-color: aliceblue;
+        }
+
+        #button-aleatorio{
+            margin-left: 5%;
+            width: 120px;
+            height: 50px;
+        }
+
+        #button-predeterminado{
+            margin-right: 5%;
+            width: 120px;
+            height: 50px;
+        }
     </style>
 </head>
 <body>
@@ -241,6 +262,11 @@
             <p>Radio Proyectil: 0.35</p>
         </ul>
     </div>
+</div>
+
+<div id="menu-principal">
+    <button id="button-aleatorio" onclick="seleccionarModoAleatorio();">Modo aleatorio</button>
+    <button id="button-predeterminado" onclick="seleccionarModoPredeterminado();">Modo predeterminado</button>
 </div>
 
 <!--
