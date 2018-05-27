@@ -37,7 +37,6 @@ class TheScene extends THREE.Scene {
     
     this.tiempoTranscurrido = 0;
 
-    //this.lanzador = new Launcher();
 
     
     this.loader = new OBJLoader();
@@ -62,22 +61,6 @@ class TheScene extends THREE.Scene {
 
     this.modoJuego = -1;
     this.mapaGenerado = false;
-
-    //this.add(new Seta());
-
-
-/*
-
-    this.aux2=new THREE.Mesh(new THREE.BoxGeometry(5,5,5), new THREE.MeshPhongMaterial ({color: 0x666666,transparent: false, opacity: 0.7}))
-    //this.aux.layers.toggle(2);
-    this.aux2.layers.enable(2);
-    this.aux2.layers.disable(0);
-    this.aux2.position.z = 10;
-
-    this.aux.add(this.aux2);
-
-    
-*/
 
   }
 
@@ -124,16 +107,6 @@ class TheScene extends THREE.Scene {
     this.spotLight.shadow.mapSize.width=2048
     this.spotLight.shadow.mapSize.height=2048;
     this.add (this.spotLight);
-
-/*
-    this.pointLight = new THREE.PointLight(0xffffff);
-    this.pointLight.position.set( 0, 120, -50 );
-    this.pointLight.castShadow = true;
-    // the shadow resolution
-    this.pointLight.shadow.mapSize.width=2048
-    this.pointLight.shadow.mapSize.height=2048;
-    this.add (this.pointLight);
-    */
   }
 
   /// It creates the geometric model: crane and ground
@@ -384,26 +357,21 @@ SiguienteNivel(){
   }
 
   disparar(orientacion){
-   // console.log(this.personaje.position)
-   // console.log(this.personaje.ojoDer.position)
   this.tiempoActualDisparo = Date.now()
   this.personaje.ajustarOrientacion(orientacion);
   var tiempotransc = (this.tiempoActualDisparo - this.tiempoAnteriorDisparo) / 1000
-   // console.log(tiempotransc)
+   
    if( tiempotransc > this.personaje.cadencia){
     var a = new THREE.Vector3(this.personaje.position.x,this.personaje.position.y,this.personaje.position.z);
     
     a.add(this.personaje.ojoDer.position)
     
 
-    //var a;
+    
     var lagrima = new Lagrima({z:a.z,y:a.y,x:a.x,o:orientacion,v:this.personaje.velocidadLagrima,r:this.personaje.radioLagrima,c:this.personaje.colorLagrima,t:1,xReal:0,zReal:0});
 
     this.lagrimas.add(lagrima)
-    //this.personaje.getWorldPosition(a);
-
-   // console.log(a)
-   // console.log(lagrima.position)
+  
    this.tiempoAnteriorDisparo = this.tiempoActualDisparo
 
    }
@@ -424,7 +392,7 @@ SiguienteNivel(){
             case 3: this.lagrima.position.x -= this.velocidad * this.tiempoTranscurrido; break;
         }
         
-     //  this.lagrima.position.z += this.velocidad * this.tiempoTranscurrido;
+     
         this.tiempoAnterior =this.tiempoActual;
     
   }
