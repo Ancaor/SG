@@ -92,10 +92,17 @@ function setMessage (str) {
 
 function seleccionarModoAleatorio() {
   scene.modoJuego = 1;
+  eliminarMenuInicial();
 }
 
 function seleccionarModoPredeterminado(){
   scene.modoJuego = 0;
+  eliminarMenuInicial();
+}
+
+function eliminarMenuInicial(){
+  var elem = document.getElementById("menu-principal");
+  elem.parentNode.removeChild(elem);
 }
 
 function restartCodeset(){
