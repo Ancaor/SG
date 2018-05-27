@@ -9,12 +9,7 @@ class Launcher extends THREE.Object3D{
         this.visor = new THREE.Mesh (
             geometria, this.material);
         
-/*
-       // this.visor.scale.set(120,30,0.1);
-        this.visor.position.z = 1.2;
-        this.visor.position.x = 0.6;
-        this.visor.position.y = character.posicion_base-0.1;
-*/
+
         this.visor.castShadow = true;
         this.visor.receiveShadow = true;
       //  this.add(this.visor)
@@ -40,7 +35,7 @@ class Launcher extends THREE.Object3D{
 
         this.tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
 
-        // Crea meteoritos pasado un tiempo
+        // Crea lagrimas pasado un tiempo
         if( this.tiempoTranscurrido > this.tiempoEntreLanzamientos){   // tiempo entre bolas
             console.log(scene.personaje.orientacion)
             this.lagrima = new Lagrima({z:this.position.z,y:this.position.y,x:this.position.x,o:scene.personaje.orientacion,v:this.velocidadMeteoritos});

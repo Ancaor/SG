@@ -91,45 +91,15 @@ class enemigo2 extends Enemigo{
        vector_unitario = vector_unitario.normalize();
         
 
-       this.mesh.position.x += (vector_unitario.x * this.velocidad);  // tiempo ?
+       this.mesh.position.x += (vector_unitario.x * this.velocidad);  
        
-       this.mesh.position.z += (vector_unitario.z * this.velocidad); // tiempo ?
+       this.mesh.position.z += (vector_unitario.z * this.velocidad);
 
        var angulo_rot = this.vector_inicial.angleTo(vector_unitario);
 
        if(vector_unitario.x > 0)
        this.mesh.rotation.y = angulo_rot;
        else this.mesh.rotation.y = -angulo_rot;
-
-
-       /*         fin-movimiento          */
-
-
-        //animacion si ha chocado con personaje
-
-        /*
-       if(this.parpadeo){
-           console.log("entra")
-           this.tiempoActualAnimacion = Date.now();
-           var tiempoTranscurridoAnimacion = (this.tiempoActualAnimacion - this.tiempoInicioAnimacion)/1000;
-
-           if(tiempoTranscurridoAnimacion < 2){
-                if(this.setVisible){
-                    this.mesh.visible = true;
-                    this.setVisible = false;
-                }else {
-                    this.mesh.visible = false;
-                    this.setVisible = true;
-                }
-           }else{
-                this.parpadeo = false;
-                this.setVisible = true;
-           } 
-
-       }
-
-       */
-
 
        //colisiones
 
@@ -140,8 +110,6 @@ class enemigo2 extends Enemigo{
        var distanciaReal = posReal.distanceTo(Mono.position);
      
        var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
-        //console.log(tiempoTranscurrido)
-
       
             if(distanciaReal <= difRadios){
                 this.tiempoAnterior = this.tiempoActual;
@@ -149,8 +117,6 @@ class enemigo2 extends Enemigo{
                 this.mesh.position.x -= (10 * vector_unitario.x);   // para que se despegue
                 this.mesh.position.z -= (10 * vector_unitario.z);   // para que se despegue
 
-              //  this.tiempoInicioAnimacion = Date.now();
-              //  this.parpadeo = true; // descomenta para parpadeo
                 return true;
                 
             }

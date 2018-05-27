@@ -3,7 +3,6 @@ class enemigo3 extends Enemigo{
         super();
 
         this.salaActual = sala;
-        //this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
 
         this.mesh = enemigos[2].clone();
         this.radioEsferaEnglobante = 1;
@@ -50,20 +49,9 @@ class enemigo3 extends Enemigo{
 
         this.add(this.mesh);
 
-        
-
-        //this.mesh.position.set(5,1,5);
 
         this.tiempoAnterior = Date.now();
         this.tiempoActual;
-
-
-        //aniumacion
-        this.parpadeo = false;
-
-        this.setVisible = true;
-        this.tiempoInicioAnimacion;
-        this.tiempoActualAnimacion;
 
 
         this.direccion = new THREE.Vector3(-1,0,0);
@@ -81,21 +69,7 @@ class enemigo3 extends Enemigo{
         var posicionZreal =  (this.mesh.position.z + this.salaActual.infoSala.Coordenada_Z)
         var posicionXreal =  (this.mesh.position.x + this.salaActual.infoSala.Coordenada_X)
 
-      // var vector_unitario = new THREE.Vector3(Mono.position.x - posicionXreal ,0,Mono.position.z - posicionZreal);
-      // vector_unitario = vector_unitario.normalize();
-        
-      // this.mesh.position.x + (this.direccion.x * this.velocidad)  // tiempo ?
-       
-      // this.mesh.position.z + (this.direccion.z * this.velocidad); // tiempo ?
-      //console.log('Avance ' + (this.direccion.x * this.velocidad))
-
        var posicionNueva = new THREE.Vector3( this.mesh.position.x + (this.direccion.x * this.velocidad),this.mesh.position.y,this.mesh.position.z + (this.direccion.z * this.velocidad));
-
-       //console.log('Pos ' + posicionNueva.x)
-
-       //console.log(this.salaActual.limite+this.salaActual.infoSala.Coordenada_X)
-
-     //  console.log( this.mesh.position.x)
 
 
        if((posicionNueva.x + this.radioEsferaEnglobante) > (this.salaActual.limite)){
@@ -134,7 +108,6 @@ class enemigo3 extends Enemigo{
        var distanciaReal = posReal.distanceTo(Mono.position);
      
        var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
-        //console.log(tiempoTranscurrido)
 
             if(tiempoTranscurrido > 1){
             if(distanciaReal <= difRadios){
@@ -167,9 +140,6 @@ class enemigo3 extends Enemigo{
     calcularNuevaDireccion(muro){
         var angulo = Math.floor(Math.random() * (290) + (24));
               angulo = angulo/100;
-              //console.log("angulo: " + angulo);
-
-             
 
               this.mesh.rotation.y -= (this.direccion.angleTo(muro));
 
@@ -180,7 +150,6 @@ class enemigo3 extends Enemigo{
 
               muro = muro.applyAxisAngle(ref,-angulo);
 
-             // console.log("Nueva dir = " + muro.x + " , " + muro.z);
 
               this.direccion = muro;
     }

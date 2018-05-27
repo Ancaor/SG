@@ -15,7 +15,6 @@ class TheScene extends THREE.Scene {
     this.pointLight = null;
     
     this.trackballControls = null;
-    this.ground = null;
 
     this.mostrarMapa = false;
     this.camaraSala = null;
@@ -146,8 +145,6 @@ class TheScene extends THREE.Scene {
     var loader = new THREE.TextureLoader();
     
     var textura = loader.load ("imgs/ground.jpg");
-    this.ground = new Ground (200, 200, new THREE.MeshPhongMaterial ({map: textura}), 4);
-    //model.add (this.ground);
 
     return model;
   }
