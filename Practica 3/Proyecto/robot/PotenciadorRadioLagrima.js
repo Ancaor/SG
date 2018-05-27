@@ -3,7 +3,7 @@ class PotenciadorRadioLagrima extends Objeto{
         super();
 
         this.tipo = "PotenciadorRadioLagrima";
-        this.bonificacion = 0.15;
+        this.bonificacion = 0.2;
 
         this.visible = false;
         this.salaActual = sala;

@@ -50,10 +50,10 @@ class Sala extends THREE.Object3D{
         this.puertasIniciales = [false, false, false, false];
 
         this.puertas_mesh = [
-            new THREE.Mesh(new THREE.BoxGeometry (2*this.tama_puerta,13,this.long_pasillo),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0})),
-            new THREE.Mesh(new THREE.BoxGeometry (this.long_pasillo,13,2*this.tama_puerta),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0})),
-            new THREE.Mesh(new THREE.BoxGeometry (2*this.tama_puerta,13,this.long_pasillo),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0})),
-            new THREE.Mesh(new THREE.BoxGeometry (this.long_pasillo,13,2*this.tama_puerta),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0}))
+            puertas[1].clone(),
+            puertas[0].clone(),
+            puertas[1].clone(),
+            puertas[0].clone()
         ];
 
         this.puertas_mesh[0].position.z = this.limite + this.long_pasillo;

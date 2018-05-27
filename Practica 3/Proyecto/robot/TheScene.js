@@ -207,6 +207,16 @@ class TheScene extends THREE.Scene {
     if(Potenciadores[4] == null && objetoCargado){
       Potenciadores[4] = objeto;
       this.loader.restart();
+      this.loader.LoadOBJ('modelos/Salas/Puertas/door1.mtl','modelos/Salas/Puertas/door1.obj');
+    }
+    if(puertas[0] == null && objetoCargado){
+      puertas[0] = objeto;
+      this.loader.restart();
+      this.loader.LoadOBJ('modelos/Salas/Puertas/door2.mtl','modelos/Salas/Puertas/door2.obj');
+    }
+    if(puertas[1] == null && objetoCargado){
+      puertas[1] = objeto;
+      this.loader.restart();
       this.loader.LoadOBJ('modelos/Salas/sala_1.mtl','modelos/Salas/sala_1.obj');
     }
     if(this.personaje != null && enemigos[0] != null &&this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {
@@ -231,6 +241,7 @@ class TheScene extends THREE.Scene {
         this.camaraSala = this.salaActual.Sala.camara;
 
         this.sala_anterior=this.salaActual;
+        this.actualizarHud();
     }
     if(this.salasCargadas == 15){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
       this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z);
@@ -265,19 +276,11 @@ class TheScene extends THREE.Scene {
           this.remove(this.mapa);
           this.generadorPartida.mapaAtual +=1;
           if(this.generadorPartida.mapaAtual == this.generadorPartida.mapas.length){
-            alert("AAAAAAH GANASTE");
+            alert("Has ganado!");
             this.reiniciarPartida();
+          }else{
+            this.SiguienteNivel();
           }
-          this.mapa = this.generadorPartida.getMapaActual();  
-          this.camaraMapa = this.mapa.camaraMapa;
-          this.mapa.generarMapa();
-          this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z );
-          this.mapa.ocultaMapa();
-          this.salaActual = this.mapa.getSalaActual();
-          this.camaraSala = this.salaActual.Sala.camara;
-          this.add(this.mapa);
-
-          this.sala_anterior=this.salaActual;
       }
     }
 
@@ -334,8 +337,28 @@ reiniciarPartida(){
   this.camaraSala = this.salaActual.Sala.camara;
   this.add(this.mapa);
 
-  codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false};
+  codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false}
+
+  this.actualizarHud();
+}
+
+actualizarHud(){
   initVida(this.personaje.vida);
+  actualizaCadencia(this.personaje.cadencia);
+  actualizaAtaque(this.personaje.damage);
+  actualizaRadioLagrima(this.personaje.radioLagrima);
+}
+
+SiguienteNivel(){
+  this.mapa = this.generadorPartida.getMapaActual();  
+  this.camaraMapa = this.mapa.camaraMapa;
+  this.mapa.generarMapa();
+  this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z );
+  this.mapa.ocultaMapa();
+  this.salaActual = this.mapa.getSalaActual();
+  this.camaraSala = this.salaActual.Sala.camara;
+  this.add(this.mapa);
+  this.sala_anterior=this.salaActual;
 }
 
   moveRobot(key){

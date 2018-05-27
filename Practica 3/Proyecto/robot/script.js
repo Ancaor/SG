@@ -5,6 +5,7 @@ objeto = null;
 objetos_sala = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 objetoCargado = false;
 enemigos = [null,null,null];
+puertas = [null, null];
 Potenciadores = [null,null,null,null,null];
 
 // map de teclas para el control fluido
@@ -35,7 +36,7 @@ applicationMode = TheScene.NO_ACTION;
  */
 function createGUI (withStats) {
   GUIcontrols = new function() {
-    this.axis = true;
+    this.axis = false;
     this.lightIntensity = 0.5;
     this.secondLightIntensity = 0.5;
     this.secondLightIsOn = false; // Controla si la segunda luz esta encendida o no
@@ -217,12 +218,24 @@ function quitarVida() {
   
   var elem = document.querySelectorAll("#vida li");
   li = elem[elem.length-1];
-  console.log(li);
   li.parentNode.removeChild(li);
   
 }
 
+function quitarTodaLaVida() {
+  
+  var elem = document.querySelectorAll("#vida li");
+
+  for(var i = elem.length-1; i >= 0; i-=1){
+    li = elem[i];
+    li.parentNode.removeChild(li);
+  }
+  
+}
+
 function initVida(vidaTotal) {
+
+  quitarTodaLaVida();
   var elem = document.getElementById("vida");
   
   for(var i = 0; i < vidaTotal; i+=1){

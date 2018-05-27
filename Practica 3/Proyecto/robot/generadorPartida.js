@@ -3,7 +3,7 @@ class GeneradorPartida extends THREE.Object3D {
     constructor(){
         super();
 
-        this.mapas = [new MapaAleatorio(2,3), new MapaAleatorio(4,3), new MapaAleatorio(5,5)];
+        this.mapas = [new Mapa(1), new MapaAleatorio(4,4), new MapaAleatorio(5,5)];
         this.mapaAtual = 0;
     }
 

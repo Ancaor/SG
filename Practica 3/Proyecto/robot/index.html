@@ -51,25 +51,50 @@
 
         #hud{
             
-            width: 425px;
-            height: 150px;
+            width: 400px;
+            height: 200px;
          
             position: absolute;
-            left:20px; 
-            top:20px;
+            padding-left:50px; 
+            padding-top:15px;
             
-            background-size: 450px 150px;
-            background-repeat: no-repeat;
+            background-size: 450px 200px;
+
         }
 
         #heart{
             width: 25px;
             height: 25px;
             margin-left:8px;
-            top:0px;
+            margin-top:30px;
             background-image: url(./imgs/Heart.png);
             background-size: 25px 25px;
             float: left;
+        }
+
+        #Stats{
+            height: 140px;
+            width: 175px;
+            margin-left:5px;
+            top:0px;
+            background-size: 25px 25px;
+            float: left;
+
+            background-color:slategrey;
+            background-repeat: no-repeat;
+            color: aliceblue;
+            border-style: solid;
+            border-width: 3px;
+            border-color:royalblue;
+        }
+
+        #titulo-stats{
+            margin:0px;
+            width:100%;
+            text-align: center;
+            background-color:blue;
+            background-repeat: no-repeat;
+            color: aliceblue;
         }
 
         #ataque{
@@ -202,17 +227,20 @@
     <ul id="vida">
     </ul>
     <br><br>
-    <ul id="ataque">
-        <p>Ataque: 20</p>
-    </ul>
-    <br><br>
-    <ul id="cadencia">
-        <p>Cadencia: 0.5</p>
-    </ul>
-    <br><br>
-    <ul id="radioLagrima">
-        <p>Radio Proyectil: 0.35</p>
-    </ul>
+    <div id="Stats">
+        <p id="titulo-stats">Stats</p>
+        <ul id="ataque">
+            <p>Ataque: 20</p>
+        </ul>
+        <br><br>
+        <ul id="cadencia">
+            <p>Cadencia: 0.5</p>
+        </ul>
+        <br><br>
+        <ul id="radioLagrima">
+            <p>Radio Proyectil: 0.35</p>
+        </ul>
+    </div>
 </div>
 
 <!--

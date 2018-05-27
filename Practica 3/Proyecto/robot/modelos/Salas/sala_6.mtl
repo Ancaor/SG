@@ -1,7 +1,7 @@
 # Blender MTL File: 'sala_6.blend'
-# Material Count: 9
+# Material Count: 11
 
-newmtl Material.001
+newmtl Material.003
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 1
-map_Kd .\modelos\Salas\Texturas\text-ground2.png
+map_Kd .\modelos\Salas\Texturas\text-ground.png
 
 newmtl Material.004
 Ns 96.078431
@@ -99,3 +99,25 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd .\modelos\Salas\Texturas\texture wall.jpg
+
+newmtl None
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd .\modelos\Salas\Texturas\text-ground.png
+
+newmtl None_text-ground2.png.004
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd .\modelos\Salas\Texturas\text-ground.png

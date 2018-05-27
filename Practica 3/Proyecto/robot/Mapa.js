@@ -11,7 +11,7 @@ class Mapa extends THREE.Object3D{
 
             this.InfoSalas = [
                                 new InfoSalaMapa(0, 0, infoMapa, 5), new InfoSalaMapa(0, 1, infoMapa, 14), new InfoSalaMapa(0,2, infoMapa, 8),
-                                new InfoSalaMapa(1, 0, infoMapa, 11), new InfoSalaMapa(1, 1, infoMapa, 15), new InfoSalaMapa(1, 2, infoMapa, 13),
+                                new InfoSalaMapa(1, 0, infoMapa, 11), new InfoSalaMapa(1, 1, infoMapa, 10), new InfoSalaMapa(1, 2, infoMapa, 13),
                                 new InfoSalaMapa(2, 0, infoMapa, 6), new InfoSalaMapa(2, 1, infoMapa, 12), new InfoSalaMapa(2, 2,infoMapa, 7)
                             ];
         
