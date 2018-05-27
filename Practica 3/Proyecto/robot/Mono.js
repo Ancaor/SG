@@ -188,6 +188,7 @@ class Mono extends THREE.Object3D{
         this.radioLagrima = 0.35;
         this.colorLagrima = 0xffffffff;
         this.damage = 20;
+        initVida(this.vida);
     }
    
     setPosicion(x,z){

@@ -92,19 +92,23 @@ function setMessage (str) {
 
 function seleccionarModoAleatorio() {
   scene.modoJuego = 1;
-  eliminarMenuInicial();
+  ocultarMenuInicial();
 }
 
 function seleccionarModoPredeterminado(){
   scene.modoJuego = 0;
-  eliminarMenuInicial();
+  ocultarMenuInicial();
 }
 
-function eliminarMenuInicial(){
+function ocultarMenuInicial(){
   var elem = document.getElementById("menu-principal");
-  elem.parentNode.removeChild(elem);
+  elem.style.display = "none";
 }
 
+function mostrarMenuInicial(){
+  var elem = document.getElementById("menu-principal");
+  elem.style.display = "block";
+}
 function restartCodeset(){
   codeset[37] = false
   codeset[38] = false

@@ -62,6 +62,7 @@ class TheScene extends THREE.Scene {
     this.generadorPartida = null;
 
     this.modoJuego = -1;
+    this.mapaGenerado = false;
 
     //this.add(new Seta());
 
@@ -228,10 +229,14 @@ class TheScene extends THREE.Scene {
         var indice = this.salasCargadas+1;
         this.loader.LoadOBJ('modelos/Salas/sala_'+indice+'.mtl','modelos/Salas/sala_'+indice+'.obj')
     }
-    if(this.salasCargadas == 14 && this.salas[this.salasCargadas] == null && objetoCargado && this.modoJuego != -1){
+    if(this.salasCargadas == 14 && this.salas[this.salasCargadas] == null && objetoCargado ){
         objetos_sala[this.salasCargadas] = objeto;
         this.loader.restart();
         this.salasCargadas++;
+        
+    }
+
+    if(this.modoJuego != -1 && !this.mapaGenerado){
         this.generadorPartida = new GeneradorPartida(this.modoJuego);
         this.mapa = this.generadorPartida.getMapaActual();
         this.camaraMapa = this.mapa.camaraMapa;
@@ -244,6 +249,7 @@ class TheScene extends THREE.Scene {
 
         this.sala_anterior=this.salaActual;
         this.actualizarHud();
+        this.mapaGenerado = true;
     }
     if(this.salasCargadas == 15){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
       this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z);
@@ -328,20 +334,14 @@ reiniciarPartida(){
   this.personaje.restart();
   this.remove(this.mapa);
 
-  this.generadorPartida = new GeneradorPartida();
-
-  this.mapa = this.generadorPartida.getMapaActual();
-  this.camaraMapa = this.mapa.camaraMapa;
-  this.mapa.generarMapa();
-  this.personaje.setPosicion(this.mapa.salaInicio.Coordenada_X, this.mapa.salaInicio.Coordenada_Z );
-  this.mapa.ocultaMapa();
-  this.salaActual = this.mapa.getSalaActual();
-  this.camaraSala = this.salaActual.Sala.camara;
-  this.add(this.mapa);
+  this.mapaGenerado =false;
+  this.modoJuego = -1;
+  mostrarMenuInicial();
+ 
 
   codeset = { 37: false, 38: false, 39: false, 40: false, 86: false, 77:false, 65: false, 68: false, 87: false, 83: false}
 
-  this.actualizarHud();
+ 
 }
 
 actualizarHud(){
