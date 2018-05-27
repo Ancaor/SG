@@ -183,6 +183,21 @@ class TheScene extends THREE.Scene {
     if(enemigos[2] == null && objetoCargado){
       enemigos[2] = objeto;
       this.loader.restart();
+      this.loader.LoadOBJ('modelos/Enemigos/MushroomBoss.mtl','modelos/Enemigos/MushroomBoss.obj');
+    }
+    if(enemigos[3] == null && objetoCargado){
+      enemigos[3] = objeto;
+      this.loader.restart();
+      this.loader.LoadOBJ('modelos/Enemigos/enemigo2Boss.mtl','modelos/Enemigos/enemigo2Boss.obj');
+    }
+    if(enemigos[4] == null && objetoCargado){
+      enemigos[4] = objeto;
+      this.loader.restart();
+      this.loader.LoadOBJ('modelos/Enemigos/BombaBoss.mtl','modelos/Enemigos/BombaBoss.obj');
+    }
+    if(enemigos[5] == null && objetoCargado){
+      enemigos[5] = objeto;
+      this.loader.restart();
       this.loader.LoadOBJ('modelos/Objetos/Espada.mtl','modelos/Objetos/Espada.obj');
     }
     
@@ -221,14 +236,14 @@ class TheScene extends THREE.Scene {
       this.loader.restart();
       this.loader.LoadOBJ('modelos/Salas/sala_1.mtl','modelos/Salas/sala_1.obj');
     }
-    if(this.personaje != null && enemigos[0] != null &&this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 14) {
+    if(this.personaje != null && enemigos[0] != null &&this.salas[this.salasCargadas] == null && objetoCargado && this.salasCargadas < 15) {
         objetos_sala[this.salasCargadas] = objeto;
         this.loader.restart();
         this.salasCargadas++;
         var indice = this.salasCargadas+1;
         this.loader.LoadOBJ('modelos/Salas/sala_'+indice+'.mtl','modelos/Salas/sala_'+indice+'.obj')
     }
-    if(this.salasCargadas == 14 && this.salas[this.salasCargadas] == null && objetoCargado && this.modoJuego != -1){
+    if(this.salasCargadas == 15 && this.salas[this.salasCargadas] == null && objetoCargado && this.modoJuego != -1){
         objetos_sala[this.salasCargadas] = objeto;
         this.loader.restart();
         this.salasCargadas++;
@@ -245,7 +260,7 @@ class TheScene extends THREE.Scene {
         this.sala_anterior=this.salaActual;
         this.actualizarHud();
     }
-    if(this.salasCargadas == 15){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
+    if(this.salasCargadas == 16){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
       this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z);
       this.salaActual = this.mapa.getSalaActual(); 
       this.salaActual.Sala.setLayers(1);
@@ -255,7 +270,6 @@ class TheScene extends THREE.Scene {
       if(this.salaActual != this.sala_anterior){
         this.sala_anterior.Sala.disableLayers(1);
         this.sala_anterior.Sala.visible=false;
-
         
       }      
 

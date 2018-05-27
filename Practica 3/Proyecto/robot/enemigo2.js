@@ -3,14 +3,13 @@ class enemigo2 extends Enemigo{
         super();
 
         this.salaActual = sala;
-        this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
 
         this.mesh = enemigos[1].clone();
         this.radioEsferaEnglobante = 1.5;
 
         this.vector_inicial = new THREE.Vector3(0,0,1);
 
-        this.velocidad = 0.3;
+        this.velocidad = 0.2;
 
         this.vida = 60;
 

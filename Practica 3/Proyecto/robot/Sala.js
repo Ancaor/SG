@@ -19,6 +19,9 @@ class Sala extends THREE.Object3D{
             case 13: this.sala = objetos_sala[12].clone(); break;
             case 14: this.sala = objetos_sala[13].clone(); break;
             case 15: this.sala = objetos_sala[14].clone(); break;
+            case 16: this.sala = objetos_sala[15].clone(); break;
+            case 17: this.sala = objetos_sala[15].clone(); break;
+            case 18: this.sala = objetos_sala[15].clone(); break;
         }
 
         this.n_enemigos = n_enemigos;
@@ -35,7 +38,6 @@ class Sala extends THREE.Object3D{
         this.enemigos = new THREE.Object3D;
         this.objeto = new THREE.Object3D;
 
-        this.teleport = new THREE.Mesh(new THREE.BoxGeometry (1,1,1),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0}));
 
         this.ultimaSala = false;
 
@@ -107,33 +109,31 @@ class Sala extends THREE.Object3D{
         }
 
 
-        for(var i = 0; i < n_enemigos; i+=1){
-            var rand = Math.floor(Math.random() * 3) + 1;
-            if(rand == 1)
-                this.enemigos.add(new enemigo2(this));
-            else if (rand == 2)
-                this.enemigos.add(new Seta(this));
-            else if (rand == 3)
-                this.enemigos.add(new enemigo3(this));
+        if(this.tipo_sala < 16){
+            for(var i = 0; i < n_enemigos; i+=1){
+                var rand = Math.floor(Math.random() * 3) + 1;
+                if(rand == 1)
+                    this.enemigos.add(new enemigo2(this));
+                else if (rand == 2)
+                    this.enemigos.add(new Seta(this));
+                else if (rand == 3)
+                    this.enemigos.add(new enemigo3(this));
+            }
+        }else if(this.tipo_sala == 16){
+            
+            this.enemigos.add(new SetaBoss(this));
+        }
+        else if(this.tipo_sala == 17){
+            this.enemigos.add(new enemigo3Boss(this));
+            
+        }else if(this.tipo_sala == 18){
+            this.enemigos.add(new enemigo2Boss(this));
+            
         }
 
-
-
-        if(tieneObjeto){
-            var rand = Math.floor(Math.random() * (4 -0) + (0));
-            if(rand == 0)
-                this.objeto.add(new PotenciadorCadencia(this));
-            else if(rand == 1)
-                this.objeto.add(new PotenciadorDamage(this));
-            else if(rand == 2)
-                this.objeto.add(new PotenciadorRadioLagrima(this));
-            else if(rand == 3)
-                this.objeto.add(new PotenciadorVida(this));
-
-            this.add(this.objeto);
-
-        }
         this.add(this.enemigos);
+        this.add(this.objeto);
+        
 
     }
 
@@ -184,6 +184,18 @@ class Sala extends THREE.Object3D{
 
     eliminarEnemigo(enemigo){
         this.enemigos.remove(this.enemigos.children[enemigo]);
+    }
+
+    invocaSeta(){
+        this.enemigos.add(new Seta(this));
+    }
+
+    invocaEnemigo2(){
+        this.enemigos.add(new enemigo2(this));
+    }
+
+    invocaEnemigo3(){
+        this.enemigos.add(new enemigo3(this));
     }
 
     eliminarObjeto(enemigo){

@@ -2,9 +2,9 @@
 character = null;
 
 objeto = null;
-objetos_sala = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+objetos_sala = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 objetoCargado = false;
-enemigos = [null,null,null];
+enemigos = [null,null,null,null, null, null];
 puertas = [null, null];
 Potenciadores = [null,null,null,null,null];
 
@@ -92,18 +92,25 @@ function setMessage (str) {
 
 function seleccionarModoAleatorio() {
   scene.modoJuego = 1;
-  eliminarMenuInicial();
+  esconderMenuInicial();
 }
 
 function seleccionarModoPredeterminado(){
   scene.modoJuego = 0;
-  eliminarMenuInicial();
+  
+  esconderMenuInicial();
 }
 
-function eliminarMenuInicial(){
+function esconderMenuInicial(){
   var elem = document.getElementById("menu-principal");
-  elem.parentNode.removeChild(elem);
+  elem.style.display = "none";
 }
+
+function mostrarMenuInicial(){
+  var elem = document.getElementById("menu-principal");
+  elem.style.display = "block";
+}
+
 
 function restartCodeset(){
   codeset[37] = false

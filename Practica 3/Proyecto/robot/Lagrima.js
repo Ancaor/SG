@@ -74,6 +74,39 @@ class Lagrima extends THREE.Object3D{
              this.position.x -= this.velocidad * this.tiempoTranscurrido; 
              else return -1;            //Ha colisionado con la pared
              break;
+
+            case 4:
+            if((this.position.z + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_Z) && (this.position.x < sala.limite + Coordenada_X)&& (this.position.x > -sala.limite + Coordenada_X)){
+             this.position.z += this.velocidad * this.tiempoTranscurrido * Math.sin(45);
+             this.position.x -= this.velocidad * this.tiempoTranscurrido * Math.sin(45);
+            }
+             else return -1;            //Ha colisionado con la pared
+             
+              break;
+
+             case 5:
+             if((this.position.x - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_X)&& (this.position.z < sala.limite + Coordenada_Z)&& (this.position.z > -sala.limite + Coordenada_Z)){
+                this.position.x -= this.velocidad * this.tiempoTranscurrido * Math.sin(45);
+                this.position.z -= this.velocidad * this.tiempoTranscurrido * Math.sin(45);
+             }
+             else return -1;            //Ha colisionado con la pared
+             break;
+
+             case 6:
+            if((this.position.z - (this.velocidad * this.tiempoTranscurrido) > -sala.limite + Coordenada_Z) && (this.position.x < sala.limite + Coordenada_X)&& (this.position.x > -sala.limite + Coordenada_X)){
+             this.position.z -= this.velocidad * this.tiempoTranscurrido * Math.sin(45);
+             this.position.x += this.velocidad * this.tiempoTranscurrido * Math.sin(45);
+            }
+             else return -1;            //Ha colisionado con la pared 
+             break;
+
+             case 7:
+             if((this.position.x + (this.velocidad * this.tiempoTranscurrido) < sala.limite + Coordenada_X) && (this.position.z < sala.limite + Coordenada_Z)&& (this.position.z > -sala.limite + Coordenada_Z)){
+             this.position.x += this.velocidad * this.tiempoTranscurrido * Math.sin(45);
+             this.position.z += this.velocidad * this.tiempoTranscurrido * Math.sin(45); 
+            }
+             else return -1;            //Ha colisionado con la pared
+             break;
         
         }
 
