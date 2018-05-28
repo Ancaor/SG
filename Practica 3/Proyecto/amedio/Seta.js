@@ -6,6 +6,7 @@ class Seta extends Enemigo{
 
         this.tiempoAnterior = Date.now();
         this.tiempoActual;
+        this.primeraVez = true;
 
         //this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
 
@@ -76,12 +77,16 @@ class Seta extends Enemigo{
 
         var tiempoTranscurrido = (this.tiempoActual-this.tiempoAnterior)/1000;
         if(tiempoTranscurrido >= this.cadencia){
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:0,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x+1,o:1,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:2,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x-1,o:3,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.tiempoAnterior = this.tiempoActual;
+            if(!this.primeraVez){
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:0,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x+1,o:1,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:2,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x-1,o:3,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+            }else{
+                this.primeraVez = false;
+            }
 
+            this.tiempoAnterior = this.tiempoActual;
             this.inflar = true;
         }
 

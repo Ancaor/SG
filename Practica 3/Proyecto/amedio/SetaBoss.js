@@ -7,7 +7,8 @@ class SetaBoss extends Enemigo{
         this.tiempoAnteriorAtaque1= Date.now();;
         this.tiempoActualAtaque1;
 
-        this.primeraVez = true;
+        this.primeraVez1 = true;
+        this.primeraVez2 = true;
 
         this.tiempoAnteriorAtaque2 = Date.now();
         this.tiempoActualAtaque2;
@@ -59,14 +60,14 @@ class SetaBoss extends Enemigo{
 
         var tiempoTranscurridoAtaque2 = (this.tiempoActualAtaque2-this.tiempoAnteriorAtaque2)/1000;
         if(tiempoTranscurridoAtaque2 >= this.cadencia_ataque_2){
-            if(!this.primeraVez){
+            if(!this.primeraVez2){
                 var tipo_invocacion = Math.floor(Math.random() * (2 - (0)) + (0));
 
                 switch(tipo_invocacion){
                     case 0: this.salaActual.invocaEnemigo2();break;
                     case 1: this.salaActual.invocaSeta();this.salaActual.invocaSeta();break;
                 }
-            }else{ this.primeraVez = false;}
+            }else{ this.primeraVez2 = false;}
 
             this.tiempoAnteriorAtaque2 = this.tiempoActualAtaque2;
         }
@@ -75,16 +76,20 @@ class SetaBoss extends Enemigo{
 
         var tiempoTranscurridoAtaque1 = (this.tiempoActualAtaque1-this.tiempoAnteriorAtaque1)/1000;
         if(tiempoTranscurridoAtaque1 >= this.cadencia_ataque_1){
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:0,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x+1,o:1,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:2,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x-1,o:3,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:4,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:5,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:6,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
-            this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:7,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+            if(!this.primeraVez1){
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:0,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x+1,o:1,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z-1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:2,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z,y:this.mesh.position.y+2,x:this.mesh.position.x-1,o:3,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:4,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:5,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:6,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                this.lagrimas.add(new Lagrima({z:this.mesh.position.z+1,y:this.mesh.position.y+2,x:this.mesh.position.x,o:7,v:this.velocidadLagrima,r:this.radioLagrima,c:this.colorLagrima,t:0,xReal:this.salaActual.infoSala.Coordenada_X,zReal:this.salaActual.infoSala.Coordenada_Z}));
+                
+            }else{
+                this.primeraVez1 = false;
+            }
             this.tiempoAnteriorAtaque1 = this.tiempoActualAtaque1;
-
             this.inflar = true;
         }
 

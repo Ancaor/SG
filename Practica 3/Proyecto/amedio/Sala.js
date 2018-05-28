@@ -202,7 +202,10 @@ class Sala extends THREE.Object3D{
     }
 
     invocaSeta(){
-        this.enemigos.add(new Seta(this));
+        var seta = new Seta(this);
+        seta.primeraVez = false;
+        this.enemigos.add(seta);
+        
     }
 
     invocaEnemigo2(){
