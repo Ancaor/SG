@@ -213,10 +213,11 @@ class TheScene extends THREE.Scene {
         console.log(indice);
         this.loader.LoadOBJ('modelos/Salas/sala_'+indice+'.mtl','modelos/Salas/sala_'+indice+'.obj')
     }
-    if(this.salasCargadas == 15 && this.salas[this.salasCargadas] == null && objetoCargado && this.modoJuego != -1){
+    if(this.salasCargadas == 15 && this.salas[this.salasCargadas] == null && objetoCargado ){
         objetos_sala[this.salasCargadas] = objeto;
         this.loader.restart();
         this.salasCargadas++;
+        mostrarMenuInicial();
         
     }
 

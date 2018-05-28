@@ -176,20 +176,21 @@ class Sala extends THREE.Object3D{
         }else{
             if(this.ultimaSala && !this.finMapa){
                 //this.remove(this.objeto);
+                if(this.objeto.children.length == 1)
                 this.objeto.remove(this.objeto.children[0]);
+
                 this.objeto.add( new teleport(this));
                 this.finMapa = true;
+                console.log("aniade teleport")
             }
             this.abrirPuertas();
-            if(this.objeto.children.length == 1)
+            if(this.objeto.children.length == 1){
                 this.muestraObjeto();
+                console.log("Muestra TELEPORT")
+            }
         }
         
         return null;
-    }
-
-    activaTeleport(){
-        this.add(this.teleport);
     }
 
     setCamara(una_camara){
