@@ -221,7 +221,7 @@ class TheScene extends THREE.Scene {
         this.actualizarHud();
         this.mapaGenerado = true;
     }
-    if(this.salasCargadas == 15){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
+    if(this.salasCargadas == 15 && this.mapaGenerado){   /// Basicamente esto es lo que se actualiza cada frame tras cargar todas las salas y el mapa
       this.mapa.calculaSalaActual(this.personaje.position.x, this.personaje.position.z);
       this.salaActual = this.mapa.getSalaActual(); 
       this.salaActual.Sala.setLayers(1);
