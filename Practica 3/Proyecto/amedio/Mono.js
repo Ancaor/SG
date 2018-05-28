@@ -23,11 +23,7 @@ class Mono extends THREE.Object3D{
 
 
         this.ojoDer = new Launcher();
-        //this.ojoDer.position.y = 5;
-
-       //this.ojoDer.position.z = 1.2;
-       //this.ojoDer.position.x = 0.6;
-       this.ojoDer.position.y = -0.7;
+        this.ojoDer.position.y = -0.7;
 
         this.add(this.ojoDer)
 
@@ -37,23 +33,20 @@ class Mono extends THREE.Object3D{
         this.PasilloVertical = false;
 
         this.radioEsferaEnglobante = 0.7;
-       // this.esferaGeometria = new THREE.SphereGeometry (this.radioEsferaEnglobante,32,32);
-      //  this.esferaEnglobante = new THREE.Mesh(this.esferaGeometria,new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}))
-        //this.add(this.esferaEnglobante);
+      
 
         //Propiedades de las lágrimas
-        this.cadencia = 0.03;
+        this.cadencia = 0.5;
         this.velocidadLagrima = 30;
         this.radioLagrima = 0.35;
         this.colorLagrima = 0xffffffff;
-        this.damage = 70;
+        this.damage = 20;
 
 
         
     }
 
     update(){
-      //  console.log(this.mono);
 
       if(this.subir_cara){
         this.position.y +=0.005;
@@ -65,10 +58,6 @@ class Mono extends THREE.Object3D{
         if(this.position.y <= (this.posicion_base-0.5))
             this.subir_cara = true;
       }
-
-      //console.log(this.vida);
-
-     // this.ojoDer.update();
 
     }
 

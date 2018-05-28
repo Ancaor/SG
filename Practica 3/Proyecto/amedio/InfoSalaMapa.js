@@ -18,10 +18,10 @@ class InfoSalaMapa extends THREE.Object3D{
 
         var rand = Math.floor(Math.random() * (10 -0) + (0))
 
-        if(rand <= 4)
+        if(rand <= 3)
            var tieneObjeto = true;
         else
-           var tieneObjeto = true;
+           var tieneObjeto = false;
 
 
         this.Sala = new Sala(tipoSala,numeroEnemigos, tieneObjeto, this);
