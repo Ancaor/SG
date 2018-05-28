@@ -13,9 +13,6 @@ class SetaBoss extends Enemigo{
         this.tiempoAnteriorAtaque2 = Date.now();
         this.tiempoActualAtaque2;
 
-        //this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
-
-
         this.mesh = enemigos[3].clone();
         this.salaActual = sala;
         this.tapa_puerta = false;
@@ -64,7 +61,7 @@ class SetaBoss extends Enemigo{
                 var tipo_invocacion = Math.floor(Math.random() * (2 - (0)) + (0));
 
                 switch(tipo_invocacion){
-                    case 0: this.salaActual.invocaEnemigo2();break;
+                    case 0: this.salaActual.invocaZombi();break;
                     case 1: this.salaActual.invocaSeta();this.salaActual.invocaSeta();break;
                 }
             }else{ this.primeraVez2 = false;}
@@ -120,7 +117,6 @@ class SetaBoss extends Enemigo{
         }else if(muerta != -2){     //Si le ha dado al mono
             this.lagrimas.remove(this.lagrimas.children[i]);
             longitud-=1;
-            console.log("Bajar vida mono");
             return true;
         }
         
@@ -130,7 +126,6 @@ class SetaBoss extends Enemigo{
 
     bajarVida(damage){
         this.vida -= damage;
-        console.log(this.vida);
 
         if(this.vida <= 0)
             return true;

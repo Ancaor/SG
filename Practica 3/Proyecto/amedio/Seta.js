@@ -8,9 +8,6 @@ class Seta extends Enemigo{
         this.tiempoActual;
         this.primeraVez = true;
 
-        //this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
-
-
         this.mesh = enemigos[0].clone();
         this.salaActual = sala;
         this.tapa_puerta = false;
@@ -45,13 +42,7 @@ class Seta extends Enemigo{
         this.inflar = true;
 
         this.radioEsferaEnglobante = 2;
-        /*
-        this.esferaGeometria = new THREE.SphereGeometry (this.radioEsferaEnglobante,32,32);
-        this.esferaEnglobante = new THREE.Mesh(this.esferaGeometria,new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 70}))
-        this.esferaEnglobante.position.set(this.x,1,this.z);
-        this.add(this.esferaEnglobante)
-*/
-        //Propiedades de las lágrimas
+
         this.cadencia = 1.5;
         this.velocidadLagrima = 30;
         this.radioLagrima = 0.6;
@@ -117,7 +108,6 @@ class Seta extends Enemigo{
         }else if(muerta != -2){     //Si le ha dado al mono
             this.lagrimas.remove(this.lagrimas.children[i]);
             longitud-=1;
-            console.log("Bajar vida mono");
             return true;
         }
         
@@ -127,8 +117,6 @@ class Seta extends Enemigo{
 
     bajarVida(damage){
         this.vida -= damage;
-        console.log(this.vida);
-
         if(this.vida <= 0)
             return true;
 

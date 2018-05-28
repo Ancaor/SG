@@ -4,7 +4,6 @@ class Launcher extends THREE.Object3D{
         this.material = new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xff, shininess: 3});
 
         var geometria = new THREE.BoxGeometry (0.5,0.5,0.1, 16, 8);    // geometria cilindro
-       // geometria.applyMatrix (new THREE.Matrix4().makeTranslation(0,0.5,0));
 
         this.visor = new THREE.Mesh (
             geometria, this.material);
@@ -12,8 +11,6 @@ class Launcher extends THREE.Object3D{
 
         this.visor.castShadow = true;
         this.visor.receiveShadow = true;
-      //  this.add(this.visor)
-
         this.tiempoAnterior = Date.now();
         this.tiempoActual = null;
         this.tiempoTranscurrido = 0;
@@ -46,7 +43,6 @@ class Launcher extends THREE.Object3D{
         //Actualiza estado de meteoritos y detecta colisiones
 
         var longitud  = this.lagrimas.children.length;
-        //console.log(longitud)
 
         for(var i = 0; i < longitud ; i++){
             this.lagrimas.children[i].update();

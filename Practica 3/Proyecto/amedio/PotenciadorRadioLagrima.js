@@ -8,8 +8,6 @@ class PotenciadorRadioLagrima extends Objeto{
         this.visible = false;
         this.salaActual = sala;
 
-        //this.mesh = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial ({color: 0xffff00,transparent: false, opacity: 0.7}));
-
         this.mesh = Potenciadores[1].clone();
 
         this.radioEsferaEnglobante = 2;
@@ -28,9 +26,7 @@ class PotenciadorRadioLagrima extends Objeto{
  
         var distanciaReal = posReal.distanceTo(Mono.position);
       
-        var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
-         //console.log(tiempoTranscurrido)
- 
+        var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000; 
        
              if(distanciaReal <= difRadios){
                  this.tiempoAnterior = this.tiempoActual;

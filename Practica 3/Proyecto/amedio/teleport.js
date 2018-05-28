@@ -8,8 +8,6 @@ class teleport extends Objeto{
         this.visible = false;
         this.salaActual = sala;
 
-        //this.mesh = new THREE.Mesh(new THREE.BoxGeometry (1,1,1),new THREE.MeshPhongMaterial ({color: 0x00604f, specular: 0xfbf804, shininess: 0}))
-
         this.mesh = Potenciadores[4].clone();
 
         this.radioEsferaEnglobante = 0.3;
@@ -18,7 +16,6 @@ class teleport extends Objeto{
     }
 
     update(Mono){
-
 
         var posicionZreal =  (this.mesh.position.z + this.salaActual.infoSala.Coordenada_Z)
         var posicionXreal =  (this.mesh.position.x + this.salaActual.infoSala.Coordenada_X)
@@ -29,12 +26,11 @@ class teleport extends Objeto{
         var distanciaReal = posReal.distanceTo(Mono.position);
       
         var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
-         //console.log(tiempoTranscurrido)
  
        
-             if(distanciaReal <= difRadios){
-                 this.tiempoAnterior = this.tiempoActual;
-                 return true;
-            }
+        if(distanciaReal <= difRadios){
+            this.tiempoAnterior = this.tiempoActual;
+            return true;
+        }
     }
 }

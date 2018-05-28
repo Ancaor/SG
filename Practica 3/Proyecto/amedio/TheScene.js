@@ -210,7 +210,6 @@ class TheScene extends THREE.Scene {
         this.loader.restart();
         this.salasCargadas++;
         var indice = this.salasCargadas+1;
-        console.log(indice);
         this.loader.LoadOBJ('modelos/Salas/sala_'+indice+'.mtl','modelos/Salas/sala_'+indice+'.obj')
     }
     if(this.salasCargadas == 15 && this.salas[this.salasCargadas] == null && objetoCargado ){
@@ -263,7 +262,6 @@ class TheScene extends THREE.Scene {
 
         if(colisionMono.tipo != "Teleport"){
           this.personaje.aplicarBonificador(colisionMono.tipo, colisionMono.bonificacion);
-          console.log("cogiste " + colisionMono.tipo);
         }else{
           this.remove(this.mapa);
           this.generadorPartida.mapaAtual +=1;
@@ -299,7 +297,6 @@ class TheScene extends THREE.Scene {
         }else if(impacto != -2){    // Si ha impactado con algo distinto a la pared
           this.lagrimas.remove(this.lagrimas.children[i]);
           longitud-=1;
-          console.log("Bajar vida enemigo numero " + impacto)
 
           var enemEliminado = this.salaActual.Sala.enemigos.children[impacto].bajarVida(this.personaje.damage);
 

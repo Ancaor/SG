@@ -118,7 +118,6 @@ class Lagrima extends THREE.Object3D{
 
             var diferencia_radios = this.radio + objetivo.radioEsferaEnglobante;
             var distanciaReal = posAux.distanceTo(posRealLagrima);
-            //  console.log(distanciaReal);
 
             if(distanciaReal <= diferencia_radios){ 
                 return 1;       //Ha colisionado con el mono
@@ -128,17 +127,13 @@ class Lagrima extends THREE.Object3D{
             var longitud = objetivo.children.length;
 
             for(var i=0;i < longitud; i++){
-                    //console.log(objetivo.children[i]);
 
                     var posAux = new THREE.Vector3(objetivo.children[i].mesh.position.x + objetivo.children[i].salaActual.infoSala.Coordenada_X,this.position.y,objetivo.children[i].mesh.position.z + objetivo.children[i].salaActual.infoSala.Coordenada_Z);
                     var posRealLagrima = new THREE.Vector3(this.position.x ,this.position.y,this.position.z + this.zReal);
-                    //console.log(posRealLagrima)
                     var diferencia_radios = this.radio + objetivo.children[i].radioEsferaEnglobante;
                     var distanciaReal = posAux.distanceTo(posRealLagrima);
-                          //console.log(distanciaReal);
 
                     if(distanciaReal <= diferencia_radios){ 
-                        console.log("colision");
                         return i;       //Ha colisionado con el enemigo con indice i
                     }
 

@@ -343,7 +343,6 @@ $(function () {
   window.addEventListener ("DOMMouseScroll", onMouseWheel, true); // For Firefox
 
   window.addEventListener('keydown', function(event) {
-    //console.log(event.keyCode);
     if (event.keyCode in codeset) {
       codeset[event.keyCode] = true;
     }

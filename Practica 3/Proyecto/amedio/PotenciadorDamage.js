@@ -8,8 +8,6 @@ class PotenciadorDamage extends Objeto{
         this.visible = false;
         this.salaActual = sala;
 
-        //this.mesh = new THREE.Mesh(new THREE.SphereGeometry(2, 32, 32), new THREE.MeshPhongMaterial ({color: 0xff00ff,transparent: false, opacity: 0.7}));
-
         this.mesh = Potenciadores[0].clone();
         this.radioEsferaEnglobante = 2;
         this.mesh.layers.set(2);
@@ -28,7 +26,6 @@ class PotenciadorDamage extends Objeto{
         var distanciaReal = posReal.distanceTo(Mono.position);
       
         var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
-         //console.log(tiempoTranscurrido)
  
        
              if(distanciaReal <= difRadios){

@@ -113,21 +113,21 @@ class Sala extends THREE.Object3D{
             for(var i = 0; i < n_enemigos; i+=1){
                 var rand = Math.floor(Math.random() * 3) + 1;
                 if(rand == 1)
-                    this.enemigos.add(new enemigo2(this));
+                    this.enemigos.add(new Zombi(this));
                 else if (rand == 2)
                     this.enemigos.add(new Seta(this));
                 else if (rand == 3)
-                    this.enemigos.add(new enemigo3(this));
+                    this.enemigos.add(new Bomba(this));
             }
         }else if(this.tipo_sala == 16){
             
             this.enemigos.add(new SetaBoss(this));
         }
         else if(this.tipo_sala == 17){
-            this.enemigos.add(new enemigo3Boss(this));
+            this.enemigos.add(new BombaBoss(this));
             
         }else if(this.tipo_sala == 18){
-            this.enemigos.add(new enemigo2Boss(this));
+            this.enemigos.add(new ZombiBoss(this));
             
         }
 
@@ -175,18 +175,15 @@ class Sala extends THREE.Object3D{
             this.cerrarPuertas();
         }else{
             if(this.ultimaSala && !this.finMapa){
-                //this.remove(this.objeto);
                 if(this.objeto.children.length == 1)
-                this.objeto.remove(this.objeto.children[0]);
+                    this.objeto.remove(this.objeto.children[0]);
 
                 this.objeto.add( new teleport(this));
                 this.finMapa = true;
-                console.log("aniade teleport")
             }
             this.abrirPuertas();
             if(this.objeto.children.length == 1){
                 this.muestraObjeto();
-                console.log("Muestra TELEPORT")
             }
         }
         
@@ -208,12 +205,12 @@ class Sala extends THREE.Object3D{
         
     }
 
-    invocaEnemigo2(){
-        this.enemigos.add(new enemigo2(this));
+    invocaZombi(){
+        this.enemigos.add(new Zombi(this));
     }
 
-    invocaEnemigo3(){
-        this.enemigos.add(new enemigo3(this));
+    invocaBomba(){
+        this.enemigos.add(new Bomba(this));
     }
 
     eliminarObjeto(enemigo){

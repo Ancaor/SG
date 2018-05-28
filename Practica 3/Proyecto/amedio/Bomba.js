@@ -1,25 +1,41 @@
-class enemigo3Boss extends Enemigo{
+class Bomba extends Enemigo{
     constructor(sala){
         super();
 
         this.salaActual = sala;
-        //this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshPhongMaterial ({color: 0xf90000,transparent: false, opacity: 0.7}));
 
-        this.mesh = enemigos[5].clone();
-        this.radioEsferaEnglobante = 2;
+        this.mesh = enemigos[2].clone();
+        this.radioEsferaEnglobante = 1;
 
         this.vector_inicial = new THREE.Vector3(0,0,1);
 
-        this.velocidad = 0.25;
+        this.velocidad = 0.2;
 
-        this.vida = 450;
-        this.primeraVez = true;
+        this.vida = 60;
+
 
         this.tapa_puerta = false;
         this.x = 0;
-        this.z = 15;
+        this.z = 0;
 
-    
+        do{
+            this.x = Math.random() * (20 - (-20)) + (-20);
+            this.z = Math.random() * (20 - (-20)) + (-20);
+
+/************************ Código para evitar crear la seta en la puerta ***************************************/
+
+
+
+            if((this.salaActual.puertas[0] && this.z > 14 && this.x > -3.5 && this.x < 3.5) 
+                || (this.salaActual.puertas[2] && this.z < -14 && this.x > -3.5 && this.x < 3.5) 
+                || (this.salaActual.puertas[1] && this.x < -14 && this.z > -3.5 && this.z < 3.5)
+                || (this.salaActual.puertas[3] && this.x > 14 && this.z > -3.5 && this.z < 3.5)){
+                this.tapa_puerta = true;
+            }else{
+                this.tapa_puerta = false;
+            }
+            
+        }while( this.tapa_puerta );
 
         this.mesh.position.set(this.x,0,this.z);
         
@@ -33,20 +49,9 @@ class enemigo3Boss extends Enemigo{
 
         this.add(this.mesh);
 
-        
-
-        //this.mesh.position.set(5,1,5);
 
         this.tiempoAnterior = Date.now();
         this.tiempoActual;
-
-
-        //aniumacion
-        this.parpadeo = false;
-
-        this.setVisible = true;
-        this.tiempoInicioAnimacion;
-        this.tiempoActualAnimacion;
 
 
         var direccion_inicial = Math.floor(Math.random() * (4 - (0)) + (0));
@@ -68,11 +73,6 @@ class enemigo3Boss extends Enemigo{
                 this.mesh.rotation.y -= Math.PI/2;
             break;
         }
-
-
-        this.tiempoAnteriorInvocacion = Date.now();
-        this.tiempoActualInvocacion;
-        this.cadenciaInvocacion = 5;
         
 
 
@@ -82,43 +82,13 @@ class enemigo3Boss extends Enemigo{
     update(Mono){
 
         this.tiempoActual = Date.now();
-        this.tiempoActualInvocacion = Date.now();
-
-        var tiempoTranscurridoInvocacion = (this.tiempoActualInvocacion-this.tiempoAnteriorInvocacion)/1000;
-
-        if(tiempoTranscurridoInvocacion >= this.cadenciaInvocacion){
-            if(!this.primeraVez){
-                var tipo_invocacion = Math.floor(Math.random() * (3 - (0)) + (0));
-
-                switch(tipo_invocacion){
-                    case 0: this.salaActual.invocaEnemigo3();this.salaActual.invocaEnemigo3();break;
-                    case 1: this.salaActual.invocaSeta();this.salaActual.invocaEnemigo3();break;
-                    case 2: this.salaActual.invocaEnemigo2();break;
-                }
-            }else{ this.primeraVez = false;}
-            this.tiempoAnteriorInvocacion = this.tiempoActualInvocacion;
-        }
 
         /* movimiento */
 
         var posicionZreal =  (this.mesh.position.z + this.salaActual.infoSala.Coordenada_Z)
         var posicionXreal =  (this.mesh.position.x + this.salaActual.infoSala.Coordenada_X)
 
-      // var vector_unitario = new THREE.Vector3(Mono.position.x - posicionXreal ,0,Mono.position.z - posicionZreal);
-      // vector_unitario = vector_unitario.normalize();
-        
-      // this.mesh.position.x + (this.direccion.x * this.velocidad)  // tiempo ?
-       
-      // this.mesh.position.z + (this.direccion.z * this.velocidad); // tiempo ?
-      //console.log('Avance ' + (this.direccion.x * this.velocidad))
-
        var posicionNueva = new THREE.Vector3( this.mesh.position.x + (this.direccion.x * this.velocidad),this.mesh.position.y,this.mesh.position.z + (this.direccion.z * this.velocidad));
-
-       //console.log('Pos ' + posicionNueva.x)
-
-       //console.log(this.salaActual.limite+this.salaActual.infoSala.Coordenada_X)
-
-     //  console.log( this.mesh.position.x)
 
 
        if((posicionNueva.x + this.radioEsferaEnglobante) > (this.salaActual.limite)){
@@ -157,7 +127,6 @@ class enemigo3Boss extends Enemigo{
        var distanciaReal = posReal.distanceTo(Mono.position);
      
        var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
-        //console.log(tiempoTranscurrido)
 
             if(tiempoTranscurrido > 1){
             if(distanciaReal <= difRadios){
@@ -179,7 +148,6 @@ class enemigo3Boss extends Enemigo{
 
     bajarVida(damage){
         this.vida -= damage;
-        console.log(this.vida);
 
         if(this.vida <= 0)
             return true;
@@ -190,9 +158,6 @@ class enemigo3Boss extends Enemigo{
     calcularNuevaDireccion(muro){
         var angulo = Math.floor(Math.random() * (290) + (24));
               angulo = angulo/100;
-              //console.log("angulo: " + angulo);
-
-             
 
               this.mesh.rotation.y -= (this.direccion.angleTo(muro));
 
@@ -203,7 +168,6 @@ class enemigo3Boss extends Enemigo{
 
               muro = muro.applyAxisAngle(ref,-angulo);
 
-             // console.log("Nueva dir = " + muro.x + " , " + muro.z);
 
               this.direccion = muro;
     }

@@ -1,4 +1,4 @@
-class enemigo2Boss extends Enemigo{
+class ZombiBoss extends Enemigo{
     constructor(sala){
         super();
 
@@ -11,7 +11,7 @@ class enemigo2Boss extends Enemigo{
 
         this.velocidad = 0.3;
 
-        this.vida = 400;
+        this.vida = 550;
 
         this.primeraVez = true;
 
@@ -32,10 +32,6 @@ class enemigo2Boss extends Enemigo{
 
         this.add(this.mesh);
 
-        
-
-        //this.mesh.position.set(5,1,5);
-
         this.tiempoAnterior = Date.now();
         this.tiempoActual;
 
@@ -44,7 +40,7 @@ class enemigo2Boss extends Enemigo{
         this.cadenciaInvocacion = 5;
 
 
-        //aniumacion
+        //animacion
         this.parpadeo = false;
 
         this.setVisible = true;
@@ -68,7 +64,7 @@ class enemigo2Boss extends Enemigo{
 
                 switch(tipo_invocacion){
                     
-                    case 0: this.salaActual.invocaEnemigo3();this.salaActual.invocaEnemigo3();break;
+                    case 0: this.salaActual.invocaBomba();this.salaActual.invocaBomba();break;
                     case 1: this.salaActual.invocaSeta();break;
                 }
             }else{ this.primeraVez = false;}
@@ -80,8 +76,6 @@ class enemigo2Boss extends Enemigo{
         
         /* movimiento */
 
-        
-
         var posicionZreal =  (this.mesh.position.z + this.salaActual.infoSala.Coordenada_Z)
         var posicionXreal =  (this.mesh.position.x + this.salaActual.infoSala.Coordenada_X)
 
@@ -92,44 +86,15 @@ class enemigo2Boss extends Enemigo{
        vector_unitario = vector_unitario.normalize();
         
 
-       this.mesh.position.x += (vector_unitario.x * this.velocidad);  // tiempo ?
+       this.mesh.position.x += (vector_unitario.x * this.velocidad);
        
-       this.mesh.position.z += (vector_unitario.z * this.velocidad); // tiempo ?
+       this.mesh.position.z += (vector_unitario.z * this.velocidad);
 
        var angulo_rot = this.vector_inicial.angleTo(vector_unitario);
 
        if(vector_unitario.x > 0)
-       this.mesh.rotation.y = angulo_rot;
+        this.mesh.rotation.y = angulo_rot;
        else this.mesh.rotation.y = -angulo_rot;
-
-
-       /*         fin-movimiento          */
-
-
-        //animacion si ha chocado con personaje
-
-        /*
-       if(this.parpadeo){
-           console.log("entra")
-           this.tiempoActualAnimacion = Date.now();
-           var tiempoTranscurridoAnimacion = (this.tiempoActualAnimacion - this.tiempoInicioAnimacion)/1000;
-
-           if(tiempoTranscurridoAnimacion < 2){
-                if(this.setVisible){
-                    this.mesh.visible = true;
-                    this.setVisible = false;
-                }else {
-                    this.mesh.visible = false;
-                    this.setVisible = true;
-                }
-           }else{
-                this.parpadeo = false;
-                this.setVisible = true;
-           } 
-
-       }
-
-       */
 
 
        //colisiones
@@ -141,7 +106,6 @@ class enemigo2Boss extends Enemigo{
        var distanciaReal = posReal.distanceTo(Mono.position);
      
        var tiempoTranscurrido = (this.tiempoActual - this.tiempoAnterior)/1000;
-        //console.log(tiempoTranscurrido)
 
       
             if(distanciaReal <= difRadios){
@@ -150,8 +114,6 @@ class enemigo2Boss extends Enemigo{
                 this.mesh.position.x -= (10 * vector_unitario.x);   // para que se despegue
                 this.mesh.position.z -= (10 * vector_unitario.z);   // para que se despegue
 
-              //  this.tiempoInicioAnimacion = Date.now();
-              //  this.parpadeo = true; // descomenta para parpadeo
                 return true;
                 
             }
@@ -162,7 +124,6 @@ class enemigo2Boss extends Enemigo{
 
     bajarVida(damage){
         this.vida -= damage;
-        console.log(this.vida);
 
         if(this.vida <= 0)
             return true;

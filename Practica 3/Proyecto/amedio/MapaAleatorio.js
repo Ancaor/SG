@@ -206,11 +206,6 @@ class MapaAleatorio extends THREE.Object3D{
                 colocados[3] = true;
 
             }
-/*
-            this.MuestraPuedeIr(puedeIr);
-            this.MuestraObligaciones(obligaciones_sala);
-            this.MuestraConjunto(conjunto);
-*/
             if(colocados[0]){
                 ubicacion = ubicacion_top;
                 caminos = this.getPuertas(this.tipoSalas[ubicacion[0]][ubicacion[1]]);
@@ -744,7 +739,6 @@ class MapaAleatorio extends THREE.Object3D{
     eleccionSalaInicio(){
         var i = Math.floor(Math.random() * (this.n_filas -0) + (0));
         var j = Math.floor(Math.random() * (this.n_columnas -0) + (0));
-        console.log("La sala de inicio es la sala ["+i+"]["+j+"]");
         this.salaInicio = this.mapa[i][j];
         
         for(var i = this.salaInicio.Sala.n_enemigos-1; i >= 0; i-=1)
@@ -780,7 +774,6 @@ class MapaAleatorio extends THREE.Object3D{
 
                 if(z_mono <= lim_z_sup && z_mono >= lim_z_inf){
                     if(x_mono <= lim_x_sup && x_mono >= lim_x_inf){
-                        //var info_sala_actual = this.mapa[i][j];
                         if(this.mapa[i][j].Visitada==false)
                             this.salasVisitadas += 1;
 
