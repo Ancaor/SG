@@ -144,9 +144,9 @@ class Sala extends THREE.Object3D{
             else if(rand == 3)
                 this.objeto.add(new PotenciadorVida(this));
 
-            this.add(this.objeto);
-
         }
+
+        this.add(this.objeto);
         
 
     }
