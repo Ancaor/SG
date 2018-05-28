@@ -116,8 +116,6 @@ class TheScene extends THREE.Scene {
   createModel () {
     var model = new THREE.Object3D()
     var loader = new THREE.TextureLoader();
-    
-    var textura = loader.load ("imgs/ground.jpg");
 
     return model;
   }
@@ -212,6 +210,7 @@ class TheScene extends THREE.Scene {
         this.loader.restart();
         this.salasCargadas++;
         var indice = this.salasCargadas+1;
+        console.log(indice);
         this.loader.LoadOBJ('modelos/Salas/sala_'+indice+'.mtl','modelos/Salas/sala_'+indice+'.obj')
     }
     if(this.salasCargadas == 15 && this.salas[this.salasCargadas] == null && objetoCargado && this.modoJuego != -1){
