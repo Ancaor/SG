@@ -2,9 +2,9 @@
 character = null;
 
 objeto = null;
-objetos_sala = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+objetos_sala = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 objetoCargado = false;
-enemigos = [null,null,null];
+enemigos = [null,null,null,null, null, null];
 puertas = [null, null];
 Potenciadores = [null,null,null,null,null];
 

@@ -9,7 +9,7 @@ class enemigo3 extends Enemigo{
 
         this.vector_inicial = new THREE.Vector3(0,0,1);
 
-        this.velocidad = 0.1;
+        this.velocidad = 0.2;
 
         this.vida = 60;
 
@@ -54,7 +54,26 @@ class enemigo3 extends Enemigo{
         this.tiempoActual;
 
 
-        this.direccion = new THREE.Vector3(-1,0,0);
+        var direccion_inicial = Math.floor(Math.random() * (4 - (0)) + (0));
+
+        switch(direccion_inicial){
+            case 0: 
+                this.direccion = new THREE.Vector3(-1,0,0); 
+            break;
+            case 1: 
+                this.direccion = new THREE.Vector3(1,0,0); 
+                this.mesh.rotation.y += Math.PI;
+            break;
+            case 2: 
+                this.direccion = new THREE.Vector3(0,0,1);
+                this.mesh.rotation.y += Math.PI/2;
+            break;
+            case 3: 
+                this.direccion = new THREE.Vector3(0,0,-1); 
+                this.mesh.rotation.y -= Math.PI/2;
+            break;
+        }
+        
 
 
 

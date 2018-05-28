@@ -168,6 +168,61 @@ class Mapa extends THREE.Object3D{
             
             this.camaraMapa.lookAt(look);
             this.camaraMapa.layers.enable(2);
+        }else{
+            this.n_filas = 1;
+            this.n_columnas =1 ;
+            
+            var infoMapa = [this.n_filas, this.n_columnas];
+
+            var tipoSala = 16;
+            if(tipo == 4){
+                tipoSala = 16;
+                
+            }else if(tipo == 5){
+                tipoSala = 17;
+            }else if(tipo == 6){
+                tipoSala = 18;
+            }
+
+            this.InfoSalas = [new InfoSalaMapa(0, 0,infoMapa, tipoSala)];
+            this.mapa = [ 
+                            [ this.InfoSalas[0] ],
+                        ]
+
+            this.salaActual = this.mapa[0][0];
+            this.salaInicio = null;
+
+            this.finMapa = false; 
+            this.salasVisitadas = 0;
+
+
+            if(this.n_filas > this.n_columnas)
+                this.camaraMapa = new THREE.OrthographicCamera( (this.n_filas*48+6) / - 2, (this.n_filas*48+6) / 2, (this.n_filas*48+6) / 2, (this.n_filas*48+6) / - 2, 1, 100000 );
+            else
+                this.camaraMapa = new THREE.OrthographicCamera( (this.n_columnas*48+6) / - 2, (this.n_columnas*48+6) / 2, (this.n_columnas*48+6) / 2, (this.n_columnas*48+6) / - 2, 1, 100000 );
+            
+
+            if(this.n_filas %2 == 0){
+                if(this.n_columnas %2 == 0){
+                    var look = new THREE.Vector3 (24,0,24);
+                    this.camaraMapa.position.set(24,200,23);
+                }else{
+                    var look = new THREE.Vector3 (0,0,24);
+                    this.camaraMapa.position.set(0,200,23);
+                }
+            }else{
+                if(this.n_columnas %2 == 0){
+                    var look = new THREE.Vector3 (24,0,0);
+                    this.camaraMapa.position.set(24,200,-1);
+                }else{
+                    var look = new THREE.Vector3 (0,0,0);
+                    this.camaraMapa.position.set(0,200,-1);
+                }
+            }
+            
+            this.camaraMapa.lookAt(look);
+            this.camaraMapa.layers.enable(2);
+
         }
 
     }
@@ -201,8 +256,10 @@ class Mapa extends THREE.Object3D{
         console.log("La sala de inicio es la sala ["+i+"]["+j+"]");
         this.salaInicio = this.mapa[i][j];
         
-        for(var i = this.salaInicio.Sala.n_enemigos-1; i >= 0; i-=1)
-            this.salaInicio.Sala.eliminarEnemigo(i);
+        if(this.n_filas != 1 && this.n_columnas != 1){
+            for(var i = this.salaInicio.Sala.n_enemigos-1; i >= 0; i-=1)
+                this.salaInicio.Sala.eliminarEnemigo(i);
+        }
         
         this.salaInicio.Sala.eliminarObjeto();
         
