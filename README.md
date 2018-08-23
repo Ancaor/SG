@@ -1,4 +1,4 @@
-# Sistemas Graficos
+# Sistemas Gráficos
 
 Libreria utilizada : Three.js 
 Lenguaje de programación : javascript
