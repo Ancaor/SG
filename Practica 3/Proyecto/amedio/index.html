@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html>
+
+    <style>
+        #myProgress {
+          width: 200px;
+          
+          position: absolute;
+          left:25px; 
+          top:50px;
+          border: 1px solid aqua;
+        }
+
+        #Menu{
+            width: 20%;
+            min-width: 300px;
+            height: 20%;
+            margin-left: 40%;
+            margin-right: 40%;
+            top: 10%;
+
+            border: 2px solid aqua;
+            padding: 10px;
+          
+            
+            position: absolute;
+            background-image: url("./imgs/fondo-menu.jpeg");
+            
+            
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        #myBar {
+          width: 100%;
+          height: 30px;
+          background-color: rgb(0, 231, 31);
+          text-align: center;
+          line-height: 30px;
+          font-family: 'Audiowide';
+  
+          
+         
+        }
+
+        #hud{
+            
+            width: 400px;
+            height: 200px;
+         
+            position: absolute;
+            padding-left:50px; 
+            padding-top:15px;
+            
+            background-size: 450px 200px;
+
+        }
+
+        #heart{
+            width: 25px;
+            height: 25px;
+            margin-left:8px;
+            margin-top:30px;
+            background-image: url(./imgs/Heart.png);
+            background-size: 25px 25px;
+            float: left;
+        }
+
+        #Stats{
+            height: 140px;
+            width: 175px;
+            margin-left:5px;
+            top:0px;
+            background-size: 25px 25px;
+            float: left;
+
+            color: aliceblue;
+            border-style: solid;
+            border-width: 3px;
+            border-color:royalblue;
+        }
+        #stats-content{
+            height: 120px;
+            width:100%;
+            background-size: 25px 25px;
+            float: left;
+
+            background-image: url("./modelos/Salas/Texturas/text-ground.png");
+            background-size: 175px 120px;
+            color: aliceblue;
+        }
+
+        #titulo-stats{
+            margin:0px;
+            width:100%;
+            height: 20px;
+            text-align: center;
+            background-color:royalblue;
+            background-repeat: no-repeat;
+            color: aliceblue;
+        }
+
+        #ataque{
+            height: 34px;
+            margin-left:8px;
+            top:0px;
+            background-size: 25px 25px;
+            float: left;
+            color: aliceblue;
+        }
+
+        #cadencia{
+            height: 34px;
+            margin-left:8px;
+            top:0px;
+            background-size: 25px 25px;
+            float: left;
+            color: aliceblue;
+        }
+
+        #radioLagrima{
+            height: 34px;
+            margin-left:8px;
+            top:0px;
+            background-size: 25px 25px;
+            float: left;
+            color: aliceblue;
+        }
+
+
+        #levelHud{
+            
+            width: 175px;
+            height: 40px;
+            background-color: rgb(0, 0, 0);
+            position: absolute;
+            left:0px; 
+            top:150px;
+
+        }
+        #nivel{
+            color:aqua;
+            font-family: 'Audiowide';
+            position: absolute;
+            left:20px; 
+            top:-25px;
+        }
+
+        #puntuacion{
+            color:aqua;
+            font-family: 'Audiowide';
+            position: absolute;
+            left:294px; 
+            top:26px;
+        }
+        #BotonInicio{
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            font-size: 16px;
+            margin: 0 auto;
+            cursor: pointer;
+
+           
+        }
+
+        </style>
+
+
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet'>
+    <title>Robot</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="../libs/three.js"></script>
+    <script type="text/javascript" src="../libs/jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="../libs/stats.js"></script>
+    <script type="text/javascript" src="../libs/dat.gui.js"></script>
+    <script type="text/javascript" src="../libs/TrackballControls.js"></script>
+    <script type="text/javascript" src="../libs/MTLLoader.js"></script>
+    <script type="text/javascript" src="../libs/OBJLoader.js"></script>
+    <script type="text/javascript" src="../libs/underscore.js"></script>
+    <script type="text/javascript" src="Lagrima.js"></script>
+    <script type="text/javascript" src="generadorPartida.js"></script>
+    <script type="text/javascript" src="Enemigo.js"></script>
+    <script type="text/javascript" src="Seta.js"></script>
+    <script type="text/javascript" src="SetaBoss.js"></script>
+    <script type="text/javascript" src="Zombi.js"></script>
+    <script type="text/javascript" src="ZombiBoss.js"></script>
+    <script type="text/javascript" src="Bomba.js"></script>
+    <script type="text/javascript" src="BombaBoss.js"></script>
+    <script type="text/javascript" src="Launcher.js"></script>
+    <script type="text/javascript" src="Mono.js"></script>
+    <script type="text/javascript" src="TheScene.js"></script>
+    <script type="text/javascript" src="OBJLoader.js"></script>
+    <script type="text/javascript" src="Sala.js"></script>
+    <script type="text/javascript" src="Mapa.js"></script>
+    <script type="text/javascript" src="MapaAleatorio.js"></script>
+    <script type="text/javascript" src="InfoSalaMapa.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="Objeto.js"></script>
+    <script type="text/javascript" src="PotenciadorCadencia.js"></script>
+    <script type="text/javascript" src="PotenciadorDamage.js"></script>
+    <script type="text/javascript" src="PotenciadorRadioLagrima.js"></script>
+    <script type="text/javascript" src="PotenciadorVida.js"></script>
+    <script type="text/javascript" src="teleport.js"></script>
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+        }
+
+         #menu-principal{
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            left: 40%;
+            top:35%;
+            background-image: url("./modelos/Salas/Texturas/text-ground.png");
+            background-size: 400px 300px;
+            display: none;
+        }
+
+        #button-aleatorio{
+            margin-top: 50px;
+            margin-left:140px;
+            margin-right:140px;
+            width: 120px;
+            height: 50px;
+        }
+
+        #button-predeterminado{
+            margin-top: 80px;
+            margin-left:140px;
+            margin-right:140px;
+            width: 120px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Div which will show statistical information -->
+<div  id="Stats-output" style="position:absolute; left:425px">
+</div>
+
+<!-- Div which will show several messages -->
+<div style="position:absolute; left:525px; top:10px" id="Messages">
+</div>
+
+<div id="hud">
+    <ul id="vida">
+    </ul>
+    <br><br>
+    <div id="Stats">
+        <p id="titulo-stats">Stats</p>
+        <div id=stats-content>
+            <ul id="ataque">
+                <p>Ataque: 20</p>
+            </ul>
+            <br><br>
+            <ul id="cadencia">
+                <p>Cadencia: 0.5</p>
+            </ul>
+            <br><br>
+            <ul id="radioLagrima">
+                <p>Radio Proyectil: 0.35</p>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="menu-principal">
+    <button id="button-aleatorio" onclick="seleccionarModoAleatorio();">Modo aleatorio</button>
+    <button id="button-predeterminado" onclick="seleccionarModoPredeterminado();">Modo predeterminado</button>
+</div>
+
+<!--
+<div id="levelHud">
+<h1 id = "nivel">Level 1</h1>
+</div>
+
+<!-- Div which will hold the Output -->
+<div id="WebGL-output">
+        
+</div>
+</body>
+</html>
